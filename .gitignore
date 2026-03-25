@@ -1,0 +1,18 @@
+# Maven: Ignorar binarios y reportes
+target/
+
+# NetBeans: Ignorar configuraciones privadas del usuario
+nbproject/private/
+build/
+nbbuild/
+dist/
+
+# Logs y temporales
+*.log
+nbactions.xml
+nb-configuration.xml
+
+# Eclipse 
+.settings/
+.project
+.classpath

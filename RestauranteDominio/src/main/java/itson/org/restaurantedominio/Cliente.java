@@ -1,35 +1,84 @@
-
 package itson.org.restaurantedominio;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 /**
  *
- * @author oliro
+ * @author joset
  */
 @Entity
-@Table(name = "Clientes")
+@Table(name = "cliente")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipoCliente", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("FRECUENTE")
 public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
+    @Column(name = "idCliente", nullable = false)
     private Long id;
 
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Column(name = "nombreCliente", nullable = false, length = 100)
     private String nombre;
-    
+
+    @Column(name = "apellidoPaterno", nullable = false, length = 50)
+    private String apellidoPaterno;
+
+    @Column(name = "apellidoMaterno", nullable = false, length = 50)
+    private String apellidoMaterno;
+
+    @Column(name = "telefono", nullable = false, length = 10)
+    private String telefono;
+
+    @Column(name = "correo", length = 50)
+    private String correo;
+
+    @Column(name = "fechaRegistro", nullable = false)
+    private LocalDate fechaRegistro;
+
     public Cliente() {
     }
 
-    public Cliente(String nombre) {
+    public Cliente(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
+        this.id = id;
         this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+    }
+    
+    
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+    }
+    
+    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -39,13 +88,45 @@ public class Cliente implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    public Long getId() {
-        return id;
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public LocalDate getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDate fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
     @Override
@@ -70,7 +151,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "itson.org.restaurantedominio.Cliente[ id=" + id + " ]";
+        return "Cliente{" + "id=" + id + ", Nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", telefono=" + telefono + ", correo=" + correo + ", fechaRegistro=" + fechaRegistro + '}';
     }
-    
+
 }
