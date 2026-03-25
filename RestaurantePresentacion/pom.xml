@@ -8,7 +8,6 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-<<<<<<< Updated upstream
             <artifactId>RestauranteDominio</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -21,34 +20,21 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>RestauranteNegocio</artifactId>
             <version>${project.version}</version>
-=======
-            <artifactId>RestauranteNegocio</artifactId>
-            <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.mycompany</groupId>
-                    <artifactId>RestauranteDTOS</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.mycompany</groupId>
-                    <artifactId>RestauranteDominio</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.mycompany</groupId>
-                    <artifactId>RestaurantePersistencia</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE150</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE250</version>
->>>>>>> Stashed changes
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.release>25</maven.compiler.release> 
         <exec.mainClass>itson.org.restaurantepresentacion.RestaurantePresentacion</exec.mainClass>
     </properties>
 </project>
