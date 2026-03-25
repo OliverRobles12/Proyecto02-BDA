@@ -44,6 +44,15 @@ public class Cliente implements Serializable {
 
     @Column(name = "correo", length = 50)
     private String correo;
+    
+    @Column(name = "visitas")
+    private int visitas;
+    
+    @Column(name = "totalGastado")
+    private double totalGastado;
+    
+    @Column(name = "puntos")
+    private int puntos;
 
     @Column(name = "fechaRegistro", nullable = false)
     private LocalDate fechaRegistro;
@@ -51,27 +60,30 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
+    public Cliente(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, int visitas, double totalGastado, int puntos, LocalDate fechaRegistro) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.correo = correo;
+        this.visitas = visitas;
+        this.totalGastado = totalGastado;
+        this.puntos = puntos;
         this.fechaRegistro = fechaRegistro;
     }
-    
-    
-    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
+
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, int visitas, double totalGastado, int puntos, LocalDate fechaRegistro) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.correo = correo;
+        this.visitas = visitas;
+        this.totalGastado = totalGastado;
+        this.puntos = puntos;
         this.fechaRegistro = fechaRegistro;
     }
-    
-    
 
     public Long getId() {
         return id;
