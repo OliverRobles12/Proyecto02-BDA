@@ -96,36 +96,10 @@ public class ClienteDAOTest {
     }
     
     @Test
-    public void testConsultarClientesFrecuentesFiltroNombreFuncionaOk() {
+    public void testConsultarClientesFrecuentesFiltroFuncionaOk() {
         
         List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
-            return dao.consultarClientesFrecuentesFiltro("Oli", "", "");
-        });
-        
-        for(ClienteFrecuente c : clientes) {
-            System.out.println(c);
-        }
-        
-    }
-    
-    @Test
-    public void testConsultarClientesFrecuentesFiltroTelefonoFuncionaOk() {
-        
-        List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
-            return dao.consultarClientesFrecuentesFiltro("", "1234567890", "");
-        });
-        
-        for(ClienteFrecuente c : clientes) {
-            System.out.println(c);
-        }
-        
-    }
-    
-    @Test
-    public void testConsultarClientesFrecuentesFiltroCorreoFuncionaOk() {
-        
-        List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
-            return dao.consultarClientesFrecuentesFiltro("", "", "oliver@gmail.com");
+            return dao.consultarClientesFrecuentesFiltro("Ju");
         });
         
         for(ClienteFrecuente c : clientes) {

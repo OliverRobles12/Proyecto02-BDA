@@ -109,7 +109,7 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public List<ClienteFrecuente> consultarClientesFrecuentesFiltro(String nombre, String telefono, String correo) throws PersistenciaException {
+    public List<ClienteFrecuente> consultarClientesFrecuentesFiltro(String filtro) throws PersistenciaException {
         
         try {
             
@@ -118,25 +118,19 @@ public class ClienteDAO implements IClienteDAO {
             CriteriaQuery<ClienteFrecuente> cq = cb.createQuery(ClienteFrecuente.class);
             Root<ClienteFrecuente> cliente = cq.from(ClienteFrecuente.class);
             
-            // Guardamos las condiciones que se cumplen
-            List<Predicate> predicados = new ArrayList<>();
-            
-            if(nombre != null && !nombre.isBlank()) {
-                predicados.add(cb.like(cliente.get("nombre"), "%" + nombre + "%"));
+            if (filtro == null || filtro.isBlank()) {
+                return em.createQuery(cq).getResultList();
             }
             
-            if(telefono != null && !telefono.isBlank()) {
-                predicados.add(cb.equal(cliente.get("telefono"), telefono));
-            }
+            String patron = "%" + filtro.toLowerCase() + "%";
             
-            if(correo != null && !correo.isBlank()) {
-                predicados.add(cb.equal(cliente.get("correo"), correo));
-            }
+            Predicate predicateNombre = cb.like(cb.lower(cliente.get("nombre")), patron);
+            Predicate predicateTelefono = cb.like(cliente.get("telefono"), patron);
+            Predicate predicateCorreo = cb.like(cb.lower(cliente.get("correo")), patron);
             
-            if(!predicados.isEmpty()) {
-                cq.where(cb.and(predicados.toArray(new Predicate[0])));
-            }
-                    
+            // Unimos los predicados
+            cq.where(cb.or(predicateNombre, predicateTelefono, predicateCorreo));
+            
             return em.createQuery(cq).getResultList();
             
         } catch (PersistenceException ex) {
