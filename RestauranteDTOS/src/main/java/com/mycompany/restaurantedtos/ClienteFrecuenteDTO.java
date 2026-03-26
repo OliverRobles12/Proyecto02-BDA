@@ -37,6 +37,19 @@ public class ClienteFrecuenteDTO {
         this.numeroVisitas = numeroVisitas;
     }
 
+    public ClienteFrecuenteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro, Integer puntosAcumulados, Double totalGastado, Integer numeroVisitas) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.fechaRegistro = fechaRegistro;
+        this.puntosAcumulados = puntosAcumulados;
+        this.totalGastado = totalGastado;
+        this.numeroVisitas = numeroVisitas;
+    }
+    
+    
     public Long getId() {
         return id;
     }

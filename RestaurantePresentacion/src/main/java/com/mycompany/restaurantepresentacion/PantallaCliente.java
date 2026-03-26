@@ -500,9 +500,9 @@ public class PantallaCliente extends javax.swing.JFrame {
             + cliente.getApellidoMaterno(),
             cliente.getTelefono(),
             cliente.getCorreo(),
-            cliente.getVisitas(),
+            cliente.getNumeroVisitas(),
             cliente.getTotalGastado(),
-            cliente.getPuntos(),
+            cliente.getPuntosAcumulados(),
             cliente.getFechaRegistro()
 
         });

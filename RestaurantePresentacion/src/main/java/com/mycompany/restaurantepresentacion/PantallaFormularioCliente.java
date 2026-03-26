@@ -298,7 +298,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
             
         }
         ClienteFrecuenteDTO nuevoCliente = new ClienteFrecuenteDTO(
-                nombre, apellidoP, apellidoM, telefono, correo, 0, 0.0d, 0, LocalDate.now());
+                nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now(), 0, 0.0d, 0);
         
         //TODO
         // clienteBO.registrarCliente(nuevoCliente);
@@ -341,8 +341,8 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
             
         }
         ClienteFrecuenteDTO clienteActualizado = new ClienteFrecuenteDTO(
-                clienteForm.getId(),nombre, apellidoP, apellidoM, telefono, correo, clienteForm.getVisitas(),
-                 clienteForm.getTotalGastado(), clienteForm.getPuntos(), fechaRegistro);
+                clienteForm.getId(),nombre, apellidoP, apellidoM, telefono, correo, fechaRegistro, clienteForm.getNumeroVisitas(),
+                clienteForm.getTotalGastado(), clienteForm.getPuntosAcumulados());
         
         //TODO
         // clienteBO.actualizarCliente(clienteActualizado);

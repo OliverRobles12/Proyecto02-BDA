@@ -363,9 +363,9 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                 c.getNombre() + " " + c.getApellidoPaterno() + " " + c.getApellidoMaterno(),
                 c.getTelefono(),
                 c.getCorreo(),
-                c.getVisitas(),
+                c.getNumeroVisitas(),
                 "$" + String.format("%.2f", c.getTotalGastado()),
-                c.getPuntos() + " pts",
+                c.getPuntosAcumulados()+ " pts",
                 "consultarfechaultcomanda"
 
             });
@@ -392,11 +392,11 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     //prueba
     private List<ClienteFrecuenteDTO> obtenerClientesPrueba() {
         List<ClienteFrecuenteDTO> clientes = new ArrayList<>();
-        clientes.add(new ClienteFrecuenteDTO(1L, "Ana", "García", "López","6441234567", "ana@mail.com", 15,189454.05 , 9472, LocalDate.of(2026, 1, 15)));
-        clientes.add(new ClienteFrecuenteDTO(4L, "Ana Lucia", "García", "López","6441234567", "ana@mail.com", 15,189454.05 , 9472, LocalDate.of(2026, 1, 15)));
-        clientes.add(new ClienteFrecuenteDTO(5L, "Ana Fernanda", "García", "López","6441234567", "ana@mail.com", 15,189454.05 , 9472, LocalDate.of(2026, 1, 15)));
-        clientes.add(new ClienteFrecuenteDTO(2L, "Luis", "Martínez", "Ruiz","6449876543", "luis@gmail.cm",15,189454.05 , 9472, LocalDate.of(2026, 2, 10)));
-        clientes.add(new ClienteFrecuenteDTO(3L, "Pedro", "López", "Torres","6443334444", "pedro@mail.com",15,189454.05 , 9472, LocalDate.of(2026, 3, 1)));
+        clientes.add(new ClienteFrecuenteDTO(1L, "Ana", "García", "López","6441234567", "ana@mail.com",LocalDate.of(2026, 1, 15), 15,189454.05 , 9472 ));
+        clientes.add(new ClienteFrecuenteDTO(4L, "Ana Lucia", "García", "López","6441234567", "ana@mail.com",LocalDate.of(2026, 1, 15) ,15,189454.05 , 9472));
+        clientes.add(new ClienteFrecuenteDTO(5L, "Ana Fernanda", "García", "López","6441234567", "ana@mail.com", LocalDate.of(2026, 1, 15), 15,189454.05 , 9472));
+        clientes.add(new ClienteFrecuenteDTO(2L, "Luis", "Martínez", "Ruiz","6449876543", "luis@gmail.cm", LocalDate.of(2026, 2, 10),15,189454.05 , 9472));
+        clientes.add(new ClienteFrecuenteDTO(3L, "Pedro", "López", "Torres","6443334444", "pedro@mail.com", LocalDate.of(2026, 3, 1),15,189454.05 , 9472));
         return clientes;
     }
     
