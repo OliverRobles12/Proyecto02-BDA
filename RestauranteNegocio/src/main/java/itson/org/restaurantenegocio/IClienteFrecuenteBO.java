@@ -5,9 +5,9 @@
 package itson.org.restaurantenegocio;
 
 import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
+import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
-import itson.org.restaurantedominio.Cliente;
-import itson.org.restaurantedominio.ClienteFrecuente;
+import java.util.List;
 
 /**
  *
@@ -15,10 +15,14 @@ import itson.org.restaurantedominio.ClienteFrecuente;
  */
 public interface IClienteFrecuenteBO {
     
-    public abstract Cliente registrarCliente(NuevoClienteFrecuenteDTO nuevoCliente) throws NegocioException;;
+    public abstract ClienteFrecuenteDTO registrarCliente(NuevoClienteFrecuenteDTO nuevoCliente) throws NegocioException;
     
-    public abstract Cliente actualizarCliente(ClienteFrecuenteActualizadoDTO nuevoCliente) throws NegocioException;;
+    public abstract ClienteFrecuenteDTO actualizarCliente(ClienteFrecuenteDTO nuevoCliente) throws NegocioException;
     
-    public abstract Cliente EliminarCliente() throws NegocioException;;
+    public abstract ClienteFrecuenteDTO EliminarCliente() throws NegocioException;
+    
+    public abstract  List<ClienteFrecuenteDTO> consultarClienteFiltro(String filtro) throws NegocioException;
+    
+    public abstract  List<ClienteFrecuenteDTO> consultarClientes( ) throws NegocioException;
     
 }

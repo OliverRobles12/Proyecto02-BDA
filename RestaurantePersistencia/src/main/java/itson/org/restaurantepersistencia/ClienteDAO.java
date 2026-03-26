@@ -6,7 +6,7 @@ import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
 import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
 import itson.org.restaurantedominio.Cliente;
 import itson.org.restaurantedominio.ClienteFrecuente;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -44,18 +44,19 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public Cliente actualizarCliente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException {
+    public ClienteFrecuente actualizarCliente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException {
         
         try {
             
             EntityManager em = ManejadorConexiones.crearEntityManager();
             em.getTransaction().begin();
-            Cliente clienteGuardado = em.find(ClienteFrecuente.class, clienteActualizado.getId());
+            ClienteFrecuente clienteGuardado = em.find(ClienteFrecuente.class, clienteActualizado.getId());
             
             clienteGuardado.setNombre(clienteActualizado.getNombre());
             clienteGuardado.setApellidoPaterno(clienteActualizado.getApellidoPaterno());
             clienteGuardado.setApellidoMaterno(clienteActualizado.getApellidoMaterno());
             clienteGuardado.setTelefono(clienteActualizado.getTelefono());
+            
             if(clienteActualizado.getCorreo() != null && !clienteActualizado.getCorreo().isBlank()){
                 clienteGuardado.setCorreo(clienteActualizado.getCorreo());
             }
@@ -136,9 +137,9 @@ public class ClienteDAO implements IClienteDAO {
         } catch (PersistenceException ex) {
             LOGGER.severe(ex.getMessage());
             throw new PersistenciaException("No ha sido posible consultar los clientes frecuentes", ex);
-        }
-        
+        }       
     }
+    
     
     
 }

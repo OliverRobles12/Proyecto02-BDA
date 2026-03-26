@@ -20,11 +20,13 @@ public class ClienteFrecuenteDTO {
     private Integer puntosAcumulados;
     private Double totalGastado;
     private Integer numeroVisitas;
+    
+    private LocalDate fechaUltimaComanda;
 
     public ClienteFrecuenteDTO() {
     }
 
-    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro, Integer puntosAcumulados, Double totalGastado, Integer numeroVisitas) {
+    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro, Integer puntosAcumulados, Double totalGastado, Integer numeroVisitas, LocalDate fechaUltimaComanda) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -36,8 +38,8 @@ public class ClienteFrecuenteDTO {
         this.totalGastado = totalGastado;
         this.numeroVisitas = numeroVisitas;
     }
-
-    public ClienteFrecuenteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro, Integer puntosAcumulados, Double totalGastado, Integer numeroVisitas) {
+    
+    public ClienteFrecuenteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro, Integer puntosAcumulados, Double totalGastado, Integer numeroVisitas, LocalDate fechaUltimaComanda) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -47,8 +49,11 @@ public class ClienteFrecuenteDTO {
         this.puntosAcumulados = puntosAcumulados;
         this.totalGastado = totalGastado;
         this.numeroVisitas = numeroVisitas;
+        this.fechaUltimaComanda = fechaUltimaComanda;
     }
+
     
+      
     
     public Long getId() {
         return id;
@@ -89,5 +94,10 @@ public class ClienteFrecuenteDTO {
     public Integer getNumeroVisitas() {
         return numeroVisitas;
     }
+
+    public LocalDate getFechaUltimaComanda() {
+        return fechaUltimaComanda;
+    }
+    
     
 }

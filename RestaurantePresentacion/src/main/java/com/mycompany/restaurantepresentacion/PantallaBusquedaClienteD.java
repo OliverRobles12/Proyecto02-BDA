@@ -6,12 +6,15 @@ package com.mycompany.restaurantepresentacion;
 
 import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
+import itson.org.restaurantenegocio.ClienteFrecuenteBO;
+import itson.org.restaurantenegocio.IClienteFrecuenteBO;
+import itson.org.restaurantenegocio.NegocioException;
+import itson.org.restaurantepersistencia.ClienteDAO;
 import java.awt.Color;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -27,10 +30,12 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
      */
     private ClienteFrecuenteDTO clienteSeleccionado = null;
     private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
-    private static final Logger LOGGER = Logger.getLogger(PantallaBusquedaClienteD.class.getName());
+    
+    private ClienteDAO clientesDAO = new ClienteDAO();
+    private IClienteFrecuenteBO clienteBO = new ClienteFrecuenteBO(clientesDAO);
 
     public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
-        
+
         super(parent, modal);
 
         initComponents();
@@ -42,11 +47,10 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
 
         inicializarTabla();
-        
+
         this.txtBusqueda.setText("Buscar por nombre, numero telefonico o correo..");
-        
+
         this.txtBusqueda.setForeground(Color.GRAY);
-        
 
     }
 
@@ -200,12 +204,16 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         btnBuscarCliente.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscarCliente.setText("Buscar ");
         btnBuscarCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 44, 79), 2));
+        btnBuscarCliente.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnBuscarCliente.setMaximumSize(new java.awt.Dimension(66, 32));
+        btnBuscarCliente.setMinimumSize(new java.awt.Dimension(66, 32));
+        btnBuscarCliente.setPreferredSize(new java.awt.Dimension(66, 32));
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarClienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 260, 190, -1));
+        panPrincipal.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 262, 190, -1));
 
         btnSeleccionarCliente.setBackground(new java.awt.Color(18, 44, 79));
         btnSeleccionarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -265,7 +273,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     }//GEN-LAST:event_txtBusquedaFocusLost
 
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
-    
+
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
@@ -278,39 +286,31 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         String textoBusqueda = this.txtBusqueda.getText().trim();
-        
+
         if (textoBusqueda.equals("Buscar por nombre, numero telefonico o correo..") || textoBusqueda.isEmpty()) {
-            
+
             JOptionPane.showMessageDialog(this,
                     "Escribe un nombre para buscar",
                     "Aviso",
-                    JOptionPane.WARNING_MESSAGE);  
-            return;
-        }
-        //TODO
-        // SE DEBE LLAMAR A LA BO Y BUSCAR LOS CLIENTES POR EL NOMBRE y METERLO A UNA LISTA List<NuevoClienteDTO> resultados 
-        // LUEGO cargarClientes(resultados);
-        
-        //Prueba
-        List<ClienteFrecuenteDTO> resultados = obtenerClientesPrueba()
-            .stream()
-            .filter(c -> 
-                c.getNombre().toLowerCase().contains(textoBusqueda.toLowerCase()) ||
-                c.getTelefono().contains(textoBusqueda) ||
-                c.getCorreo().toLowerCase().contains(textoBusqueda.toLowerCase())
-            )
-            .collect(Collectors.toList());
-
-        if (resultados.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                "No se encontró ningún cliente",
-                "Sin resultados",
-                JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        cargarClientes(resultados);
-        
+        try {
+            listaClientes = clienteBO.consultarClienteFiltro(textoBusqueda);
+
+            if (listaClientes.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "No se encontró ningún cliente",
+                        "Sin resultados",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            cargarClientes(listaClientes);
+        } catch (NegocioException ex) {
+            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnSeleccionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClienteActionPerformed
@@ -327,28 +327,30 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
     private void inicializarTabla() {
 
-        String[] columnas = {"Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
+        String[] columnas = {"Id","Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
 
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {       // que no se pueda editar las celdas
                 return false;
             }
-            
+
         };
 
         tblClientes.setModel(modelo);
-        
+
         tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         tblClientes.setRowSelectionAllowed(true);
-        
+
         utilerias.estilizarTabla(tblClientes);
-        
-        //TODO cargar todos los cliente de la BD con el metodo de la BO
-        List<ClienteFrecuenteDTO> clientes = obtenerClientesPrueba(); // clienteBO.buscarTodos();
-        
-        cargarClientes(clientes);
+
+        try {
+            List<ClienteFrecuenteDTO> clientes = clienteBO.consultarClientes();
+            cargarClientes(clientes);
+        } catch (NegocioException ex) {
+            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void cargarClientes(List<ClienteFrecuenteDTO> clientes) {
@@ -360,13 +362,14 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         for (ClienteFrecuenteDTO c : clientes) {
 
             modelo.addRow(new Object[]{
+                c.getId(),
                 c.getNombre() + " " + c.getApellidoPaterno() + " " + c.getApellidoMaterno(),
                 c.getTelefono(),
                 c.getCorreo(),
                 c.getNumeroVisitas(),
                 "$" + String.format("%.2f", c.getTotalGastado()),
-                c.getPuntosAcumulados()+ " pts",
-                "consultarfechaultcomanda"
+                c.getPuntosAcumulados() + " pts",
+                c.getFechaUltimaComanda()
 
             });
         }
@@ -388,18 +391,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     public ClienteFrecuenteDTO getClienteSeleccionado() {
         return this.clienteSeleccionado;
     }
-    
-    //prueba
-    private List<ClienteFrecuenteDTO> obtenerClientesPrueba() {
-        List<ClienteFrecuenteDTO> clientes = new ArrayList<>();
-        clientes.add(new ClienteFrecuenteDTO(1L, "Ana", "García", "López","6441234567", "ana@mail.com",LocalDate.of(2026, 1, 15), 15,189454.05 , 9472 ));
-        clientes.add(new ClienteFrecuenteDTO(4L, "Ana Lucia", "García", "López","6441234567", "ana@mail.com",LocalDate.of(2026, 1, 15) ,15,189454.05 , 9472));
-        clientes.add(new ClienteFrecuenteDTO(5L, "Ana Fernanda", "García", "López","6441234567", "ana@mail.com", LocalDate.of(2026, 1, 15), 15,189454.05 , 9472));
-        clientes.add(new ClienteFrecuenteDTO(2L, "Luis", "Martínez", "Ruiz","6449876543", "luis@gmail.cm", LocalDate.of(2026, 2, 10),15,189454.05 , 9472));
-        clientes.add(new ClienteFrecuenteDTO(3L, "Pedro", "López", "Torres","6443334444", "pedro@mail.com", LocalDate.of(2026, 3, 1),15,189454.05 , 9472));
-        return clientes;
-    }
-    
 
     /**
      * @param args the command line arguments

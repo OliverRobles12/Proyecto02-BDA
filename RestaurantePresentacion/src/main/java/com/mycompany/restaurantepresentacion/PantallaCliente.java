@@ -417,12 +417,13 @@ public class PantallaCliente extends javax.swing.JFrame {
         );
 
         dialogo.setVisible(true);
-
+        
         ClienteFrecuenteDTO clienteElegido = dialogo.getClienteSeleccionado();
-
+        
         if (clienteElegido != null) {
-
-            mostrarClienteTabla(clienteElegido);
+            listaClientes.remove(clienteSeleccionado);
+            listaClientes.add(clienteElegido);
+            mostrarClienteTabla();
 
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
@@ -443,8 +444,8 @@ public class PantallaCliente extends javax.swing.JFrame {
                 ClienteFrecuenteDTO nuevocliente = formClie.getClienteFrecuenteDTO();
 
                 if (nuevocliente != null) {
-
-                    mostrarClienteTabla(nuevocliente);
+                    listaClientes.add(nuevocliente);
+                    mostrarClienteTabla();
 
                 }
 
@@ -479,8 +480,10 @@ public class PantallaCliente extends javax.swing.JFrame {
                     ClienteFrecuenteDTO clienteActualizado = formClie.getClienteFrecuenteDTO();
 
                     if (clienteActualizado != null) {
-
-                        mostrarClienteTabla(clienteActualizado);
+                        listaClientes.removeIf(c -> c.getId().equals(clienteSeleccionado.getId()));
+                        listaClientes.add(clienteActualizado);
+                        mostrarClienteTabla();
+                        
                     }
 
                     setVisible(true);
@@ -491,10 +494,11 @@ public class PantallaCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
-    private void mostrarClienteTabla(ClienteFrecuenteDTO cliente) {
-        listaClientes.add(cliente);
-        
+    private void mostrarClienteTabla() {
+        modelotabla.setRowCount(0);
+        for (ClienteFrecuenteDTO cliente : listaClientes) {
         modelotabla.addRow(new Object[]{
+            cliente.getId(),
             cliente.getNombre() + " "
             + cliente.getApellidoPaterno() + " "
             + cliente.getApellidoMaterno(),
@@ -504,8 +508,8 @@ public class PantallaCliente extends javax.swing.JFrame {
             cliente.getTotalGastado(),
             cliente.getPuntosAcumulados(),
             cliente.getFechaRegistro()
-
         });
+    }
 
         tblClientes.setModel(modelotabla);
 
@@ -518,7 +522,7 @@ public class PantallaCliente extends javax.swing.JFrame {
     }
 
     private DefaultTableModel obtenerModelo() {
-        String[] columnas = {"Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};
+        String[] columnas = {"Id","Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
 
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
 

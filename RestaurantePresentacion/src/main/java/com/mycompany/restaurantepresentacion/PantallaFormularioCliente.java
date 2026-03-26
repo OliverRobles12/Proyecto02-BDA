@@ -5,9 +5,15 @@
 package com.mycompany.restaurantepresentacion;
 
 import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
+import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
+import itson.org.restaurantenegocio.ClienteFrecuenteBO;
+import itson.org.restaurantenegocio.IClienteFrecuenteBO;
+import itson.org.restaurantenegocio.NegocioException;
+import itson.org.restaurantepersistencia.ClienteDAO;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,44 +22,55 @@ import javax.swing.JOptionPane;
  */
 public class PantallaFormularioCliente extends javax.swing.JFrame {
 
-    private ClienteFrecuenteDTO clienteForm;
+    private ClienteFrecuenteDTO clienteForm = null;
+    private ClienteDAO clientesDAO = new ClienteDAO();
+    private IClienteFrecuenteBO clienteBO = new ClienteFrecuenteBO(clientesDAO);
+    private boolean modoEdicion = false;
 
     /**
      * Creates new form PantallaFormularioCliente
      */
     public PantallaFormularioCliente() {
         initComponents();
-        
+
         utilerias.colocarLogo(btnLogo);
-        
+
         utilerias.estilizarBotonPrimario(btnEditarCliente);
-        
+
         utilerias.estilizarBotonPrimario(btnGuardarCliente);
         
         utilerias.estilizarBotonSinFondo(btnCancelar);
+        modoEdicion = false;
+
+        btnGuardarCliente.setVisible(true);
+        btnEditarCliente.setVisible(false);
         
-        verificarBoton();
-        
+        txtFechaRegistro.setText(LocalDate.now().toString());
+
         txtFechaRegistro.setEditable(false);
-        
-        this.setLocationRelativeTo(null);        
+
+        this.setLocationRelativeTo(null);
 
     }
 
     public PantallaFormularioCliente(ClienteFrecuenteDTO cliente) {
         initComponents();
-        
+
         utilerias.colocarLogo(btnLogo);
-        
+
         utilerias.estilizarBotonPrimario(btnEditarCliente);
-        
+
         utilerias.estilizarBotonPrimario(btnGuardarCliente);
-        
+
         utilerias.estilizarBotonSinFondo(btnCancelar);
+
+        modoEdicion = true;
+        btnGuardarCliente.setVisible(false);
+        btnEditarCliente.setVisible(true);
         
-        verificarBoton();
+        txtFechaRegistro.setText(LocalDate.now().toString());
         txtFechaRegistro.setEditable(false);
-        
+
         this.setLocationRelativeTo(null);
 
         this.clienteForm = cliente;
@@ -187,20 +204,10 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                 btnGuardarClienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnGuardarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 550, 190, 30));
+        panPrincipal.add(btnGuardarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 550, 190, 30));
         panPrincipal.add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 300, 30));
 
         txtFechaRegistro.setName(""); // NOI18N
-        txtFechaRegistro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtFechaRegistroMouseClicked(evt);
-            }
-        });
-        txtFechaRegistro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaRegistroActionPerformed(evt);
-            }
-        });
         panPrincipal.add(txtFechaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 470, 300, 30));
 
         lblApellidoPaterno.setText("Apellido Paterno *");
@@ -246,7 +253,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                 btnEditarClienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 550, 190, 30));
+        panPrincipal.add(btnEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 190, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -277,42 +284,41 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
         String nombre = txtNombres.getText().trim();
-        
+
         String apellidoP = txtApellidoP.getText().trim();
-        
+
         String apellidoM = txtApellidoMaterno.getText().trim();
-        
+
         String telefono = txtTelefono.getText().trim();
-        
+
         String correo = txtCorreoElectronico.getText().trim();
-        
 
         // validacion de los campos vacios
         if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
-            
+
             JOptionPane.showMessageDialog(this,
                     "Ningún campo puede estar vacío",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
-            
-        }
-        ClienteFrecuenteDTO nuevoCliente = new ClienteFrecuenteDTO(
-                nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now(), clienteForm.getNumeroVisitas(), clienteForm.getTotalGastado(), clienteForm.getPuntosAcumulados());
-        
-        //TODO
-        // clienteBO.registrarCliente(nuevoCliente);
-        
-        this.clienteForm = nuevoCliente;
-        
-        JOptionPane.showMessageDialog(this,
-                "Cliente guardado correctamente",
-                "Éxito",
-                JOptionPane.INFORMATION_MESSAGE);
-        
 
-        this.dispose(); // cierra esta y lanza el windowClosed
-        
+        }
+        try {
+            NuevoClienteFrecuenteDTO nuevoCliente = new NuevoClienteFrecuenteDTO(
+                    nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now()
+            );
+
+            this.clienteForm = clienteBO.registrarCliente(nuevoCliente);
+
+            JOptionPane.showMessageDialog(this,
+                    "Cliente guardado correctamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            this.dispose(); // cierra esta y lanza el windowClosed
+        } catch (NegocioException ex) {
+            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
     private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
@@ -321,81 +327,63 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
         String nombre = txtNombres.getText().trim();
-        
+
         String apellidoP = txtApellidoP.getText().trim();
-        
+
         String apellidoM = txtApellidoMaterno.getText().trim();
-        
+
         String telefono = txtTelefono.getText().trim();
-        
+
         String correo = txtCorreoElectronico.getText().trim();
-        
+
         LocalDate fechaRegistro = clienteForm.getFechaRegistro();
-        
+
         // validacion de los campos vacios
         if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Ningún campo puede estar vacío",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
-            
+            return;
         }
         ClienteFrecuenteDTO clienteActualizado = new ClienteFrecuenteDTO(
-                clienteForm.getId(),nombre, apellidoP, apellidoM, telefono, correo, fechaRegistro, clienteForm.getNumeroVisitas(),
-                clienteForm.getTotalGastado(), clienteForm.getPuntosAcumulados());
-        
-        //TODO
-        // clienteBO.actualizarCliente(clienteActualizado);
-        
-        this.clienteForm = clienteActualizado;
-        
-        JOptionPane.showMessageDialog(this,
-                "Cliente actualizado correctamente",
-                "Éxito",
-                JOptionPane.INFORMATION_MESSAGE);
+                clienteForm.getId(), nombre, apellidoP, apellidoM, telefono, correo, fechaRegistro, clienteForm.getNumeroVisitas(),
+                clienteForm.getTotalGastado(), clienteForm.getPuntosAcumulados(), clienteForm.getFechaUltimaComanda()
+        );
+        try {
+            clienteBO.actualizarCliente(clienteActualizado);
 
-        this.dispose(); // cierra y lanza el windowClosed
+            this.clienteForm = clienteActualizado;
+
+            JOptionPane.showMessageDialog(this,
+                    "Cliente actualizado correctamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            this.dispose(); // cierra y lanza el windowClosed
+        } catch (NegocioException ex) {
+            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
-
-    private void txtFechaRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaRegistroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaRegistroActionPerformed
-
-    private void txtFechaRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaRegistroMouseClicked
-        txtFechaRegistro.setText(
-                LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yy")));
-    }//GEN-LAST:event_txtFechaRegistroMouseClicked
 
     public ClienteFrecuenteDTO getClienteFrecuenteDTO() {
         return clienteForm;
     }
 
-    public void verificarBoton() {
-        if (txtNombres.getText().isEmpty() || txtApellidoP.getText().isEmpty()
-                
-                || txtApellidoMaterno.getText().isEmpty() || txtTelefono.getText().isEmpty()
-                
-                || txtCorreoElectronico.getText().isEmpty()) {
-
-            btnEditarCliente.setVisible(true);
-        }
-        btnEditarCliente.setVisible(false);
-    }
-
     private void llenarCampos(ClienteFrecuenteDTO cliente) {
-        
+
         txtNombres.setText(cliente.getNombre());
-        
+
         txtApellidoP.setText(cliente.getApellidoPaterno());
-        
+
         txtApellidoMaterno.setText(cliente.getApellidoMaterno());
-        
+
         txtTelefono.setText(cliente.getTelefono());
-        
+
         txtCorreoElectronico.setText(cliente.getCorreo());
-        
+
         txtFechaRegistro.setText(cliente.getFechaRegistro().toString());
-        
+
     }
 
     /**

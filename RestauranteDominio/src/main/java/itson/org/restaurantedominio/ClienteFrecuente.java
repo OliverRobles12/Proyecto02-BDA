@@ -44,5 +44,31 @@ public class ClienteFrecuente extends Cliente{
         this.numeroVisitas = 0;
     }
 
+    public Integer getPuntosAcumulados() {
+        return puntosAcumulados;
+    }
+
+    public void setPuntosAcumulados(Integer puntosAcumulados) {
+        this.puntosAcumulados = puntosAcumulados;
+    }
+
+    public Double getTotalGastado() {
+        return totalGastado;
+    }
+
+    public void setTotalGastado(Double totalGastado) {
+        this.totalGastado = totalGastado;
+    }
+
+    public Integer getNumeroVisitas() {
+        return numeroVisitas;
+    }
+
+    public void setNumeroVisitas(Integer numeroVisitas) {
+        this.numeroVisitas = numeroVisitas;
+    }
+    
+    
+
    
 }
