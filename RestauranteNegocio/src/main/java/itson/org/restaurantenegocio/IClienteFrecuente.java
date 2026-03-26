@@ -6,10 +6,10 @@ package itson.org.restaurantenegocio;
 
 /**
  *
- * @author juanl
+ * @author oliro
  */
 public interface IClienteFrecuente {
     
-    //public abstract NuevoClienteFrecuenteDTO
+    public abstract void algo();
     
 }
