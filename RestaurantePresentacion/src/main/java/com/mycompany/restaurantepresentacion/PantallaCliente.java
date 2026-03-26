@@ -2,14 +2,11 @@ package com.mycompany.restaurantepresentacion;
 
 import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
-import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,8 +21,8 @@ public class PantallaCliente extends javax.swing.JFrame {
     private ClienteFrecuenteDTO clienteSeleccionado = null;
 
     private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
-    
-    private DefaultTableModel modelotabla ;
+
+    private DefaultTableModel modelotabla;
 
     /**
      * Creates new form PantallaCliente
@@ -49,12 +46,6 @@ public class PantallaCliente extends javax.swing.JFrame {
 
         utilerias.estilizarBotonPrimario(btnNuevoCliente);
 
-        utilerias.estilizarBotonPrimario(btnBuscarCliente);
-        
-        utilerias.estilizarTabla(tblClientes);
-        
-        obtenerModelo();
-        
         this.setLocationRelativeTo(null);
     }
 
@@ -87,11 +78,8 @@ public class PantallaCliente extends javax.swing.JFrame {
         lblNombreBtnPantalla = new javax.swing.JLabel();
         lblPrincipal1 = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
-        btnBuscarCliente = new javax.swing.JButton();
         btnNuevoCliente = new javax.swing.JButton();
         btnEditarCliente = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Clientes Menu");
@@ -315,17 +303,6 @@ public class PantallaCliente extends javax.swing.JFrame {
         sep.setForeground(new java.awt.Color(18, 44, 79));
         panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 1080, -1));
 
-        btnBuscarCliente.setBackground(new java.awt.Color(18, 44, 79));
-        btnBuscarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnBuscarCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscarCliente.setText("Buscar Cliente");
-        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarClienteActionPerformed(evt);
-            }
-        });
-        panPrincipal.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 280, 180, -1));
-
         btnNuevoCliente.setBackground(new java.awt.Color(18, 44, 79));
         btnNuevoCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnNuevoCliente.setForeground(new java.awt.Color(255, 255, 255));
@@ -348,22 +325,6 @@ public class PantallaCliente extends javax.swing.JFrame {
             }
         });
         panPrincipal.add(btnEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 230, -1));
-
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        tblClientes.setFillsViewportHeight(true);
-        jScrollPane1.setViewportView(tblClientes);
-
-        panPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 337, 1080, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -411,23 +372,6 @@ public class PantallaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD(
-                (java.awt.Frame) SwingUtilities.getWindowAncestor(this), true
-        );
-
-        dialogo.setVisible(true);
-        
-        ClienteFrecuenteDTO clienteElegido = dialogo.getClienteSeleccionado();
-        
-        if (clienteElegido != null) {
-            listaClientes.remove(clienteSeleccionado);
-            listaClientes.add(clienteElegido);
-            mostrarClienteTabla();
-
-        }
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
-
     private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
         this.setVisible(false);
 
@@ -436,105 +380,35 @@ public class PantallaCliente extends javax.swing.JFrame {
         formClie.setVisible(true);
 
         formClie.addWindowListener(new WindowAdapter() {
-
             @Override
-
             public void windowClosed(WindowEvent e) {
-                // cuando cierre el formulario recupera el cliente creado
-                ClienteFrecuenteDTO nuevocliente = formClie.getClienteFrecuenteDTO();
-
-                if (nuevocliente != null) {
-                    listaClientes.add(nuevocliente);
-                    mostrarClienteTabla();
-
-                }
-
                 setVisible(true);
             }
         });
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-        try {
-            if (tblClientes.getSelectedRow() < 0) {
-                JOptionPane.showMessageDialog(this,
-                        "Selecciona un cliente primero",
-                        "Aviso",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            ClienteFrecuenteDTO clienteSeleccionado = this.listaClientes.get(tblClientes.getSelectedRow());
+        PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD(
+            (java.awt.Frame) SwingUtilities.getWindowAncestor(this), true
+        );
 
-            this.setVisible(false);
+        dialogo.setVisible(true);
 
-            PantallaFormularioCliente formClie = new PantallaFormularioCliente(clienteSeleccionado);
+        ClienteFrecuenteDTO clienteElegido = dialogo.getClienteSeleccionado();
+        
+        PantallaFormularioCliente formClie = new PantallaFormularioCliente(clienteElegido);
 
-            formClie.setVisible(true);
-
-            formClie.addWindowListener(new WindowAdapter() {
-
-                @Override
-                public void windowClosed(WindowEvent e) {
-
-                    ClienteFrecuenteDTO clienteActualizado = formClie.getClienteFrecuenteDTO();
-
-                    if (clienteActualizado != null) {
-                        listaClientes.removeIf(c -> c.getId().equals(clienteSeleccionado.getId()));
-                        listaClientes.add(clienteActualizado);
-                        mostrarClienteTabla();
-                        
-                    }
-
-                    setVisible(true);
-                }
-            });
-        } catch (Exception ex) {
-            LOGGER.severe(ex.getMessage());
-        }
-    }//GEN-LAST:event_btnEditarClienteActionPerformed
-
-    private void mostrarClienteTabla() {
-        modelotabla.setRowCount(0);
-        for (ClienteFrecuenteDTO cliente : listaClientes) {
-        modelotabla.addRow(new Object[]{
-            cliente.getId(),
-            cliente.getNombre() + " "
-            + cliente.getApellidoPaterno() + " "
-            + cliente.getApellidoMaterno(),
-            cliente.getTelefono(),
-            cliente.getCorreo(),
-            cliente.getNumeroVisitas(),
-            cliente.getTotalGastado(),
-            cliente.getPuntosAcumulados(),
-            cliente.getFechaRegistro()
-        });
-    }
-
-        tblClientes.setModel(modelotabla);
-
-        tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        jScrollPane1.getViewport().setBackground(Color.WHITE);
-
-        jScrollPane1.setBackground(Color.WHITE);
-
-    }
-
-    private DefaultTableModel obtenerModelo() {
-        String[] columnas = {"Id","Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
-
-        DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+        formClie.setVisible(true);
+        
+        formClie.addWindowListener(new WindowAdapter() {
 
             @Override
-            public boolean isCellEditable(int row, int column) {
-
-                return false;
-
+            public void windowClosed(WindowEvent e) {
+                setVisible(true);
             }
-        };
-        return this.modelotabla=modelo;
-    }
+        });
+    }//GEN-LAST:event_btnEditarClienteActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -572,7 +446,6 @@ public class PantallaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnComandas;
     private javax.swing.JButton btnEditarCliente;
@@ -582,7 +455,6 @@ public class PantallaCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevoCliente;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnReportes;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAnalisis;
     private javax.swing.JLabel lblCatalogo;
     private javax.swing.JLabel lblNombreBtnPantalla;
@@ -596,6 +468,5 @@ public class PantallaCliente extends javax.swing.JFrame {
     private javax.swing.JPanel panPrincipal;
     private javax.swing.JPanel panSuperior;
     private javax.swing.JSeparator sep;
-    private javax.swing.JTable tblClientes;
     // End of variables declaration//GEN-END:variables
 }

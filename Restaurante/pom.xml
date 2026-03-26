@@ -8,8 +8,8 @@
     <modules>
         <module>../RestauranteDominio</module>
         <module>../RestauranteDtos</module>
-        <module>../RestauranteNegocio</module>
         <module>../RestaurantePersistencia</module>
+        <module>../RestauranteNegocio</module>
         <module>../RestaurantePresentacion</module>
     </modules>
     <properties>
