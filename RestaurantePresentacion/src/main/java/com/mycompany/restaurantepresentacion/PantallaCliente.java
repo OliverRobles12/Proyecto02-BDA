@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
@@ -18,9 +19,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PantallaCliente extends javax.swing.JFrame {
 
+    private static final Logger LOGGER = Logger.getLogger(PantallaCliente.class.getName());
+
     private ClienteFrecuenteDTO clienteSeleccionado = null;
 
     private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
+    
+    private DefaultTableModel modelotabla ;
 
     /**
      * Creates new form PantallaCliente
@@ -45,7 +50,11 @@ public class PantallaCliente extends javax.swing.JFrame {
         utilerias.estilizarBotonPrimario(btnNuevoCliente);
 
         utilerias.estilizarBotonPrimario(btnBuscarCliente);
-
+        
+        utilerias.estilizarTabla(tblClientes);
+        
+        obtenerModelo();
+        
         this.setLocationRelativeTo(null);
     }
 
@@ -87,6 +96,7 @@ public class PantallaCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Clientes Menu");
         setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
         setSize(new java.awt.Dimension(1366, 768));
 
         panPrincipal.setBackground(new java.awt.Color(255, 255, 255));
@@ -444,48 +454,55 @@ public class PantallaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-
-        if (tblClientes.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona un cliente primero",
-                    "Aviso",
-                    JOptionPane.WARNING_MESSAGE);
-
-        }
-        ClienteFrecuenteDTO clienteSeleccionado = this.listaClientes.get(tblClientes.getSelectedRow());
-
-        this.setVisible(false);
-
-        PantallaFormularioCliente formClie = new PantallaFormularioCliente(clienteSeleccionado);
-
-        formClie.setVisible(true);
-
-        formClie.addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-
-                ClienteFrecuenteDTO clienteActualizado = formClie.getClienteFrecuenteDTO();
-
-                if (clienteActualizado != null) {
-
-                    mostrarClienteTabla(clienteActualizado);
-                }
-
-                setVisible(true);
+        try {
+            if (tblClientes.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Selecciona un cliente primero",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
             }
-        });
+            
+            ClienteFrecuenteDTO clienteSeleccionado = this.listaClientes.get(tblClientes.getSelectedRow());
+
+            this.setVisible(false);
+
+            PantallaFormularioCliente formClie = new PantallaFormularioCliente(clienteSeleccionado);
+
+            formClie.setVisible(true);
+
+            formClie.addWindowListener(new WindowAdapter() {
+
+                @Override
+                public void windowClosed(WindowEvent e) {
+
+                    ClienteFrecuenteDTO clienteActualizado = formClie.getClienteFrecuenteDTO();
+
+                    if (clienteActualizado != null) {
+
+                        mostrarClienteTabla(clienteActualizado);
+                    }
+
+                    setVisible(true);
+                }
+            });
+        } catch (Exception ex) {
+            LOGGER.severe(ex.getMessage());
+        }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
     private void mostrarClienteTabla(ClienteFrecuenteDTO cliente) {
-        DefaultTableModel modelotabla = obtenerModelo();
-
+        listaClientes.add(cliente);
+        
         modelotabla.addRow(new Object[]{
             cliente.getNombre() + " "
             + cliente.getApellidoPaterno() + " "
             + cliente.getApellidoMaterno(),
             cliente.getTelefono(),
             cliente.getCorreo(),
+            cliente.getVisitas(),
+            cliente.getTotalGastado(),
+            cliente.getPuntos(),
             cliente.getFechaRegistro()
 
         });
@@ -512,7 +529,7 @@ public class PantallaCliente extends javax.swing.JFrame {
 
             }
         };
-        return modelo;
+        return this.modelotabla=modelo;
     }
 
     /**

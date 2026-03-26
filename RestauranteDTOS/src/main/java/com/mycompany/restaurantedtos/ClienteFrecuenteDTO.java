@@ -8,7 +8,7 @@ import java.time.LocalDate;
  * @author joset
  */
 public class ClienteFrecuenteDTO {
-    
+    private Long id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -18,6 +18,19 @@ public class ClienteFrecuenteDTO {
     private double totalGastado;
     private int puntos;
     private LocalDate fechaRegistro;
+
+    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, int visitas, double totalGastado, int puntos, LocalDate fechaRegistro) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.visitas = visitas;
+        this.totalGastado = totalGastado;
+        this.puntos = puntos;
+        this.fechaRegistro = fechaRegistro;
+    }
 
     public ClienteFrecuenteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, int visitas, double totalGastado, int puntos, LocalDate fechaRegistro) {
         this.nombre = nombre;
@@ -29,6 +42,16 @@ public class ClienteFrecuenteDTO {
         this.totalGastado = totalGastado;
         this.puntos = puntos;
         this.fechaRegistro = fechaRegistro;
+    }
+    
+    
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {

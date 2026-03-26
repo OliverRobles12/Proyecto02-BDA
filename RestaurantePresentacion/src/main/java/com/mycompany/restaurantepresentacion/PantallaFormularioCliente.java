@@ -98,7 +98,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario Cliente");
-        setResizable(false);
         setSize(new java.awt.Dimension(1366, 768));
 
         panPrincipal.setBackground(new java.awt.Color(255, 255, 255));
@@ -295,6 +294,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     "Ningún campo puede estar vacío",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+            return;
             
         }
         ClienteFrecuenteDTO nuevoCliente = new ClienteFrecuenteDTO(
@@ -341,7 +341,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
             
         }
         ClienteFrecuenteDTO clienteActualizado = new ClienteFrecuenteDTO(
-                nombre, apellidoP, apellidoM, telefono, correo, clienteForm.getVisitas(),
+                clienteForm.getId(),nombre, apellidoP, apellidoM, telefono, correo, clienteForm.getVisitas(),
                  clienteForm.getTotalGastado(), clienteForm.getPuntos(), fechaRegistro);
         
         //TODO
@@ -350,7 +350,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         this.clienteForm = clienteActualizado;
         
         JOptionPane.showMessageDialog(this,
-                "Cliente guardado correctamente",
+                "Cliente actualizado correctamente",
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE);
 
