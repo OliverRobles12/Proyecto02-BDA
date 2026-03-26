@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.restaurantepresentacion;
 
-import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
-import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
+import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -20,20 +18,34 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PantallaCliente extends javax.swing.JFrame {
 
+    private ClienteFrecuenteDTO clienteSeleccionado = null;
+
+    private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
+
     /**
      * Creates new form PantallaCliente
      */
     public PantallaCliente() {
         initComponents();
+
         utilerias.colocarLogo(btnLogo);
+
         utilerias.estilizarBotonMenu(btnInicio);
+
         utilerias.estilizarBotonMenu(btnIngredientes);
+
         utilerias.estilizarBotonMenu(btnProductos);
+
         utilerias.estilizarBotonMenu(btnComandas);
+
         utilerias.estilizarBotonMenu(btnReportes);
+
         utilerias.estilizarBotonPrimario(btnEditarCliente);
+
         utilerias.estilizarBotonPrimario(btnNuevoCliente);
+
         utilerias.estilizarBotonPrimario(btnBuscarCliente);
+
         this.setLocationRelativeTo(null);
     }
 
@@ -393,107 +405,116 @@ public class PantallaCliente extends javax.swing.JFrame {
         PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD(
                 (java.awt.Frame) SwingUtilities.getWindowAncestor(this), true
         );
+
         dialogo.setVisible(true);
 
-        ClienteFrecuenteActualizadoDTO clienteElegido = dialogo.getClienteSeleccionado();
+        ClienteFrecuenteDTO clienteElegido = dialogo.getClienteSeleccionado();
+
         if (clienteElegido != null) {
-            mostrarClienteActualizadoTabla(clienteElegido);
+
+            mostrarClienteTabla(clienteElegido);
+
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
         this.setVisible(false);
+
         PantallaFormularioCliente formClie = new PantallaFormularioCliente();
+
         formClie.setVisible(true);
-        
+
         formClie.addWindowListener(new WindowAdapter() {
+
             @Override
+
             public void windowClosed(WindowEvent e) {
-                // cuando se cierre el formulario recuperas el cliente creado
-                NuevoClienteFrecuenteDTO nuevocliente = formClie.getClienteFrecuenteDTO();
+                // cuando cierre el formulario recupera el cliente creado
+                ClienteFrecuenteDTO nuevocliente = formClie.getClienteFrecuenteDTO();
+
                 if (nuevocliente != null) {
+
                     mostrarClienteTabla(nuevocliente);
+
                 }
+
                 setVisible(true);
             }
         });
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-    PantallaFormularioCliente formClie = new PantallaFormularioCliente();
+
+        if (tblClientes.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona un cliente primero",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+
+        }
+        ClienteFrecuenteDTO clienteSeleccionado = this.listaClientes.get(tblClientes.getSelectedRow());
+
+        this.setVisible(false);
+
+        PantallaFormularioCliente formClie = new PantallaFormularioCliente(clienteSeleccionado);
+
         formClie.setVisible(true);
+
         formClie.addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosed(WindowEvent e) {
-                // cuando se cierre el formulario recuperas el cliente creado
-                NuevoClienteFrecuenteDTO nuevocliente = formClie.getClienteFrecuenteDTO();
-                if (nuevocliente != null) {
-                    mostrarClienteTabla(nuevocliente);
+
+                ClienteFrecuenteDTO clienteActualizado = formClie.getClienteFrecuenteDTO();
+
+                if (clienteActualizado != null) {
+
+                    mostrarClienteTabla(clienteActualizado);
                 }
+
+                setVisible(true);
             }
         });
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
-    private void mostrarClienteTabla(NuevoClienteFrecuenteDTO cliente) {
+    private void mostrarClienteTabla(ClienteFrecuenteDTO cliente) {
         DefaultTableModel modelotabla = obtenerModelo();
+
         modelotabla.addRow(new Object[]{
             cliente.getNombre() + " "
             + cliente.getApellidoPaterno() + " "
             + cliente.getApellidoMaterno(),
             cliente.getTelefono(),
             cliente.getCorreo(),
-            cliente.getVisitas(),
-            "$" + String.format("%.2f", cliente.getTotalGastado()),
-            cliente.getPuntos() + " pts",
             cliente.getFechaRegistro()
 
         });
-        
+
         tblClientes.setModel(modelotabla);
 
         tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         jScrollPane1.getViewport().setBackground(Color.WHITE);
-        
+
         jScrollPane1.setBackground(Color.WHITE);
 
     }
-    private void mostrarClienteActualizadoTabla(ClienteFrecuenteActualizadoDTO cliente) {
 
-        DefaultTableModel modelotabla = obtenerModelo();
-        modelotabla.addRow(new Object[]{
-            cliente.getNombre() + " "
-            + cliente.getApellidoPaterno() + " "
-            + cliente.getApellidoMaterno(),
-            cliente.getTelefono(),
-            cliente.getCorreo(),
-            cliente.getVisitas(),
-            "$" + String.format("%.2f", cliente.getTotalGastado()),
-            cliente.getPuntos() + " pts",
-            cliente.getFechaRegistro()
-
-        });
-        
-        tblClientes.setModel(modelotabla);
-
-        tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        jScrollPane1.getViewport().setBackground(Color.WHITE);
-        
-        jScrollPane1.setBackground(Color.WHITE);
-
-    }
-    private DefaultTableModel obtenerModelo(){
-        String[] columnas = {"Nombre", "Teléfono", "Correo","Visitas", "Total gastado", "Puntos", "Últ. comanda"};
+    private DefaultTableModel obtenerModelo() {
+        String[] columnas = {"Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};
 
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+
             @Override
             public boolean isCellEditable(int row, int column) {
+
                 return false;
+
             }
         };
         return modelo;
     }
+
     /**
      * @param args the command line arguments
      */

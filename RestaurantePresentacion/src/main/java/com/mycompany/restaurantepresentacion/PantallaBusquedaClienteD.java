@@ -4,8 +4,7 @@
  */
 package com.mycompany.restaurantepresentacion;
 
-import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
-import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
+import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -23,10 +22,11 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     /**
      * Creates new form PantallaBusquedaClienteD
      */
-    private ClienteFrecuenteActualizadoDTO clienteSeleccionado = null;
-    private List<ClienteFrecuenteActualizadoDTO> listaClientes = new ArrayList<>();
+    private ClienteFrecuenteDTO clienteSeleccionado = null;
+    private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
 
     public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
+        
         super(parent, modal);
 
         initComponents();
@@ -34,6 +34,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         utilerias.colocarLogo(btnLogo);
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
+        
         utilerias.estilizarTabla(tblClientes);
 
         this.setLocationRelativeTo(null);
@@ -273,12 +274,13 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         String textoBusqueda = this.txtBusqueda.getText().trim();
+        
         if (textoBusqueda.equals("Buscar por nombre...") || textoBusqueda.isEmpty()) {
+            
             JOptionPane.showMessageDialog(this,
                     "Escribe un nombre para buscar",
                     "Aviso",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
+                    JOptionPane.WARNING_MESSAGE);          
         }
         //TODO
         // SE DEBE LLAMAR A LA BO Y BUSCAR LOS CLIENTES POR EL NOMBRE y METERLO A UNA LISTA List<NuevoClienteDTO> resultados 
@@ -291,7 +293,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                     "Selecciona un cliente primero",
                     "Aviso",
                     JOptionPane.WARNING_MESSAGE);
-            return;
         }
         seleccionarClienteTabla();
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
@@ -305,20 +306,23 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
             public boolean isCellEditable(int row, int column) {       // que no se pueda editar las celdas
                 return false;
             }
+            
         };
         
         tblClientes.setModel(modelo);
+        
         tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         tblClientes.setRowSelectionAllowed(true);
     }
 
-    private void cargarClientes(List<ClienteFrecuenteActualizadoDTO> clientes) {
+    private void cargarClientes(List<ClienteFrecuenteDTO> clientes) {
 
         DefaultTableModel modelo = (DefaultTableModel) this.tblClientes.getModel();
 
         modelo.setRowCount(0);
 
-        for (ClienteFrecuenteActualizadoDTO c : clientes) {
+        for (ClienteFrecuenteDTO c : clientes) {
 
             modelo.addRow(new Object[]{
                 c.getNombre() + " " + c.getApellidoPaterno() + " " + c.getApellidoMaterno(),
@@ -327,6 +331,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                 c.getVisitas(),
                 "$" + String.format("%.2f", c.getTotalGastado()),
                 c.getPuntos() + " pts",
+                "consultarfechaultcomanda"
 
             });
         }
@@ -345,7 +350,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         }
     }
 
-    public ClienteFrecuenteActualizadoDTO getClienteSeleccionado() {
+    public ClienteFrecuenteDTO getClienteSeleccionado() {
         return this.clienteSeleccionado;
     }
 
