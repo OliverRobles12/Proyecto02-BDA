@@ -1,9 +1,12 @@
 
 package itson.org.restaurantepersistencia;
 
+import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
 import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
 import itson.org.restaurantedominio.Cliente;
+import itson.org.restaurantedominio.ClienteFrecuente;
 import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +17,8 @@ import org.junit.jupiter.api.Test;
  */
 public class ClienteDAOTest {
     
-    ClienteDAO dao;
+    private ClienteDAO dao;
+    private Long idCliente = 5L;
     
     public ClienteDAOTest() {
     }
@@ -40,6 +44,93 @@ public class ClienteDAOTest {
         });
         
         Assertions.assertNotNull(cliente.getId());
+        
+        idCliente = cliente.getId();
+        
+    }
+    
+    @Test
+    public void testActualizarClienteFrecuenteFuncionaOk() {
+        
+        ClienteFrecuenteActualizadoDTO clienteActualizado = new ClienteFrecuenteActualizadoDTO(
+                idCliente,
+                "Oliver", 
+                "Robles", 
+                "Cota", 
+                "1234567890",
+                "oliver@gmail.com"
+        );
+        
+        Cliente cliente = Assertions.assertDoesNotThrow(() -> {
+            return dao.actualizarCliente(clienteActualizado);
+        });
+        
+        Assertions.assertEquals(cliente.getCorreo(), "oliver@gmail.com");
+        
+    }
+    
+    @Test
+    public void testEliminarClienteFrecuenteFuncionaOk() {
+        
+        Cliente cliente = Assertions.assertDoesNotThrow(() -> {
+            return dao.eliminarCliente(idCliente);
+        });
+        
+        Assertions.assertNotNull(cliente.getId());
+        
+    }
+    
+    @Test
+    public void testConsultarClientesFrecuentesFuncionaOk() {
+        
+        
+        List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
+            return dao.consultarClientesFrecuentes();
+        });
+        
+        for(ClienteFrecuente c : clientes) {
+            System.out.println(c);
+        }
+        
+        
+    }
+    
+    @Test
+    public void testConsultarClientesFrecuentesFiltroNombreFuncionaOk() {
+        
+        List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
+            return dao.consultarClientesFrecuentesFiltro("Oli", "", "");
+        });
+        
+        for(ClienteFrecuente c : clientes) {
+            System.out.println(c);
+        }
+        
+    }
+    
+    @Test
+    public void testConsultarClientesFrecuentesFiltroTelefonoFuncionaOk() {
+        
+        List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
+            return dao.consultarClientesFrecuentesFiltro("", "1234567890", "");
+        });
+        
+        for(ClienteFrecuente c : clientes) {
+            System.out.println(c);
+        }
+        
+    }
+    
+    @Test
+    public void testConsultarClientesFrecuentesFiltroCorreoFuncionaOk() {
+        
+        List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
+            return dao.consultarClientesFrecuentesFiltro("", "", "oliver@gmail.com");
+        });
+        
+        for(ClienteFrecuente c : clientes) {
+            System.out.println(c);
+        }
         
     }
     
