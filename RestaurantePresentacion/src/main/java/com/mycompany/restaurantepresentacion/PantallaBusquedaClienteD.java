@@ -4,7 +4,8 @@
  */
 package com.mycompany.restaurantepresentacion;
 
-import com.mycompany.restaurantedtos.NuevoClienteDTO;
+import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
+import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     /**
      * Creates new form PantallaBusquedaClienteD
      */
-    private NuevoClienteDTO clienteSeleccionado = null;
-    private List<NuevoClienteDTO> listaClientes = new ArrayList<>();
+    private ClienteFrecuenteActualizadoDTO clienteSeleccionado = null;
+    private List<ClienteFrecuenteActualizadoDTO> listaClientes = new ArrayList<>();
 
     public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -32,7 +33,8 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
         utilerias.colocarLogo(btnLogo);
 
-        utilerias.estilizarBotonPrimario(btnCancelar);
+        utilerias.estilizarBotonSinFondo(btnCancelar);
+        utilerias.estilizarTabla(tblClientes);
 
         this.setLocationRelativeTo(null);
 
@@ -60,7 +62,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         panMostrarNavegacion = new javax.swing.JPanel();
         lblPantallaActualNav = new javax.swing.JLabel();
         lblNombreBtnPantalla = new javax.swing.JLabel();
-        lblPrincipal1 = new javax.swing.JLabel();
+        lblPantalla = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
@@ -70,6 +72,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         btnSeleccionarCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Busqueda Cliente");
 
         panPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         panPrincipal.setMaximumSize(new java.awt.Dimension(1366, 768));
@@ -127,9 +130,9 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
         panPrincipal.add(panMostrarNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1370, -1));
 
-        lblPrincipal1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
-        lblPrincipal1.setText("Busqueda Cliente");
-        panPrincipal.add(lblPrincipal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
+        lblPantalla.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
+        lblPantalla.setText("Busqueda Cliente");
+        panPrincipal.add(lblPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
 
         sep.setForeground(new java.awt.Color(18, 44, 79));
         panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 243, 1060, 10));
@@ -137,6 +140,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(18, 44, 79));
         btnCancelar.setText("Cancelar ");
+        btnCancelar.setOpaque(true);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -176,6 +180,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
             }
         ));
+        tblClientes.setFillsViewportHeight(true);
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblClientesMouseClicked(evt);
@@ -291,7 +296,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         seleccionarClienteTabla();
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
 
-    public void inicializarTabla() {
+    private void inicializarTabla() {
 
         String[] columnas = {"Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
 
@@ -301,21 +306,19 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                 return false;
             }
         };
-
-        this.tblClientes.setModel(modelo);
-
-        this.tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        this.tblClientes.setRowSelectionAllowed(true);
+        
+        tblClientes.setModel(modelo);
+        tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblClientes.setRowSelectionAllowed(true);
     }
 
-    public void cargarClientes(List<NuevoClienteDTO> clientes) {
+    private void cargarClientes(List<ClienteFrecuenteActualizadoDTO> clientes) {
 
         DefaultTableModel modelo = (DefaultTableModel) this.tblClientes.getModel();
 
         modelo.setRowCount(0);
 
-        for (NuevoClienteDTO c : clientes) {
+        for (ClienteFrecuenteActualizadoDTO c : clientes) {
 
             modelo.addRow(new Object[]{
                 c.getNombre() + " " + c.getApellidoPaterno() + " " + c.getApellidoMaterno(),
@@ -324,7 +327,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                 c.getVisitas(),
                 "$" + String.format("%.2f", c.getTotalGastado()),
                 c.getPuntos() + " pts",
-                c.getUltimaComanda()
 
             });
         }
@@ -343,7 +345,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         }
     }
 
-    public NuevoClienteDTO getClienteSeleccionado() {
+    public ClienteFrecuenteActualizadoDTO getClienteSeleccionado() {
         return this.clienteSeleccionado;
     }
 
@@ -352,27 +354,27 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -397,8 +399,8 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblNombreBtnPantalla;
     private javax.swing.JLabel lblNombreRestaurante;
+    private javax.swing.JLabel lblPantalla;
     private javax.swing.JLabel lblPantallaActualNav;
-    private javax.swing.JLabel lblPrincipal1;
     private javax.swing.JPanel panMostrarNavegacion;
     private javax.swing.JPanel panPrincipal;
     private javax.swing.JPanel panSuperior;

@@ -4,10 +4,15 @@
  */
 package com.mycompany.restaurantepresentacion;
 
-import com.mycompany.restaurantedtos.NuevoClienteDTO;
+import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
+import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
+import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -64,11 +69,12 @@ public class PantallaCliente extends javax.swing.JFrame {
         btnBuscarCliente = new javax.swing.JButton();
         btnNuevoCliente = new javax.swing.JButton();
         btnEditarCliente = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Pantalla Clientes");
+        setTitle(" Clientes Menu");
         setBackground(new java.awt.Color(255, 255, 255));
-        setResizable(false);
         setSize(new java.awt.Dimension(1366, 768));
 
         panPrincipal.setBackground(new java.awt.Color(255, 255, 255));
@@ -285,7 +291,7 @@ public class PantallaCliente extends javax.swing.JFrame {
         panPrincipal.add(lblPrincipal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
 
         sep.setForeground(new java.awt.Color(18, 44, 79));
-        panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 1090, -1));
+        panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 1080, -1));
 
         btnBuscarCliente.setBackground(new java.awt.Color(18, 44, 79));
         btnBuscarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -296,20 +302,46 @@ public class PantallaCliente extends javax.swing.JFrame {
                 btnBuscarClienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 280, 190, -1));
+        panPrincipal.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 280, 180, -1));
 
         btnNuevoCliente.setBackground(new java.awt.Color(18, 44, 79));
         btnNuevoCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnNuevoCliente.setForeground(new java.awt.Color(255, 255, 255));
         btnNuevoCliente.setText("Nuevo Cliente");
         btnNuevoCliente.setToolTipText("");
+        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoClienteActionPerformed(evt);
+            }
+        });
         panPrincipal.add(btnNuevoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, 240, -1));
 
         btnEditarCliente.setBackground(new java.awt.Color(18, 44, 79));
         btnEditarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnEditarCliente.setForeground(new java.awt.Color(255, 255, 255));
         btnEditarCliente.setText("Editar Cliente");
+        btnEditarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarClienteActionPerformed(evt);
+            }
+        });
         panPrincipal.add(btnEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 230, -1));
+
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tblClientes.setFillsViewportHeight(true);
+        jScrollPane1.setViewportView(tblClientes);
+
+        panPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 337, 1080, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -328,7 +360,7 @@ public class PantallaCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void btnLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoActionPerformed
@@ -358,43 +390,136 @@ public class PantallaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-    PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD(
-            (java.awt.Frame) SwingUtilities.getWindowAncestor(this), true
+        PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD(
+                (java.awt.Frame) SwingUtilities.getWindowAncestor(this), true
         );
         dialogo.setVisible(true);
 
-        NuevoClienteDTO clienteElegido = dialogo.getClienteSeleccionado();
+        ClienteFrecuenteActualizadoDTO clienteElegido = dialogo.getClienteSeleccionado();
         if (clienteElegido != null) {
-            //TODO CREAR LA TABLA CON LOS DATOS DEL CLIENTE
+            mostrarClienteActualizadoTabla(clienteElegido);
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
+    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
+        this.setVisible(false);
+        PantallaFormularioCliente formClie = new PantallaFormularioCliente();
+        formClie.setVisible(true);
+        
+        formClie.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                // cuando se cierre el formulario recuperas el cliente creado
+                NuevoClienteFrecuenteDTO nuevocliente = formClie.getClienteFrecuenteDTO();
+                if (nuevocliente != null) {
+                    mostrarClienteTabla(nuevocliente);
+                }
+                setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_btnNuevoClienteActionPerformed
+
+    private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
+    PantallaFormularioCliente formClie = new PantallaFormularioCliente();
+        formClie.setVisible(true);
+        formClie.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                // cuando se cierre el formulario recuperas el cliente creado
+                NuevoClienteFrecuenteDTO nuevocliente = formClie.getClienteFrecuenteDTO();
+                if (nuevocliente != null) {
+                    mostrarClienteTabla(nuevocliente);
+                }
+            }
+        });
+    }//GEN-LAST:event_btnEditarClienteActionPerformed
+
+    private void mostrarClienteTabla(NuevoClienteFrecuenteDTO cliente) {
+        DefaultTableModel modelotabla = obtenerModelo();
+        modelotabla.addRow(new Object[]{
+            cliente.getNombre() + " "
+            + cliente.getApellidoPaterno() + " "
+            + cliente.getApellidoMaterno(),
+            cliente.getTelefono(),
+            cliente.getCorreo(),
+            cliente.getVisitas(),
+            "$" + String.format("%.2f", cliente.getTotalGastado()),
+            cliente.getPuntos() + " pts",
+            cliente.getFechaRegistro()
+
+        });
+        
+        tblClientes.setModel(modelotabla);
+
+        tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
+        
+        jScrollPane1.setBackground(Color.WHITE);
+
+    }
+    private void mostrarClienteActualizadoTabla(ClienteFrecuenteActualizadoDTO cliente) {
+
+        DefaultTableModel modelotabla = obtenerModelo();
+        modelotabla.addRow(new Object[]{
+            cliente.getNombre() + " "
+            + cliente.getApellidoPaterno() + " "
+            + cliente.getApellidoMaterno(),
+            cliente.getTelefono(),
+            cliente.getCorreo(),
+            cliente.getVisitas(),
+            "$" + String.format("%.2f", cliente.getTotalGastado()),
+            cliente.getPuntos() + " pts",
+            cliente.getFechaRegistro()
+
+        });
+        
+        tblClientes.setModel(modelotabla);
+
+        tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
+        
+        jScrollPane1.setBackground(Color.WHITE);
+
+    }
+    private DefaultTableModel obtenerModelo(){
+        String[] columnas = {"Nombre", "Teléfono", "Correo","Visitas", "Total gastado", "Puntos", "Últ. comanda"};
+
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        return modelo;
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(PantallaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -415,6 +540,7 @@ public class PantallaCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevoCliente;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnReportes;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAnalisis;
     private javax.swing.JLabel lblCatalogo;
     private javax.swing.JLabel lblNombreBtnPantalla;
@@ -428,5 +554,6 @@ public class PantallaCliente extends javax.swing.JFrame {
     private javax.swing.JPanel panPrincipal;
     private javax.swing.JPanel panSuperior;
     private javax.swing.JSeparator sep;
+    private javax.swing.JTable tblClientes;
     // End of variables declaration//GEN-END:variables
 }

@@ -38,7 +38,7 @@ public class Cliente implements Serializable {
     @Column(name = "apellidoMaterno", nullable = false, length = 50)
     private String apellidoMaterno;
 
-    @Column(name = "telefono", nullable = false, length = 10)
+    @Column(name = "telefono", nullable = false, length = 16)
     private String telefono;
 
     @Column(name = "correo", length = 50)
@@ -77,6 +77,7 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
     }
+    
     
     
 

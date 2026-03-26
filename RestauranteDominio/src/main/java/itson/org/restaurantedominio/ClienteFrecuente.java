@@ -4,14 +4,10 @@
  */
 package itson.org.restaurantedominio;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -34,13 +30,39 @@ public class ClienteFrecuente extends Cliente{
     @Column(name = "numero_visitas")
     private Integer numeroVisitas;
     
+    
+    
     public ClienteFrecuente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
-        super(null,nombre,apellidoPaterno,apellidoMaterno,telefono,correo,fechaRegistro);
+        super(nombre,apellidoPaterno,apellidoMaterno,telefono,correo,fechaRegistro);
         this.puntosAcumulados = 0;
         this.totalGastado = 0.0;
         this.numeroVisitas = 0;
     }
 
+    public Integer getPuntosAcumulados() {
+        return puntosAcumulados;
+    }
+
+    public void setPuntosAcumulados(Integer puntosAcumulados) {
+        this.puntosAcumulados = puntosAcumulados;
+    }
+
+    public Double getTotalGastado() {
+        return totalGastado;
+    }
+
+    public void setTotalGastado(Double totalGastado) {
+        this.totalGastado = totalGastado;
+    }
+
+    public Integer getNumeroVisitas() {
+        return numeroVisitas;
+    }
+
+    public void setNumeroVisitas(Integer numeroVisitas) {
+        this.numeroVisitas = numeroVisitas;
+    }
+    
     
    
 }
