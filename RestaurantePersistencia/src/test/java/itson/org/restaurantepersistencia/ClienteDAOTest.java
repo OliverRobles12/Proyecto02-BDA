@@ -1,7 +1,11 @@
 
 package itson.org.restaurantepersistencia;
 
+import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
+import itson.org.restaurantedominio.Cliente;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -10,15 +14,32 @@ import org.junit.jupiter.api.Test;
  */
 public class ClienteDAOTest {
     
+    ClienteDAO dao;
+    
     public ClienteDAOTest() {
+    }
+    
+    @BeforeEach
+    public void init(){
+        dao = new ClienteDAO();
     }
 
     @Test
     public void testCrearClienteFuncionaOk() {
-        ClienteDAO dao = new ClienteDAO();
-        Assertions.assertDoesNotThrow(() -> {
-            dao.crearClientePrueba();
+        
+        NuevoClienteFrecuenteDTO nuevoCliente = new NuevoClienteFrecuenteDTO(
+                "Oliver", 
+                "Robles", 
+                "Cota", 
+                "1234567890", 
+                LocalDate.now()
+        );
+        
+        Cliente cliente = Assertions.assertDoesNotThrow(() -> {
+            return dao.registrarCliente(nuevoCliente);
         });
+        
+        Assertions.assertNotNull(cliente.getId());
         
     }
     
