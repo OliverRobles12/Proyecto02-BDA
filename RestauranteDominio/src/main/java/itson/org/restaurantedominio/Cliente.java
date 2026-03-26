@@ -20,8 +20,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "clientes")
-@Inheritance(strategy = InheritanceType.JOINED) // Crea tablas separadas conectadas por ID
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_cliente", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("Regular")
 public class Cliente implements Serializable {
 
     @Id
@@ -38,7 +39,7 @@ public class Cliente implements Serializable {
     @Column(name = "apellidoMaterno", nullable = false, length = 50)
     private String apellidoMaterno;
 
-    @Column(name = "telefono", nullable = false, length = 16)
+    @Column(name = "telefono", nullable = false, length = 10)
     private String telefono;
 
     @Column(name = "correo", length = 50)
@@ -50,37 +51,19 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
-        this.id = id;
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, LocalDate fechaRegistro) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
-        this.correo = correo;
         this.fechaRegistro = fechaRegistro;
     }
-
+    
     public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.telefono = telefono;
+        this(nombre, apellidoPaterno, apellidoMaterno, telefono, fechaRegistro);
         this.correo = correo;
-        this.fechaRegistro = fechaRegistro;
-    }
-
-    public Cliente(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, LocalDate fechaRegistro) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.telefono = telefono;
-        this.fechaRegistro = fechaRegistro;
     }
     
-    
-    
-
     public Long getId() {
         return id;
     }
