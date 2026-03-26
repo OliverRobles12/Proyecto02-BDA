@@ -21,6 +21,6 @@ public interface IClienteDAO {
     
     public abstract List<ClienteFrecuente> consultarClientesFrecuentes() throws PersistenciaException;
     
-    public abstract List<ClienteFrecuente> consultarClientesFrecuentesFiltro(String nombre, String telefono, String correo) throws PersistenciaException;
+    public abstract List<ClienteFrecuente> consultarClientesFrecuentesFiltro(String filtro) throws PersistenciaException;
     
 }
