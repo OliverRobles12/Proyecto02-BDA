@@ -7,13 +7,8 @@ package com.mycompany.restaurantepresentacion;
 import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
 import com.mycompany.utilerias.utilerias;
-import itson.org.restaurantenegocio.ClienteFrecuenteBO;
-import itson.org.restaurantenegocio.IClienteFrecuenteBO;
 import itson.org.restaurantenegocio.NegocioException;
-import itson.org.restaurantepersistencia.ClienteDAO;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,22 +18,26 @@ import javax.swing.JOptionPane;
 public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     private ClienteFrecuenteDTO clienteForm = null;
-    private boolean modoEdicion = false;
 
     /**
      * Creates new form PantallaFormularioCliente
      */
     public PantallaFormularioCliente() {
         initComponents();
-
-        utilerias.colocarLogo(btnLogo);
-
+        
+        panelHeader = new com.mycompany.utilerias.PanelHeader();
+        panelNavegacion = new com.mycompany.utilerias.PanelNavegacionPantallasPrincipales();
+        
+        panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 130));       
+        panPrincipal.add(panelNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1366, 45));
+        
+        panelNavegacion.setBreadcrumb("Clientes Frecuentes", "Formulario");
+        
         utilerias.estilizarBotonPrimario(btnEditarCliente);
 
         utilerias.estilizarBotonPrimario(btnGuardarCliente);
         
         utilerias.estilizarBotonSinFondo(btnCancelar);
-        modoEdicion = false;
 
         btnGuardarCliente.setVisible(true);
         btnEditarCliente.setVisible(false);
@@ -53,16 +52,21 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     public PantallaFormularioCliente(ClienteFrecuenteDTO cliente) {
         initComponents();
-
-        utilerias.colocarLogo(btnLogo);
-
+        
+        panelHeader = new com.mycompany.utilerias.PanelHeader();
+        panelNavegacion = new com.mycompany.utilerias.PanelNavegacionPantallasPrincipales();
+        
+        panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 130));       
+        panPrincipal.add(panelNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1366, 45));
+        
+        panelNavegacion.setBreadcrumb("Clientes Frecuentes", "Formulario");
+        
         utilerias.estilizarBotonPrimario(btnEditarCliente);
 
         utilerias.estilizarBotonPrimario(btnGuardarCliente);
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
-
-        modoEdicion = true;
+        
         btnGuardarCliente.setVisible(false);
         btnEditarCliente.setVisible(true);
         
@@ -110,6 +114,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         lblTelefonod = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         btnEditarCliente = new javax.swing.JButton();
+        panContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario Cliente");
@@ -253,6 +258,21 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         });
         panPrincipal.add(btnEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 190, 30));
 
+        panContenido.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
+        panContenido.setLayout(panContenidoLayout);
+        panContenidoLayout.setHorizontalGroup(
+            panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1370, Short.MAX_VALUE)
+        );
+        panContenidoLayout.setVerticalGroup(
+            panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
+
+        panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 177, 1370, 590));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -270,10 +290,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLogoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         clienteForm = null;
@@ -370,6 +386,10 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
+    private void btnLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogoActionPerformed
+
     public ClienteFrecuenteDTO getClienteFrecuenteDTO() {
         return clienteForm;
     }
@@ -440,6 +460,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblPantalla;
     private javax.swing.JLabel lblPantallaActualNav;
     private javax.swing.JLabel lblTelefonod;
+    private javax.swing.JPanel panContenido;
     private javax.swing.JPanel panMostrarNavegacion;
     private javax.swing.JPanel panPrincipal;
     private javax.swing.JPanel panSuperior;
@@ -451,4 +472,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+    private com.mycompany.utilerias.PanelHeader panelHeader;
+    private com.mycompany.utilerias.PanelNavegacionPantallasPrincipales panelNavegacion;
 }

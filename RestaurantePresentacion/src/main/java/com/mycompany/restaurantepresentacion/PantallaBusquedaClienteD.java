@@ -31,16 +31,21 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private ClienteFrecuenteDTO clienteSeleccionado = null;
     private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
     
-    private ClienteDAO clientesDAO = new ClienteDAO();
-    private IClienteFrecuenteBO clienteBO = new ClienteFrecuenteBO(clientesDAO);
+    private final ClienteDAO clientesDAO = new ClienteDAO();
+    private final IClienteFrecuenteBO clienteBO = new ClienteFrecuenteBO(clientesDAO);
 
     public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
 
         super(parent, modal);
 
         initComponents();
-
-        utilerias.colocarLogo(btnLogo);
+        panelHeader = new com.mycompany.utilerias.PanelHeader();
+        panelNavegacion = new com.mycompany.utilerias.PanelNavegacionPantallasPrincipales();
+        
+        panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 130));       
+        panPrincipal.add(panelNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1366, 45));
+        
+        panelNavegacion.setBreadcrumb("Clientes Frecuentes", "BusquedaCliente");
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
 
@@ -64,12 +69,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private void initComponents() {
 
         panPrincipal = new javax.swing.JPanel();
-        panSuperior = new javax.swing.JPanel();
-        btnLogo = new javax.swing.JButton();
-        lblNombreRestaurante = new javax.swing.JLabel();
-        panMostrarNavegacion = new javax.swing.JPanel();
-        lblPantallaActualNav = new javax.swing.JLabel();
-        lblNombreBtnPantalla = new javax.swing.JLabel();
         lblPantalla = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JButton();
@@ -78,6 +77,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         tblClientes = new javax.swing.JTable();
         btnBuscarCliente = new javax.swing.JButton();
         btnSeleccionarCliente = new javax.swing.JButton();
+        panContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busqueda Cliente");
@@ -87,57 +87,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         panPrincipal.setMaximumSize(new java.awt.Dimension(1366, 768));
         panPrincipal.setPreferredSize(new java.awt.Dimension(1366, 768));
         panPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panSuperior.setBackground(new java.awt.Color(18, 44, 79));
-        panSuperior.setLayout(new javax.swing.BoxLayout(panSuperior, javax.swing.BoxLayout.LINE_AXIS));
-
-        btnLogo.setText("btnLogo");
-        btnLogo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoActionPerformed(evt);
-            }
-        });
-        panSuperior.add(btnLogo);
-
-        lblNombreRestaurante.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblNombreRestaurante.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombreRestaurante.setText("Nombre del restaurante");
-        panSuperior.add(lblNombreRestaurante);
-
-        panPrincipal.add(panSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 130));
-
-        panMostrarNavegacion.setBackground(new java.awt.Color(91, 136, 178));
-
-        lblPantallaActualNav.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        lblPantallaActualNav.setForeground(new java.awt.Color(255, 255, 255));
-        lblPantallaActualNav.setText("Busqueda");
-
-        lblNombreBtnPantalla.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        lblNombreBtnPantalla.setForeground(new java.awt.Color(18, 44, 79));
-        lblNombreBtnPantalla.setText("Clientes Frecuentes >");
-
-        javax.swing.GroupLayout panMostrarNavegacionLayout = new javax.swing.GroupLayout(panMostrarNavegacion);
-        panMostrarNavegacion.setLayout(panMostrarNavegacionLayout);
-        panMostrarNavegacionLayout.setHorizontalGroup(
-            panMostrarNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panMostrarNavegacionLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(lblNombreBtnPantalla)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPantallaActualNav)
-                .addContainerGap(1012, Short.MAX_VALUE))
-        );
-        panMostrarNavegacionLayout.setVerticalGroup(
-            panMostrarNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panMostrarNavegacionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panMostrarNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreBtnPantalla)
-                    .addComponent(lblPantallaActualNav))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        panPrincipal.add(panMostrarNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1370, -1));
 
         lblPantalla.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         lblPantalla.setText("Busqueda Cliente");
@@ -227,6 +176,21 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         });
         panPrincipal.add(btnSeleccionarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 700, 190, -1));
 
+        panContenido.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
+        panContenido.setLayout(panContenidoLayout);
+        panContenidoLayout.setHorizontalGroup(
+            panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1370, Short.MAX_VALUE)
+        );
+        panContenidoLayout.setVerticalGroup(
+            panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
+
+        panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 177, 1370, 590));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,10 +208,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLogoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         clienteSeleccionado = null;
@@ -437,18 +397,15 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnLogo;
     private javax.swing.JButton btnSeleccionarCliente;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblNombreBtnPantalla;
-    private javax.swing.JLabel lblNombreRestaurante;
     private javax.swing.JLabel lblPantalla;
-    private javax.swing.JLabel lblPantallaActualNav;
-    private javax.swing.JPanel panMostrarNavegacion;
+    private javax.swing.JPanel panContenido;
     private javax.swing.JPanel panPrincipal;
-    private javax.swing.JPanel panSuperior;
     private javax.swing.JSeparator sep;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
+    private com.mycompany.utilerias.PanelHeader panelHeader;
+    private com.mycompany.utilerias.PanelNavegacionPantallasPrincipales panelNavegacion;
 }
