@@ -4,8 +4,8 @@ package com.mycompany.restaurantepresentacion;
 import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
 import itson.org.restaurantenegocio.ClienteFrecuenteBO;
+import itson.org.restaurantenegocio.IClienteFrecuenteBO;
 import itson.org.restaurantenegocio.NegocioException;
-import itson.org.restaurantepersistencia.ClienteDAO;
 
 /**
  *Esta clase nos ayuda a controlar el flujo entre las pantallas y
@@ -18,13 +18,11 @@ public class Controlador {
    
     
     private static Controlador instancia;
-    private ClienteDAO clientesDAO;
-    private ClienteFrecuenteBO clientesBO;
+    private IClienteFrecuenteBO clientesBO;
     
     
     private Controlador() {
-       this.clientesDAO = new ClienteDAO();
-       this.clientesBO = new ClienteFrecuenteBO(clientesDAO);
+       this.clientesBO = new ClienteFrecuenteBO();
     }
     
     /**

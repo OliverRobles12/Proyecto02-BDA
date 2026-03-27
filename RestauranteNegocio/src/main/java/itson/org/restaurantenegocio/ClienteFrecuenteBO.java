@@ -22,8 +22,8 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     private final ClienteDAO clientesDAO;
     private static final Logger LOGGER = Logger.getLogger(ClienteFrecuenteBO.class.getName());
 
-    public ClienteFrecuenteBO(ClienteDAO clientesDAO) {
-        this.clientesDAO = clientesDAO;
+    public ClienteFrecuenteBO() {
+        this.clientesDAO = new ClienteDAO();
     }
 
     @Override
