@@ -3,6 +3,7 @@ package itson.org.restaurantedominio;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import utilerias.CryptoConverter;
 
 /**
  *
@@ -38,11 +40,13 @@ public class Cliente implements Serializable {
 
     @Column(name = "apellidoMaterno", nullable = false, length = 50)
     private String apellidoMaterno;
-
-    @Column(name = "telefono", nullable = false, length = 10)
+    
+    @Convert(converter = CryptoConverter.class)
+    @Column(name = "telefono", nullable = false, length = 64)
     private String telefono;
 
-    @Column(name = "correo", length = 50)
+    @Convert(converter = CryptoConverter.class)
+    @Column(name = "correo", length = 255)
     private String correo;
 
     @Column(name = "fechaRegistro", nullable = false)

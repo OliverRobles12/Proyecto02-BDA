@@ -29,7 +29,7 @@ public class ClienteDAOTest {
         dao = new ClienteDAO();
         
         NuevoClienteFrecuenteDTO clientePrueba = new NuevoClienteFrecuenteDTO(
-                "Cliente", "Test", "Temporal", "0000000000", LocalDate.now()
+                "Cliente", "Test", "Temporal", "1234567890", "test@gmail.com", LocalDate.now()
         );
         
         try {
@@ -118,7 +118,7 @@ public class ClienteDAOTest {
     public void testConsultarClientesFrecuentesFiltroFuncionaOk() {
         
         List<ClienteFrecuente> clientes = Assertions.assertDoesNotThrow(() -> {
-            return dao.consultarClientesFrecuentesFiltro("Cliente");
+            return dao.consultarClientesFrecuentesFiltro("test@gmail.com");
         });
         
         Assertions.assertTrue(!clientes.isEmpty());
