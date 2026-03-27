@@ -13,14 +13,44 @@ import java.util.List;
  */
 public interface IClienteDAO {
 
-    public abstract Cliente registrarCliente(NuevoClienteFrecuenteDTO nuevoCliente) throws PersistenciaException;
-    
-    public abstract Cliente actualizarCliente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException;
-    
+    /**
+     * Método para registrar un cliente frecuente nuevo en la base de datos.
+     * @param nuevoCliente NuevoClienteFrecuenteDTO con la información del cliente a registrar.
+     * @return El objeto ClienteFrecuente creado, incluyendo su ID generado.
+     * @throws PersistenciaException Si ocurre un error en la base de datos.
+     */
+    public abstract Cliente registrarClienteFrecuente(NuevoClienteFrecuenteDTO nuevoCliente) throws PersistenciaException;
+
+    /**
+     * Método para actualizar los datos de un cliente frecuente ya existente en la base de datos.
+     * @param clienteActualizado ClienteFrecuenteDTO con los nuevos datos y el ID del cliente a modificar.
+     * @return El objeto ClienteFrecuente con la información actualizada.
+     * @throws PersistenciaException Si ocurre un error en la base de datos.
+     */
+    public abstract Cliente actualizarClienteFrecuente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException;
+
+    /**
+     * Método para eliminar un cliente frecuente que se encuentre actualmente en la base de datos.
+     * @param id Identificador único del cliente a eliminar.
+     * @return El objeto ClienteFrecuente que ha sido eliminado.
+     * @throws PersistenciaException Si ocurre un error en la base de datos.
+     */
     public abstract Cliente eliminarCliente(Long id) throws PersistenciaException;
-    
+
+    /**
+     * Método que hace una consulta con todos los clientes frecuentes en el sistema y devuelve una lista con ellos.
+     * @return Una lista de objetos ClienteFrecuente; si no hay, devuelve una lista vacía.
+     * @throws PersistenciaException Si ocurre un error en la base de datos.
+     */
     public abstract List<ClienteFrecuente> consultarClientesFrecuentes() throws PersistenciaException;
-    
+
+    /**
+     * Método para hacer una consulta de todos los clientes frecuentes donde el filtro pueda coincidir con alguno de los parámetros:
+     * nombre, teléfono o correo.
+     * @param filtro Filtro de texto a buscar en los campos del cliente.
+     * @return Una lista de objetos ClienteFrecuente que coinciden con el criterio de búsqueda; si no hay, devuelve una lista vacía.
+     * @throws PersistenciaException Si ocurre un error en la base de datos.
+     */
     public abstract List<ClienteFrecuente> consultarClientesFrecuentesFiltro(String filtro) throws PersistenciaException;
     
 }

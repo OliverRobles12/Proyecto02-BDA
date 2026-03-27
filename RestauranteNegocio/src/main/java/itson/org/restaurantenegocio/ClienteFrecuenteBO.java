@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package itson.org.restaurantenegocio;
 
 import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
@@ -76,7 +73,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         
 
         try {
-            Cliente cliente = clientesDAO.registrarCliente(nuevoCliente);
+            Cliente cliente = clientesDAO.registrarClienteFrecuente(nuevoCliente);
             //TODO
             //LocalDate fechaUltimaComanda = clientesDAO.consultarFechaUltimaComanda(cliente.getId());
             LocalDate fechaUltimaComanda = LocalDate.now(); //Eliminar esto
@@ -144,7 +141,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
                     clienteActualizado.getTelefono(),
                     clienteActualizado.getCorreo()
             );
-            ClienteFrecuente cliente = clientesDAO.actualizarCliente(clienteConversion);
+            ClienteFrecuente cliente = clientesDAO.actualizarClienteFrecuente(clienteConversion);
             //TODO
             //LocalDate fechaUltimaComanda = clientesDAO.consultarFechaUltimaComanda(cliente.getId());
             LocalDate fechaUltimaComanda = LocalDate.now(); //Eliminar esto

@@ -26,7 +26,7 @@ public class ClienteDAO implements IClienteDAO {
     private static final Logger LOGGER = Logger.getLogger(ClienteDAO.class.getName());
 
     @Override
-    public Cliente registrarCliente(NuevoClienteFrecuenteDTO nuevoCliente) throws PersistenciaException {
+    public Cliente registrarClienteFrecuente(NuevoClienteFrecuenteDTO nuevoCliente) throws PersistenciaException {
         
         Cliente cliente = ClienteDTOAClienteFrecuenteDominioAdapter.adapter(nuevoCliente);
         
@@ -44,7 +44,7 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public ClienteFrecuente actualizarCliente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException {
+    public ClienteFrecuente actualizarClienteFrecuente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException {
         
         try {
             
