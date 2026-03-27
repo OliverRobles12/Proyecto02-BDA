@@ -23,8 +23,6 @@ import javax.swing.JOptionPane;
 public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     private ClienteFrecuenteDTO clienteForm = null;
-    private ClienteDAO clientesDAO = new ClienteDAO();
-    private IClienteFrecuenteBO clienteBO = new ClienteFrecuenteBO(clientesDAO);
     private boolean modoEdicion = false;
 
     /**
@@ -308,7 +306,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now()
             );
 
-            this.clienteForm = clienteBO.registrarCliente(nuevoCliente);
+            Controlador.getIntancia().registrarClienteC(nuevoCliente);
 
             JOptionPane.showMessageDialog(this,
                     "Cliente guardado correctamente",
@@ -317,7 +315,10 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
             this.dispose(); // cierra esta y lanza el windowClosed
         } catch (NegocioException ex) {
-            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), 
+                    "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
@@ -351,7 +352,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                 clienteForm.getTotalGastado(), clienteForm.getPuntosAcumulados(), clienteForm.getFechaUltimaComanda()
         );
         try {
-            clienteBO.actualizarCliente(clienteActualizado);
+            Controlador.getIntancia().actualizarClienteC(clienteActualizado);
 
             this.clienteForm = clienteActualizado;
 
@@ -362,7 +363,10 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
             this.dispose(); // cierra y lanza el windowClosed
         } catch (NegocioException ex) {
-            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), 
+                    "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 

@@ -373,40 +373,19 @@ public class PantallaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
-        this.setVisible(false);
-
-        PantallaFormularioCliente formClie = new PantallaFormularioCliente();
-
-        formClie.setVisible(true);
-
-        formClie.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                setVisible(true);
-            }
-        });
+        
+        Controlador.getIntancia().abrirFomularioCliente(this);
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-        PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD(
-            (java.awt.Frame) SwingUtilities.getWindowAncestor(this), true
-        );
-
+        PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD((java.awt.Frame) SwingUtilities.getWindowAncestor(this), true);
         dialogo.setVisible(true);
 
         ClienteFrecuenteDTO clienteElegido = dialogo.getClienteSeleccionado();
         
-        PantallaFormularioCliente formClie = new PantallaFormularioCliente(clienteElegido);
-
-        formClie.setVisible(true);
-        
-        formClie.addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                setVisible(true);
-            }
-        });
+        if (clienteElegido != null) {
+            Controlador.getIntancia().abrirFormularioEditarCliente(clienteElegido, this);
+        }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
 
