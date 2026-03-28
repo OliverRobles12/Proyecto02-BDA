@@ -46,7 +46,7 @@ public class utilerias {
      */
     public static void colocarLogo(JButton btn) {
         btn.setText(" ");
-        escalarImagen(btn, "src/main/java/com/mycompany/recursos/logo3.jpg", 110, 110);
+        escalarImagen(btn, "src/main/java/org/itson/restaurante/recursos/logo3.jpg", 110, 110);
         btn.setBorderPainted(false);
         btn.setContentAreaFilled(false);
         btn.setFocusPainted(false);
