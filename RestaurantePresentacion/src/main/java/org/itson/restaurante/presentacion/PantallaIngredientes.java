@@ -3,19 +3,22 @@ package org.itson.restaurante.presentacion;
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
 import org.itson.restaurante.utilerias.utilerias;
 import javax.swing.SwingUtilities;
-import org.itson.restaurante.utilerias.*;
+import org.itson.restaurante.dtos.IngredienteDTO;
+import org.itson.restaurante.utilerias.PanelHeader;
+import org.itson.restaurante.utilerias.PanelMenu;
+import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
  * @author joset
  */
-public class PantallaCliente extends javax.swing.JFrame {
+public class PantallaIngredientes extends javax.swing.JFrame {
 
     /**
      * Creates new form PantallaCliente
      */
-    public PantallaCliente() {
+    public PantallaIngredientes() {
         initComponents();
         //paneles reutilizables
         panelHeader = new PanelHeader();
@@ -26,11 +29,11 @@ public class PantallaCliente extends javax.swing.JFrame {
         panPrincipal.add(panelMenu, new AbsoluteConstraints(0, 130, 215, 640));
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(215, 130, 1151, 45));
 
-        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Clientes");
+        panelNavegacion.setPantallasNavegacion("Ingredientes", "Menu Ingredientes");
 
-        utilerias.estilizarBotonPrimario(btnEditarCliente);
+        utilerias.estilizarBotonPrimario(btnEditarIngrediente);
 
-        utilerias.estilizarBotonPrimario(btnNuevoCliente);
+        utilerias.estilizarBotonPrimario(btnNuevoIngrediente);
 
         this.setLocationRelativeTo(null);
     }
@@ -47,8 +50,8 @@ public class PantallaCliente extends javax.swing.JFrame {
         panPrincipal = new javax.swing.JPanel();
         lblPrincipal1 = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
-        btnNuevoCliente = new javax.swing.JButton();
-        btnEditarCliente = new javax.swing.JButton();
+        btnNuevoIngrediente = new javax.swing.JButton();
+        btnEditarIngrediente = new javax.swing.JButton();
         panContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,34 +66,34 @@ public class PantallaCliente extends javax.swing.JFrame {
         panPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblPrincipal1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
-        lblPrincipal1.setText("Menu Clientes ");
+        lblPrincipal1.setText("Menu Ingredientes");
         panPrincipal.add(lblPrincipal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
 
         sep.setForeground(new java.awt.Color(18, 44, 79));
         panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 1080, -1));
 
-        btnNuevoCliente.setBackground(new java.awt.Color(18, 44, 79));
-        btnNuevoCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnNuevoCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnNuevoCliente.setText("Nuevo Cliente");
-        btnNuevoCliente.setToolTipText("");
-        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevoIngrediente.setBackground(new java.awt.Color(18, 44, 79));
+        btnNuevoIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnNuevoIngrediente.setForeground(new java.awt.Color(255, 255, 255));
+        btnNuevoIngrediente.setText("Nuevo Ingrediente");
+        btnNuevoIngrediente.setToolTipText("");
+        btnNuevoIngrediente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoClienteActionPerformed(evt);
+                btnNuevoIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnNuevoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, 240, -1));
+        panPrincipal.add(btnNuevoIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, 240, -1));
 
-        btnEditarCliente.setBackground(new java.awt.Color(18, 44, 79));
-        btnEditarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnEditarCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditarCliente.setText("Editar Cliente");
-        btnEditarCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
+        btnEditarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEditarIngrediente.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarIngrediente.setText("Editar Ingrediente");
+        btnEditarIngrediente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarClienteActionPerformed(evt);
+                btnEditarIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 230, -1));
+        panPrincipal.add(btnEditarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 230, -1));
 
         panContenido.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -105,7 +108,7 @@ public class PantallaCliente extends javax.swing.JFrame {
             .addGap(0, 590, Short.MAX_VALUE)
         );
 
-        panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 177, 1150, 590));
+        panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 1150, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,25 +128,25 @@ public class PantallaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
+    private void btnNuevoIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoIngredienteActionPerformed
 
-        Controlador.getIntancia().abrirFomularioCliente(this);
-    }//GEN-LAST:event_btnNuevoClienteActionPerformed
+        Controlador.getIntancia().abrirFomularioIngrediente(this);
+    }//GEN-LAST:event_btnNuevoIngredienteActionPerformed
 
-    private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-        PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD((java.awt.Frame) SwingUtilities.getWindowAncestor(this), true);
+    private void btnEditarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarIngredienteActionPerformed
+        PantallaBusquedaIngrediente dialogo = new PantallaBusquedaIngrediente((java.awt.Frame) SwingUtilities.getWindowAncestor(this), true);
         dialogo.setVisible(true);
 
-        ClienteFrecuenteDTO clienteElegido = dialogo.getClienteSeleccionado();
+//        IngredienteDTO ingrediente = dialogo.getClienteSeleccionado();
 
-        if (clienteElegido != null) {
-            Controlador.getIntancia().abrirFormularioEditarCliente(clienteElegido, this);
-        }
-    }//GEN-LAST:event_btnEditarClienteActionPerformed
+//        if (ingrediente != null) {
+//            Controlador.getIntancia().abrirFormularioEditarIngrediente(ingrediente, this);
+//        }
+    }//GEN-LAST:event_btnEditarIngredienteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditarCliente;
-    private javax.swing.JButton btnNuevoCliente;
+    private javax.swing.JButton btnEditarIngrediente;
+    private javax.swing.JButton btnNuevoIngrediente;
     private javax.swing.JLabel lblPrincipal1;
     private javax.swing.JPanel panContenido;
     private javax.swing.JPanel panPrincipal;

@@ -10,6 +10,7 @@ import org.itson.restaurante.utilerias.utilerias;
 import org.itson.restaurante.negocio.NegocioException;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
+import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -18,14 +19,14 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  *
  * @author joset
  */
-public class PantallaFormularioCliente extends javax.swing.JFrame {
+public class PantallaFormularioIngrediente extends javax.swing.JFrame {
 
-    private ClienteFrecuenteDTO clienteForm = null;
+    private IngredienteDTO ingredienteForm = null;
 
     /**
      * Creates new form PantallaFormularioCliente
      */
-    public PantallaFormularioCliente() {
+    public PantallaFormularioIngrediente() {
         initComponents();
         
         panelHeader = new PanelHeader();
@@ -34,23 +35,23 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));       
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
         
-        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
+        panelNavegacion.setPantallasNavegacion("Ingredientes", "Formulario");
         
-        utilerias.estilizarBotonPrimario(btnEditarCliente);
+        utilerias.estilizarBotonPrimario(btnEditarIngrediente);
 
-        utilerias.estilizarBotonPrimario(btnGuardarCliente);
+        utilerias.estilizarBotonPrimario(btnGuardarIngrediente);
         
         utilerias.estilizarBotonSinFondo(btnCancelar);
 
-        btnGuardarCliente.setVisible(true);
-        btnEditarCliente.setVisible(false);
+        btnGuardarIngrediente.setVisible(true);
+        btnEditarIngrediente.setVisible(false);
         
 
         this.setLocationRelativeTo(null);
 
     }
 
-    public PantallaFormularioCliente(ClienteFrecuenteDTO cliente) {
+    public PantallaFormularioIngrediente(IngredienteDTO ingrediente) {
         initComponents();
         
         panelHeader = new PanelHeader();
@@ -61,20 +62,20 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         
         panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
         
-        utilerias.estilizarBotonPrimario(btnEditarCliente);
+        utilerias.estilizarBotonPrimario(btnEditarIngrediente);
 
-        utilerias.estilizarBotonPrimario(btnGuardarCliente);
+        utilerias.estilizarBotonPrimario(btnGuardarIngrediente);
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
         
-        btnGuardarCliente.setVisible(false);
-        btnEditarCliente.setVisible(true);
+        btnGuardarIngrediente.setVisible(false);
+        btnEditarIngrediente.setVisible(true);
 
         this.setLocationRelativeTo(null);
 
-        this.clienteForm = cliente;
+        this.ingredienteForm = ingrediente;
         
-        llenarCampos(this.clienteForm);
+        llenarCampos(this.ingredienteForm);
 
     }
 
@@ -91,7 +92,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         lblPantalla = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JButton();
-        btnGuardarCliente = new javax.swing.JButton();
+        btnGuardarIngrediente = new javax.swing.JButton();
         txtApellidoP = new javax.swing.JTextField();
         lblApellidoPaterno = new javax.swing.JLabel();
         lblNombres = new javax.swing.JLabel();
@@ -102,7 +103,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         txtApellidoMaterno = new javax.swing.JTextField();
         lblTelefonod = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        btnEditarCliente = new javax.swing.JButton();
+        btnEditarIngrediente = new javax.swing.JButton();
         panContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -115,7 +116,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         panPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblPantalla.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
-        lblPantalla.setText("Formulario Cliente");
+        lblPantalla.setText("Formulario Ingrediente");
         panPrincipal.add(lblPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
 
         sep.setForeground(new java.awt.Color(18, 44, 79));
@@ -132,20 +133,20 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         });
         panPrincipal.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 550, 190, 30));
 
-        btnGuardarCliente.setBackground(new java.awt.Color(18, 44, 79));
-        btnGuardarCliente.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnGuardarCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardarCliente.setText("Guardar Cliente");
-        btnGuardarCliente.setToolTipText("");
-        btnGuardarCliente.setMaximumSize(new java.awt.Dimension(149, 32));
-        btnGuardarCliente.setMinimumSize(new java.awt.Dimension(149, 32));
-        btnGuardarCliente.setPreferredSize(new java.awt.Dimension(149, 32));
-        btnGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
+        btnGuardarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnGuardarIngrediente.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardarIngrediente.setText("Guardar Ingrediente");
+        btnGuardarIngrediente.setToolTipText("");
+        btnGuardarIngrediente.setMaximumSize(new java.awt.Dimension(149, 32));
+        btnGuardarIngrediente.setMinimumSize(new java.awt.Dimension(149, 32));
+        btnGuardarIngrediente.setPreferredSize(new java.awt.Dimension(149, 32));
+        btnGuardarIngrediente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarClienteActionPerformed(evt);
+                btnGuardarIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnGuardarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 550, 190, 30));
+        panPrincipal.add(btnGuardarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 550, 190, 30));
         panPrincipal.add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 300, 30));
 
         lblApellidoPaterno.setText("Apellido Paterno *");
@@ -175,20 +176,20 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         panPrincipal.add(lblTelefonod, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 350, -1, -1));
         panPrincipal.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 370, 300, 30));
 
-        btnEditarCliente.setBackground(new java.awt.Color(18, 44, 79));
-        btnEditarCliente.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnEditarCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditarCliente.setText("Editar Cliente");
-        btnEditarCliente.setToolTipText("");
-        btnEditarCliente.setMaximumSize(new java.awt.Dimension(133, 32));
-        btnEditarCliente.setMinimumSize(new java.awt.Dimension(133, 32));
-        btnEditarCliente.setPreferredSize(new java.awt.Dimension(133, 32));
-        btnEditarCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
+        btnEditarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnEditarIngrediente.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarIngrediente.setText("Editar Ingrediente");
+        btnEditarIngrediente.setToolTipText("");
+        btnEditarIngrediente.setMaximumSize(new java.awt.Dimension(133, 32));
+        btnEditarIngrediente.setMinimumSize(new java.awt.Dimension(133, 32));
+        btnEditarIngrediente.setPreferredSize(new java.awt.Dimension(133, 32));
+        btnEditarIngrediente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarClienteActionPerformed(evt);
+                btnEditarIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 190, 30));
+        panPrincipal.add(btnEditarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 190, 30));
 
         panContenido.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -224,121 +225,120 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        clienteForm = null;
+        ingredienteForm = null;
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
-        String nombre = txtNombres.getText().trim();
-
-        String apellidoP = txtApellidoP.getText().trim();
-
-        String apellidoM = txtApellidoMaterno.getText().trim();
-
-        String telefono = txtTelefono.getText().trim();
-
-        String correo = txtCorreoElectronico.getText().trim();
-
-        // validacion de los campos vacios
-        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
-
-            JOptionPane.showMessageDialog(this,
-                    "Ningún campo puede estar vacío",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-
-        }
-        try {
-            NuevoClienteFrecuenteDTO nuevoCliente = new NuevoClienteFrecuenteDTO(
-                    nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now()
-            );
-
-            Controlador.getIntancia().registrarClienteC(nuevoCliente);
-
-            JOptionPane.showMessageDialog(this,
-                    "Cliente guardado correctamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            this.dispose(); // se cierra esta y lanza el windowClosed
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage(), 
-                    "Aviso", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnGuardarClienteActionPerformed
+    private void btnGuardarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarIngredienteActionPerformed
+//        String nombre = txtNombres.getText().trim();
+//
+//        String apellidoP = txtApellidoP.getText().trim();
+//
+//        String apellidoM = txtApellidoMaterno.getText().trim();
+//
+//        String telefono = txtTelefono.getText().trim();
+//
+//        String correo = txtCorreoElectronico.getText().trim();
+//
+//        // validacion de los campos vacios
+//        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
+//
+//            JOptionPane.showMessageDialog(this,
+//                    "Ningún campo puede estar vacío",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return;
+//
+//        }
+//        try {
+//            NuevoClienteFrecuenteDTO nuevoCliente = new NuevoClienteFrecuenteDTO(
+//                    nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now()
+//            );
+//
+//            Controlador.getIntancia().registrarClienteC(nuevoCliente);
+//
+//            JOptionPane.showMessageDialog(this,
+//                    "Cliente guardado correctamente",
+//                    "Éxito",
+//                    JOptionPane.INFORMATION_MESSAGE);
+//
+//            this.dispose(); // se cierra esta y lanza el windowClosed
+//        } catch (NegocioException ex) {
+//            JOptionPane.showMessageDialog(this,
+//                    ex.getMessage(), 
+//                    "Aviso", 
+//                    JOptionPane.WARNING_MESSAGE);
+//        }
+    }//GEN-LAST:event_btnGuardarIngredienteActionPerformed
 
     private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombresActionPerformed
 
-    private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-        String nombre = txtNombres.getText().trim();
+    private void btnEditarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarIngredienteActionPerformed
+//        String nombre = txtNombres.getText().trim();
+//
+//        String apellidoP = txtApellidoP.getText().trim();
+//
+//        String apellidoM = txtApellidoMaterno.getText().trim();
+//
+//        String telefono = txtTelefono.getText().trim();
+//
+//        String correo = txtCorreoElectronico.getText().trim();
+//
+//        LocalDate fechaRegistro = ingredienteForm.getFechaRegistro();
+//
+//        // validacion de los campos vacios
+//        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
+//            JOptionPane.showMessageDialog(this,
+//                    "Ningún campo puede estar vacío",
+//                    "Error",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//        ClienteFrecuenteDTO clienteActualizado = new ClienteFrecuenteDTO(
+//                ingredienteForm.getId(), nombre, apellidoP, apellidoM, telefono, correo, fechaRegistro, ingredienteForm.getNumeroVisitas(),
+//                ingredienteForm.getTotalGastado(), ingredienteForm.getPuntosAcumulados(), ingredienteForm.getFechaUltimaComanda()
+//        );
+//        try {
+//            Controlador.getIntancia().actualizarClienteC(clienteActualizado);
+//
+//            this.ingredienteForm = clienteActualizado;
+//
+//            JOptionPane.showMessageDialog(this,
+//                    "Cliente actualizado correctamente",
+//                    "Éxito",
+//                    JOptionPane.INFORMATION_MESSAGE);
+//
+//            this.dispose(); // cierra y lanza el windowClosed
+//        } catch (NegocioException ex) {
+//            JOptionPane.showMessageDialog(this,
+//                    ex.getMessage(), 
+//                    "Aviso", 
+//                    JOptionPane.WARNING_MESSAGE);
+//        }
+    }//GEN-LAST:event_btnEditarIngredienteActionPerformed
 
-        String apellidoP = txtApellidoP.getText().trim();
-
-        String apellidoM = txtApellidoMaterno.getText().trim();
-
-        String telefono = txtTelefono.getText().trim();
-
-        String correo = txtCorreoElectronico.getText().trim();
-
-        LocalDate fechaRegistro = clienteForm.getFechaRegistro();
-
-        // validacion de los campos vacios
-        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Ningún campo puede estar vacío",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        ClienteFrecuenteDTO clienteActualizado = new ClienteFrecuenteDTO(
-                clienteForm.getId(), nombre, apellidoP, apellidoM, telefono, correo, fechaRegistro, clienteForm.getNumeroVisitas(),
-                clienteForm.getTotalGastado(), clienteForm.getPuntosAcumulados(), clienteForm.getFechaUltimaComanda()
-        );
-        try {
-            Controlador.getIntancia().actualizarClienteC(clienteActualizado);
-
-            this.clienteForm = clienteActualizado;
-
-            JOptionPane.showMessageDialog(this,
-                    "Cliente actualizado correctamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            this.dispose(); // cierra y lanza el windowClosed
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage(), 
-                    "Aviso", 
-                    JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEditarClienteActionPerformed
-
-    public ClienteFrecuenteDTO getClienteFrecuenteDTO() {
-        return clienteForm;
+    public IngredienteDTO getIngredienteDTO() {
+        return ingredienteForm;
     }
 
-    private void llenarCampos(ClienteFrecuenteDTO cliente) {
+    private void llenarCampos(IngredienteDTO ingrediente) {
+//
+//        txtNombres.setText(ingrediente.getNombre());
+//
+//        txtApellidoP.setText(ingrediente.getUnidad());
+//
+//        txtApellidoMaterno.setText(ingrediente.getStock());
+//
+//        txtTelefono.setText(ingrediente.getImagen());
 
-        txtNombres.setText(cliente.getNombre());
-
-        txtApellidoP.setText(cliente.getApellidoPaterno());
-
-        txtApellidoMaterno.setText(cliente.getApellidoMaterno());
-
-        txtTelefono.setText(cliente.getTelefono());
-
-        txtCorreoElectronico.setText(cliente.getCorreo());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEditarCliente;
-    private javax.swing.JButton btnGuardarCliente;
+    private javax.swing.JButton btnEditarIngrediente;
+    private javax.swing.JButton btnGuardarIngrediente;
     private javax.swing.JLabel lblApellidoMaterno;
     private javax.swing.JLabel lblApellidoPaterno;
     private javax.swing.JLabel lblCorreo;

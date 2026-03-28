@@ -16,6 +16,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import org.itson.restaurante.dtos.IngredienteDTO;
+import org.itson.restaurante.negocio.IIngredientesBO;
+import org.itson.restaurante.negocio.IngredientesBO;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -24,19 +27,19 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  *
  * @author joset
  */
-public class PantallaBusquedaClienteD extends javax.swing.JDialog {
+public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
 
     /**
      * Creates new form PantallaBusquedaClienteD
      */
-    private ClienteFrecuenteDTO clienteSeleccionado = null;
-    private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
+    private IngredienteDTO ingredienteSeleccionado = null;
+    private List<IngredienteDTO> listaIngredientes = new ArrayList<>();
 
-    private final IClienteFrecuenteBO clienteBO = new ClienteFrecuenteBO();
+    private final IIngredientesBO ingredienteBO = new IngredientesBO();
 
     private boolean alertaSinResultados = false;
 
-    public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
+    public PantallaBusquedaIngrediente(java.awt.Frame parent, boolean modal) {
 
         super(parent, modal);
 
@@ -47,7 +50,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
 
-        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Busqueda Cliente");
+        panelNavegacion.setPantallasNavegacion("Ingrediente", "Busqueda Ingrediente");
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
 
@@ -55,7 +58,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
         inicializarTabla();
 
-        this.txtBusqueda.setText("Buscar por nombre, numero telefonico o correo..");
+        this.txtBusqueda.setText("Buscar por nombre o unidad...");
 
         this.txtBusqueda.setForeground(Color.GRAY);
 
@@ -76,7 +79,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
+        tblIngredientes = new javax.swing.JTable();
         btnSeleccionarCliente = new javax.swing.JButton();
         panContenido = new javax.swing.JPanel();
 
@@ -90,7 +93,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         panPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblPantalla.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
-        lblPantalla.setText("Busqueda Cliente");
+        lblPantalla.setText("Busqueda Ingrediente");
         panPrincipal.add(lblPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
 
         sep.setForeground(new java.awt.Color(18, 44, 79));
@@ -133,7 +136,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         });
         panPrincipal.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 262, 1060, -1));
 
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tblIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -144,13 +147,13 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
             }
         ));
-        tblClientes.setFillsViewportHeight(true);
-        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblIngredientes.setFillsViewportHeight(true);
+        tblIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblClientesMouseClicked(evt);
+                tblIngredientesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblClientes);
+        jScrollPane1.setViewportView(tblIngredientes);
 
         panPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 1060, 350));
 
@@ -200,12 +203,12 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        clienteSeleccionado = null;
+        ingredienteSeleccionado = null;
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtBusquedaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusGained
-        if (this.txtBusqueda.getText().equals("Buscar por nombre, numero telefonico o correo..")) {
+        if (this.txtBusqueda.getText().equals("Buscar por nombre o unidad...")) {
 
             this.txtBusqueda.setText(" ");
 
@@ -216,7 +219,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private void txtBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusLost
         if (this.txtBusqueda.getText().isEmpty()) {
 
-            this.txtBusqueda.setText("Buscar por nombre, numero telefonico o correo..");
+            this.txtBusqueda.setText("Buscar por nombre o unidad...");
 
             this.txtBusqueda.setForeground(Color.GRAY);
         }
@@ -226,35 +229,35 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
-    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+    private void tblIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIngredientesMouseClicked
         if (evt.getClickCount() == 2) {
 
-            seleccionarClienteTabla();
+            seleccionarIngredienteTabla();
 
         }
-    }//GEN-LAST:event_tblClientesMouseClicked
+    }//GEN-LAST:event_tblIngredientesMouseClicked
 
     private void btnSeleccionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClienteActionPerformed
-        if (tblClientes.getSelectedRow() < 0) {
+        if (tblIngredientes.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this,
-                    "Selecciona un cliente primero",
+                    "Selecciona un ingrediente primero",
                     "Aviso",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        seleccionarClienteTabla();
+        seleccionarIngredienteTabla();
         this.dispose();
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
 
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         String textoBusqueda = this.txtBusqueda.getText().trim();
         try {
-            listaClientes = clienteBO.consultarClienteFiltro(textoBusqueda);
+            listaIngredientes = ingredienteBO.consultarIngredientesFiltro(textoBusqueda);
 
-            if (listaClientes.isEmpty()) {
+            if (listaIngredientes.isEmpty()) {
                 if (!alertaSinResultados && evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     JOptionPane.showMessageDialog(this,
-                            "No se encontró ningún cliente",
+                            "No se encontró ningún ingrediente",
                             "Sin resultados",
                             JOptionPane.INFORMATION_MESSAGE);
                     alertaSinResultados = true;
@@ -262,7 +265,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                 return;
             }
             alertaSinResultados= false;
-            cargarClientes(listaClientes);
+            cargarIngredientes(listaIngredientes);
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this,
                     ex.getMessage(), 
@@ -273,7 +276,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
     private void inicializarTabla() {
 
-        String[] columnas = {"Id", "Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
+        String[] columnas = {"Id", "Nombre", "Unidad", "Stock", "Imagen"};//Columnas
 
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
             @Override
@@ -283,17 +286,17 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
         };
 
-        tblClientes.setModel(modelo);
+        tblIngredientes.setModel(modelo);
 
-        tblClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblIngredientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        tblClientes.setRowSelectionAllowed(true);
+        tblIngredientes.setRowSelectionAllowed(true);
 
-        utilerias.estilizarTabla(tblClientes);
+        utilerias.estilizarTabla(tblIngredientes);
 
         try {
-            List<ClienteFrecuenteDTO> clientes = clienteBO.consultarClientes();
-            cargarClientes(clientes);
+            List<IngredienteDTO> ingrediente = ingredienteBO.consultarIngredientes();
+            cargarIngredientes(ingrediente);
         } catch (NegocioException ex) {
              JOptionPane.showMessageDialog(this,
                     ex.getMessage(), 
@@ -302,43 +305,39 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         }
     }
 
-    private void cargarClientes(List<ClienteFrecuenteDTO> clientes) {
+    private void cargarIngredientes(List<IngredienteDTO> ingredientes) {
 
-        DefaultTableModel modelo = (DefaultTableModel) this.tblClientes.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) this.tblIngredientes.getModel();
 
         modelo.setRowCount(0);
 
-        for (ClienteFrecuenteDTO c : clientes) {
+        for (IngredienteDTO i : ingredientes) {
 
             modelo.addRow(new Object[]{
-                c.getId(),
-                c.getNombre() + " " + c.getApellidoPaterno() + " " + c.getApellidoMaterno(),
-                c.getTelefono(),
-                c.getCorreo(),
-                c.getNumeroVisitas(),
-                "$" + String.format("%.2f", c.getTotalGastado()),
-                c.getPuntosAcumulados() + " pts",
-                c.getFechaUltimaComanda()
-
+                i.getId(),
+                i.getNombre() ,
+                i.getUnidadMedida(),
+                i.getStock(),
+                i.getImagen(),
             });
         }
 
-        this.listaClientes = clientes;
+        this.listaIngredientes = ingredientes;
     }
 
-    private void seleccionarClienteTabla() {
+    private void seleccionarIngredienteTabla() {
 
-        int fila = this.tblClientes.getSelectedRow();
+        int fila = this.tblIngredientes.getSelectedRow();
 
         if (fila >= 0) {
 
-            this.clienteSeleccionado = this.listaClientes.get(fila);
+            this.ingredienteSeleccionado = this.listaIngredientes.get(fila);
 
         }
     }
 
-    public ClienteFrecuenteDTO getClienteSeleccionado() {
-        return this.clienteSeleccionado;
+    public IngredienteDTO getIngredienteSeleccionado() {
+        return this.ingredienteSeleccionado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -349,7 +348,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private javax.swing.JPanel panContenido;
     private javax.swing.JPanel panPrincipal;
     private javax.swing.JSeparator sep;
-    private javax.swing.JTable tblClientes;
+    private javax.swing.JTable tblIngredientes;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
     private org.itson.restaurante.utilerias.PanelHeader panelHeader;

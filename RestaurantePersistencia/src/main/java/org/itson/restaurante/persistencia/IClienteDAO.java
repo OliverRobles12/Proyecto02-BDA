@@ -27,7 +27,7 @@ public interface IClienteDAO {
      * @return El objeto ClienteFrecuente con la información actualizada.
      * @throws PersistenciaException Si ocurre un error en la base de datos.
      */
-    public abstract Cliente actualizarClienteFrecuente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException;
+    public abstract ClienteFrecuente actualizarClienteFrecuente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException;
 
     /**
      * Método para eliminar un cliente frecuente que se encuentre actualmente en la base de datos.

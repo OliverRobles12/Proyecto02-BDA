@@ -2,6 +2,7 @@
 package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
+import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
 import org.itson.restaurante.dtos.RolEmpleado;
 import org.itson.restaurante.negocio.ClienteFrecuenteBO;
@@ -65,8 +66,7 @@ public class Controlador {
     }
     
     /**
-     * Este metodo abre la pantalla del Formulario en el modo registro
-     * y oculta la pantalla de donde se llamo hasta la muestra hasta que termine
+     * Este metodo abre la pantalla del Formulario de registro
      * @param pantallaActual la pantalla actual es ocultada temporalmente
      */
     public void abrirFomularioCliente(javax.swing.JFrame pantallaActual){
@@ -85,8 +85,36 @@ public class Controlador {
         }
         formulario.setVisible(true);
     }
+    
+    /**
+     * Este metodo abre la pantalla del Formulario de registro
+     * 
+     * @param pantallaActual la pantalla actual es ocultada temporalmente
+     */
+    public void abrirFomularioIngrediente(javax.swing.JFrame pantallaActual){
+        PantallaFormularioIngrediente formulario = new PantallaFormularioIngrediente();
+        formulario.setVisible(true);
+        
+        if(pantallaActual != null){
+            pantallaActual.dispose();
+            
+            formulario.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    pantallaActual.setVisible(true); 
+                }
+            });
+        }
+        formulario.setVisible(true);
+    }
 
     public void abrirIngredientes(javax.swing.JFrame pantallaActual){
+        PantallaIngredientes ingrediente = new PantallaIngredientes();
+        ingrediente.setVisible(true);
+        
+        if (pantallaActual != null) {
+            pantallaActual.dispose(); 
+        }
 
     }
     public void abrirProductos(javax.swing.JFrame pantallaActual){
@@ -108,6 +136,28 @@ public class Controlador {
      */
     public void abrirFormularioEditarCliente(ClienteFrecuenteDTO cliente, javax.swing.JFrame pantallaActual){
         PantallaFormularioCliente formulario = new PantallaFormularioCliente(cliente);
+        formulario.setVisible(true);
+        
+        if(pantallaActual != null){
+            pantallaActual.dispose(); 
+            
+        formulario.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    pantallaActual.setVisible(true); 
+                }
+            });
+        }
+    }
+    
+     /**
+     * Este metodo abre la pantalla del formulario en modo de edicion y carga
+     * los datos del ingrediente que se seleccionó.
+     * @param ingrediente la DTO con los datos que se van a editar
+     * @param pantallaActual la ventana actual será oculta temporalmente
+     */
+    public void abrirFormularioEditarIngrediente(IngredienteDTO ingrediente, javax.swing.JFrame pantallaActual){
+        PantallaFormularioIngrediente formulario = new PantallaFormularioIngrediente(ingrediente);
         formulario.setVisible(true);
         
         if(pantallaActual != null){

@@ -66,7 +66,7 @@ public class PanelNavegacionPantallasPrincipales extends javax.swing.JPanel {
 
         add(panMostrarNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-    public void setBreadcrumb(String pantallaOrigen, String pantalla) {
+    public void setPantallasNavegacion(String pantallaOrigen, String pantalla) {
         lblNombreBtnPantalla.setText(pantallaOrigen + " >");
         lblPantallaActualNav.setText(pantalla);
     }

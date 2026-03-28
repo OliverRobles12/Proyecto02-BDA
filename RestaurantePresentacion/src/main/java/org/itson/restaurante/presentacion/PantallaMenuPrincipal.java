@@ -4,6 +4,11 @@
  */
 package org.itson.restaurante.presentacion;
 
+import org.itson.restaurante.utilerias.PanelHeader;
+import org.itson.restaurante.utilerias.PanelMenu;
+import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+
 /**
  *
  * @author joset
@@ -15,15 +20,15 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
      */
     public PantallaMenuPrincipal() {
         initComponents();
-        panelHeader = new org.itson.restaurante.utilerias.PanelHeader();
-        panelMenu = new org.itson.restaurante.utilerias.PanelMenu();
-        panelNavegacion = new org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales();
+        panelHeader = new PanelHeader();
+        panelMenu = new PanelMenu();
+        panelNavegacion = new PanelNavegacionPantallasPrincipales();
 
-        panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 130));
-        panPrincipal.add(panelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 215, 640));
-        panPrincipal.add(panelNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 130, 1151, 45));
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
+        panPrincipal.add(panelMenu, new AbsoluteConstraints(0, 130, 215, 640));
+        panPrincipal.add(panelNavegacion, new AbsoluteConstraints(215, 130, 1151, 45));
 
-        panelNavegacion.setBreadcrumb("Inicio", "Resumen del día");
+        panelNavegacion.setPantallasNavegacion("Inicio", "Resumen del día");
         
        
         // conectar datos al dashboard

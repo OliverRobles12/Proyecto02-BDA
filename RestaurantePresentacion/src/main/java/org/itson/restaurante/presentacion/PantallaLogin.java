@@ -12,7 +12,9 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import org.itson.restaurante.utilerias.PanelHeader;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -27,13 +29,13 @@ public class PantallaLogin extends javax.swing.JFrame {
         initComponents();
 
         //paneles reutilizables
-        panelHeader = new org.itson.restaurante.utilerias.PanelHeader();
+        panelHeader = new PanelHeader();
 
-        panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 768));
-        panSecundario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1000, 768));
+        panSecundario.setLayout(new AbsoluteLayout());
 
         PanelBordeRedondo panelCentral = new PanelBordeRedondo(30, new Color(251, 249, 228));
-        panelCentral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCentral.setLayout(new AbsoluteLayout());
 
         JLabel lblTitulo = new JLabel("¿Cómo deseas ingresar?");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));

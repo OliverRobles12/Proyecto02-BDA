@@ -80,7 +80,6 @@ public class utilerias {
         btn.setOpaque(true);
         btn.setContentAreaFilled(true);
         btn.setBorderPainted(false);
-        btn.setUI(new javax.swing.plaf.basic.BasicButtonUI());;
     }
 
     /**
@@ -90,21 +89,16 @@ public class utilerias {
      * @param tbl Tabla a estilizar
      */
     public static void estilizarTabla(JTable tbl) {
-        // Fondo blanco en la tabla
         tbl.setBackground(Color.WHITE);
 
-        // Color de líneas de la tabla (gris suave)
         tbl.setGridColor(new Color(220, 220, 220));
 
-        // Altura de las filas
         tbl.setRowHeight(30);
 
-        // Estilo del encabezado
         tbl.getTableHeader().setBackground(new Color(18, 44, 79));
         tbl.getTableHeader().setForeground(Color.WHITE);
         tbl.getTableHeader().setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        // Renderer personalizado para filas
         tbl.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
@@ -114,12 +108,10 @@ public class utilerias {
                 Component c = super.getTableCellRendererComponent(
                         table, value, isSelected, hasFocus, row, column);
 
-                // Estilo cuando la fila está seleccionada
                 if (isSelected) {
                     c.setBackground(new Color(18, 44, 79));
                     c.setForeground(Color.WHITE);
                 } else {
-                    // Estilo normal
                     c.setBackground(Color.WHITE);
                     c.setForeground(new Color(18, 44, 79));
                 }

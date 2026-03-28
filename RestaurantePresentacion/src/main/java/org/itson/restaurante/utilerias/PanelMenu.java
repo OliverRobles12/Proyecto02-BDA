@@ -64,18 +64,22 @@ public class PanelMenu extends javax.swing.JPanel {
         panNavegacion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblPrincipal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPrincipal.setForeground(new java.awt.Color(204, 204, 204));
         lblPrincipal.setText("PRINCIPAL");
         panNavegacion.add(lblPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 21, -1, -1));
 
         lblOperacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblOperacion.setForeground(new java.awt.Color(204, 204, 204));
         lblOperacion.setText("OPERACIÓN");
         panNavegacion.add(lblOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 365, -1, -1));
 
         lblCatalogo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblCatalogo.setForeground(new java.awt.Color(204, 204, 204));
         lblCatalogo.setText("CATÁLOGOS");
         panNavegacion.add(lblCatalogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 137, -1, -1));
 
         lblAnalisis.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblAnalisis.setForeground(new java.awt.Color(204, 204, 204));
         lblAnalisis.setText("ANÁLISIS");
         panNavegacion.add(lblAnalisis, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 481, -1, -1));
 

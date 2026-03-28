@@ -13,13 +13,14 @@ import org.itson.restaurante.persistencia.PersistenciaException;
 import java.time.LocalDate;
 
 import java.util.List;
+import org.itson.restaurante.persistencia.IClienteDAO;
 /**
  *
  * @author juanl
  */
 public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
-    private final ClienteDAO clientesDAO;
+    private final IClienteDAO clientesDAO;
 
     public ClienteFrecuenteBO() {
         this.clientesDAO = new ClienteDAO();
