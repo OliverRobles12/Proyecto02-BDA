@@ -3,6 +3,7 @@ package com.mycompany.restaurantepresentacion;
 
 import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
+import com.mycompany.restaurantedtos.RolEmpleado;
 import itson.org.restaurantenegocio.ClienteFrecuenteBO;
 import itson.org.restaurantenegocio.IClienteFrecuenteBO;
 import itson.org.restaurantenegocio.NegocioException;
@@ -16,7 +17,7 @@ import itson.org.restaurantenegocio.NegocioException;
  */
 public class Controlador {
    
-    
+    private RolEmpleado rolActual;
     private static Controlador instancia;
     private IClienteFrecuenteBO clientesBO;
     
@@ -37,11 +38,15 @@ public class Controlador {
         return instancia;
     }
     
+    public void abrirMenuPrincipal(javax.swing.JFrame pantallaActual) {
+
+    }
+    
     /**
      * Este metodo abre la pantalla del menu principal
      * @param pantallaActual 
      */
-    public void abrirMenuPrincipal(javax.swing.JFrame pantallaActual) {
+    public void abrirClientes(javax.swing.JFrame pantallaActual) {
         PantallaCliente menu = new PantallaCliente();
         menu.setVisible(true);
         
@@ -70,6 +75,19 @@ public class Controlador {
             });
         }
         formulario.setVisible(true);
+    }
+
+    public void abrirIngredientes(javax.swing.JFrame pantallaActual){
+
+    }
+    public void abrirProductos(javax.swing.JFrame pantallaActual){
+
+    }
+    public void abrirComandas(javax.swing.JFrame pantallaActual){
+
+    }
+    public void abrirReportes(javax.swing.JFrame pantallaActual){
+
     }
     
     
@@ -121,4 +139,20 @@ public class Controlador {
         return this.clientesBO.actualizarCliente(clienteActualizado);
     
     }
+
+    public RolEmpleado getRolActual() {
+        return rolActual;
+    }
+
+    public void setRolActual(RolEmpleado rolActual) {
+        this.rolActual = rolActual;
+    }
+    
+    public boolean esAdministrador(){
+        return rolActual == RolEmpleado.ADMINISTRADOR;
+    }
+    public boolean esMesero(){
+        return rolActual == RolEmpleado.ADMINISTRADOR;
+    }
+    
 }

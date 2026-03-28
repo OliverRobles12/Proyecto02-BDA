@@ -9,12 +9,9 @@ import com.mycompany.utilerias.utilerias;
 import itson.org.restaurantenegocio.ClienteFrecuenteBO;
 import itson.org.restaurantenegocio.IClienteFrecuenteBO;
 import itson.org.restaurantenegocio.NegocioException;
-import itson.org.restaurantepersistencia.ClienteDAO;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -30,9 +27,10 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
      */
     private ClienteFrecuenteDTO clienteSeleccionado = null;
     private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
-    
-    private final ClienteDAO clientesDAO = new ClienteDAO();
+
     private final IClienteFrecuenteBO clienteBO = new ClienteFrecuenteBO();
+
+    private boolean alertaSinResultados = false;
 
     public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
 
@@ -41,10 +39,10 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         initComponents();
         panelHeader = new com.mycompany.utilerias.PanelHeader();
         panelNavegacion = new com.mycompany.utilerias.PanelNavegacionPantallasPrincipales();
-        
-        panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 130));       
+
+        panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 130));
         panPrincipal.add(panelNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1366, 45));
-        
+
         panelNavegacion.setBreadcrumb("Clientes Frecuentes", "BusquedaCliente");
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
@@ -75,7 +73,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
-        btnBuscarCliente = new javax.swing.JButton();
         btnSeleccionarCliente = new javax.swing.JButton();
         panContenido = new javax.swing.JPanel();
 
@@ -125,7 +122,12 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                 txtBusquedaActionPerformed(evt);
             }
         });
-        panPrincipal.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 262, 850, -1));
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
+        panPrincipal.add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 262, 1060, -1));
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -147,22 +149,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblClientes);
 
         panPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 1060, 350));
-
-        btnBuscarCliente.setBackground(new java.awt.Color(18, 44, 79));
-        btnBuscarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnBuscarCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscarCliente.setText("Buscar ");
-        btnBuscarCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 44, 79), 2));
-        btnBuscarCliente.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        btnBuscarCliente.setMaximumSize(new java.awt.Dimension(66, 32));
-        btnBuscarCliente.setMinimumSize(new java.awt.Dimension(66, 32));
-        btnBuscarCliente.setPreferredSize(new java.awt.Dimension(66, 32));
-        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarClienteActionPerformed(evt);
-            }
-        });
-        panPrincipal.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 262, 190, -1));
 
         btnSeleccionarCliente.setBackground(new java.awt.Color(18, 44, 79));
         btnSeleccionarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -244,35 +230,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tblClientesMouseClicked
 
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        String textoBusqueda = this.txtBusqueda.getText().trim();
-
-        if (textoBusqueda.equals("Buscar por nombre, numero telefonico o correo..") || textoBusqueda.isEmpty()) {
-
-            JOptionPane.showMessageDialog(this,
-                    "Escribe un nombre para buscar",
-                    "Aviso",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        try {
-            listaClientes = clienteBO.consultarClienteFiltro(textoBusqueda);
-
-            if (listaClientes.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "No se encontró ningún cliente",
-                        "Sin resultados",
-                        JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            cargarClientes(listaClientes);
-        } catch (NegocioException ex) {
-            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
-
     private void btnSeleccionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClienteActionPerformed
         if (tblClientes.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this,
@@ -285,9 +242,34 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
 
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        String textoBusqueda = this.txtBusqueda.getText().trim();
+        try {
+            listaClientes = clienteBO.consultarClienteFiltro(textoBusqueda);
+
+            if (listaClientes.isEmpty()) {
+                if (!alertaSinResultados) {
+                    JOptionPane.showMessageDialog(this,
+                            "No se encontró ningún cliente",
+                            "Sin resultados",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    alertaSinResultados = true;
+                }
+                return;
+            }
+            alertaSinResultados= false;
+            cargarClientes(listaClientes);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), 
+                    "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
+
     private void inicializarTabla() {
 
-        String[] columnas = {"Id","Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
+        String[] columnas = {"Id", "Nombre", "Teléfono", "Correo", "Visitas", "Total gastado", "Puntos", "Últ. comanda"};//Columnas
 
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
             @Override
@@ -309,7 +291,10 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
             List<ClienteFrecuenteDTO> clientes = clienteBO.consultarClientes();
             cargarClientes(clientes);
         } catch (NegocioException ex) {
-            Logger.getLogger(PantallaBusquedaClienteD.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), 
+                    "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -353,7 +338,6 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSeleccionarCliente;
     private javax.swing.JScrollPane jScrollPane1;

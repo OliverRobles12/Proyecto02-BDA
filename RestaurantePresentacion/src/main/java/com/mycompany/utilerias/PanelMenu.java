@@ -29,6 +29,8 @@ public class PanelMenu extends javax.swing.JPanel {
         utilerias.estilizarBotonMenu(btnComandas);
 
         utilerias.estilizarBotonMenu(btnReportes);
+        
+        configurarSegunRol();
     }
 
     /**
@@ -207,7 +209,9 @@ public class PanelMenu extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,6 +219,18 @@ public class PanelMenu extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void configurarSegunRol() {
+        if (Controlador.getIntancia().esMesero()) {
+            btnInicio.setVisible(false);
+            btnInicio.setVisible(false);
+            btnIngredientes.setVisible(false);
+            btnProductos.setVisible(false);
+            btnClientes.setVisible(false);
+            btnReportes.setVisible(false);
+            lblCatalogo.setVisible(false);
+            lblAnalisis.setVisible(false);
+        }
+    }
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         controlador.abrirMenuPrincipal(
                 (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
@@ -228,7 +244,7 @@ public class PanelMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btnIngredientesActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        controlador.abrirCliente(
+        controlador.abrirClientes(
                 (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
         );
     }//GEN-LAST:event_btnClientesActionPerformed

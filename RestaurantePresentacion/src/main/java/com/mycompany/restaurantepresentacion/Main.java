@@ -12,7 +12,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        PantallaCliente pantalla = new PantallaCliente();
+        PantallaLogin pantalla = new PantallaLogin();
         pantalla.setVisible(true);
         
     }

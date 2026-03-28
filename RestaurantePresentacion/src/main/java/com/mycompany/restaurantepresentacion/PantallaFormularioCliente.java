@@ -42,9 +42,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         btnGuardarCliente.setVisible(true);
         btnEditarCliente.setVisible(false);
         
-        txtFechaRegistro.setText(LocalDate.now().toString());
-
-        txtFechaRegistro.setEditable(false);
 
         this.setLocationRelativeTo(null);
 
@@ -69,9 +66,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         
         btnGuardarCliente.setVisible(false);
         btnEditarCliente.setVisible(true);
-        
-        txtFechaRegistro.setText(LocalDate.now().toString());
-        txtFechaRegistro.setEditable(false);
 
         this.setLocationRelativeTo(null);
 
@@ -91,22 +85,14 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         panPrincipal = new javax.swing.JPanel();
-        panSuperior = new javax.swing.JPanel();
-        btnLogo = new javax.swing.JButton();
-        lblNombreRestaurante = new javax.swing.JLabel();
-        panMostrarNavegacion = new javax.swing.JPanel();
-        lblPantallaActualNav = new javax.swing.JLabel();
-        lblNombreBtnPantalla = new javax.swing.JLabel();
         lblPantalla = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JButton();
         btnGuardarCliente = new javax.swing.JButton();
         txtApellidoP = new javax.swing.JTextField();
-        txtFechaRegistro = new javax.swing.JTextField();
         lblApellidoPaterno = new javax.swing.JLabel();
         lblNombres = new javax.swing.JLabel();
         txtNombres = new javax.swing.JTextField();
-        lblFecharRegistro = new javax.swing.JLabel();
         txtCorreoElectronico = new javax.swing.JTextField();
         lblCorreo = new javax.swing.JLabel();
         lblApellidoMaterno = new javax.swing.JLabel();
@@ -124,57 +110,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         panPrincipal.setMaximumSize(new java.awt.Dimension(1366, 768));
         panPrincipal.setPreferredSize(new java.awt.Dimension(1366, 768));
         panPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panSuperior.setBackground(new java.awt.Color(18, 44, 79));
-        panSuperior.setLayout(new javax.swing.BoxLayout(panSuperior, javax.swing.BoxLayout.LINE_AXIS));
-
-        btnLogo.setText("btnLogo");
-        btnLogo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoActionPerformed(evt);
-            }
-        });
-        panSuperior.add(btnLogo);
-
-        lblNombreRestaurante.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblNombreRestaurante.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombreRestaurante.setText("Nombre del restaurante");
-        panSuperior.add(lblNombreRestaurante);
-
-        panPrincipal.add(panSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 130));
-
-        panMostrarNavegacion.setBackground(new java.awt.Color(91, 136, 178));
-
-        lblPantallaActualNav.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        lblPantallaActualNav.setForeground(new java.awt.Color(255, 255, 255));
-        lblPantallaActualNav.setText("Formulario cliente");
-
-        lblNombreBtnPantalla.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        lblNombreBtnPantalla.setForeground(new java.awt.Color(18, 44, 79));
-        lblNombreBtnPantalla.setText("Clientes Frecuentes >");
-
-        javax.swing.GroupLayout panMostrarNavegacionLayout = new javax.swing.GroupLayout(panMostrarNavegacion);
-        panMostrarNavegacion.setLayout(panMostrarNavegacionLayout);
-        panMostrarNavegacionLayout.setHorizontalGroup(
-            panMostrarNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panMostrarNavegacionLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(lblNombreBtnPantalla)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPantallaActualNav)
-                .addContainerGap(931, Short.MAX_VALUE))
-        );
-        panMostrarNavegacionLayout.setVerticalGroup(
-            panMostrarNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panMostrarNavegacionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panMostrarNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreBtnPantalla)
-                    .addComponent(lblPantallaActualNav))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        panPrincipal.add(panMostrarNavegacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1370, -1));
 
         lblPantalla.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         lblPantalla.setText("Formulario Cliente");
@@ -210,9 +145,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         panPrincipal.add(btnGuardarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 550, 190, 30));
         panPrincipal.add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 300, 30));
 
-        txtFechaRegistro.setName(""); // NOI18N
-        panPrincipal.add(txtFechaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 470, 300, 30));
-
         lblApellidoPaterno.setText("Apellido Paterno *");
         panPrincipal.add(lblApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, -1, -1));
 
@@ -225,9 +157,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
             }
         });
         panPrincipal.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 300, 30));
-
-        lblFecharRegistro.setText("Fecha de registro");
-        panPrincipal.add(lblFecharRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 450, -1, -1));
         panPrincipal.add(txtCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, 300, 30));
 
         lblCorreo.setText("Correo electronico (opcional)");
@@ -278,13 +207,13 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -329,7 +258,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            this.dispose(); // cierra esta y lanza el windowClosed
+            this.dispose(); // se cierra esta y lanza el windowClosed
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this,
                     ex.getMessage(), 
@@ -386,10 +315,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
-    private void btnLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLogoActionPerformed
-
     public ClienteFrecuenteDTO getClienteFrecuenteDTO() {
         return clienteForm;
     }
@@ -405,35 +330,24 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         txtTelefono.setText(cliente.getTelefono());
 
         txtCorreoElectronico.setText(cliente.getCorreo());
-
-        txtFechaRegistro.setText(cliente.getFechaRegistro().toString());
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditarCliente;
     private javax.swing.JButton btnGuardarCliente;
-    private javax.swing.JButton btnLogo;
     private javax.swing.JLabel lblApellidoMaterno;
     private javax.swing.JLabel lblApellidoPaterno;
     private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblFecharRegistro;
-    private javax.swing.JLabel lblNombreBtnPantalla;
-    private javax.swing.JLabel lblNombreRestaurante;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblPantalla;
-    private javax.swing.JLabel lblPantallaActualNav;
     private javax.swing.JLabel lblTelefonod;
     private javax.swing.JPanel panContenido;
-    private javax.swing.JPanel panMostrarNavegacion;
     private javax.swing.JPanel panPrincipal;
-    private javax.swing.JPanel panSuperior;
     private javax.swing.JSeparator sep;
     private javax.swing.JTextField txtApellidoMaterno;
     private javax.swing.JTextField txtApellidoP;
     private javax.swing.JTextField txtCorreoElectronico;
-    private javax.swing.JTextField txtFechaRegistro;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
