@@ -30,8 +30,11 @@ public class PantallaLogin extends javax.swing.JFrame {
         panelHeader = new com.mycompany.utilerias.PanelHeader();
 
         panPrincipal.add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 768));
+        panSecundario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PanelBordeRedondo panelCentral = new PanelBordeRedondo(30, new Color(251, 249, 228));
+        panelCentral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         JLabel lblTitulo = new JLabel("¿Cómo deseas ingresar?");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
         lblTitulo.setForeground(new Color(18, 44, 79));
@@ -48,12 +51,10 @@ public class PantallaLogin extends javax.swing.JFrame {
         JButton btnMesero = new JButton("Soy Mesero");
         btnMesero.setBackground(new Color(18, 44, 79));
         btnMesero.setForeground(Color.WHITE);
-        btnMesero.setFont(new Font("Segoe UI", Font.BOLD, 16));
         utilerias.estilizarBotonPrimario(btnMesero);
+        btnMesero.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
         JButton btnAdmin = new JButton("Soy Administrador");
-        btnAdmin.setBackground(Color.WHITE);
-        btnAdmin.setForeground(new Color(18, 44, 79));
         btnAdmin.setFont(new Font("Segoe UI", Font.BOLD, 16));
         utilerias.estilizarBotonSinFondo(btnAdmin);
 
@@ -61,18 +62,19 @@ public class PantallaLogin extends javax.swing.JFrame {
             Controlador.getIntancia().setRolActual(RolEmpleado.MESERO);
             Controlador.getIntancia().abrirComandas(this);
         });
-
         btnAdmin.addActionListener(e -> {
             Controlador.getIntancia().setRolActual(RolEmpleado.ADMINISTRADOR);
-            Controlador.getIntancia().abrirClientes(this);
+            Controlador.getIntancia().abrirMenuPrincipal(this);
         });
-        panSecundario.add(panelCentral);
-        panelCentral.add(lblTitulo, new AbsoluteConstraints(50, 170, 340, 40));
-        panelCentral.add(lblSubtitulo, new AbsoluteConstraints(40, 220, 360, 50));
-        panelCentral.add(sep, new AbsoluteConstraints(40, 285, 360, 10));
-        panelCentral.add(btnMesero, new AbsoluteConstraints(50, 320, 340, 55));
-        panelCentral.add(btnAdmin, new AbsoluteConstraints(50, 395, 340, 55));
-        
+
+        panelCentral.add(lblTitulo,    new AbsoluteConstraints(50, 80, 340,  40));
+        panelCentral.add(lblSubtitulo, new AbsoluteConstraints(40, 130, 360,  50));
+        panelCentral.add(sep,          new AbsoluteConstraints(40, 190, 360,  10));
+        panelCentral.add(btnMesero,    new AbsoluteConstraints(50, 220, 340,  55));
+        panelCentral.add(btnAdmin,     new AbsoluteConstraints(50, 295, 340,  55));
+
+        panSecundario.add(panelCentral, new AbsoluteConstraints(290, 57, 440, 525));
+
         setLocationRelativeTo(null);
     }
 
@@ -93,6 +95,7 @@ public class PantallaLogin extends javax.swing.JFrame {
         setBackground(new java.awt.Color(18, 44, 79));
         setPreferredSize(new java.awt.Dimension(1000, 768));
         setResizable(false);
+        setSize(new java.awt.Dimension(1000, 768));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panPrincipal.setBackground(new java.awt.Color(18, 44, 79));
@@ -108,7 +111,18 @@ public class PantallaLogin extends javax.swing.JFrame {
 
         panSecundario.setBackground(new java.awt.Color(18, 44, 79));
         panSecundario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(91, 136, 178), 4));
-        panSecundario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.GroupLayout panSecundarioLayout = new javax.swing.GroupLayout(panSecundario);
+        panSecundario.setLayout(panSecundarioLayout);
+        panSecundarioLayout.setHorizontalGroup(
+            panSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1012, Short.MAX_VALUE)
+        );
+        panSecundarioLayout.setVerticalGroup(
+            panSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 632, Short.MAX_VALUE)
+        );
+
         getContentPane().add(panSecundario, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 130, 1020, 640));
 
         pack();

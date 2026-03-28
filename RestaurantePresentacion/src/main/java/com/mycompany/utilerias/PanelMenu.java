@@ -25,7 +25,9 @@ public class PanelMenu extends javax.swing.JPanel {
         utilerias.estilizarBotonMenu(btnIngredientes);
 
         utilerias.estilizarBotonMenu(btnProductos);
-
+        
+        utilerias.estilizarBotonMenu(btnClientes);
+        
         utilerias.estilizarBotonMenu(btnComandas);
 
         utilerias.estilizarBotonMenu(btnReportes);
@@ -57,37 +59,44 @@ public class PanelMenu extends javax.swing.JPanel {
         panNavegacion.setBackground(new java.awt.Color(18, 44, 79));
         panNavegacion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         panNavegacion.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        panNavegacion.setMinimumSize(new java.awt.Dimension(220, 640));
+        panNavegacion.setRequestFocusEnabled(false);
+        panNavegacion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblPrincipal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPrincipal.setForeground(new java.awt.Color(204, 204, 204));
         lblPrincipal.setText("PRINCIPAL");
+        panNavegacion.add(lblPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 21, -1, -1));
 
         lblOperacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblOperacion.setForeground(new java.awt.Color(204, 204, 204));
         lblOperacion.setText("OPERACIÓN");
+        panNavegacion.add(lblOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 365, -1, -1));
 
         lblCatalogo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblCatalogo.setForeground(new java.awt.Color(204, 204, 204));
         lblCatalogo.setText("CATÁLOGOS");
+        panNavegacion.add(lblCatalogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 137, -1, -1));
 
         lblAnalisis.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblAnalisis.setForeground(new java.awt.Color(204, 204, 204));
         lblAnalisis.setText("ANÁLISIS");
+        panNavegacion.add(lblAnalisis, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 481, -1, -1));
 
-        btnInicio.setBackground(new java.awt.Color(18, 44, 79));
+        btnInicio.setBackground(new java.awt.Color(17, 50, 93));
         btnInicio.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("Inicio");
         btnInicio.setBorder(null);
         btnInicio.setBorderPainted(false);
-        btnInicio.setFocusPainted(false);
         btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInicioActionPerformed(evt);
             }
         });
+        panNavegacion.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 53, 212, 44));
 
-        btnIngredientes.setBackground(new java.awt.Color(18, 44, 79));
+        btnIngredientes.setBackground(new java.awt.Color(17, 50, 93));
         btnIngredientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnIngredientes.setForeground(new java.awt.Color(255, 255, 255));
         btnIngredientes.setText("Ingredientes");
@@ -98,6 +107,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnIngredientesActionPerformed(evt);
             }
         });
+        panNavegacion.add(btnIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 169, 212, 44));
 
         btnClientes.setBackground(new java.awt.Color(17, 50, 93));
         btnClientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -110,8 +120,9 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnClientesActionPerformed(evt);
             }
         });
+        panNavegacion.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 225, 212, 44));
 
-        btnProductos.setBackground(new java.awt.Color(18, 44, 79));
+        btnProductos.setBackground(new java.awt.Color(17, 50, 93));
         btnProductos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnProductos.setForeground(new java.awt.Color(255, 255, 255));
         btnProductos.setText("Productos");
@@ -122,8 +133,9 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnProductosActionPerformed(evt);
             }
         });
+        panNavegacion.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 281, 218, 44));
 
-        btnComandas.setBackground(new java.awt.Color(18, 44, 79));
+        btnComandas.setBackground(new java.awt.Color(17, 50, 93));
         btnComandas.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnComandas.setForeground(new java.awt.Color(255, 255, 255));
         btnComandas.setText("Comandas");
@@ -135,87 +147,33 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnComandasActionPerformed(evt);
             }
         });
+        panNavegacion.add(btnComandas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 397, 212, 44));
 
-        btnReportes.setBackground(new java.awt.Color(18, 44, 79));
+        btnReportes.setBackground(new java.awt.Color(17, 50, 93));
         btnReportes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("Reportes");
         btnReportes.setToolTipText("");
         btnReportes.setBorder(null);
         btnReportes.setBorderPainted(false);
-        btnReportes.setDefaultCapable(false);
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReportesActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout panNavegacionLayout = new javax.swing.GroupLayout(panNavegacion);
-        panNavegacion.setLayout(panNavegacionLayout);
-        panNavegacionLayout.setHorizontalGroup(
-            panNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panNavegacionLayout.createSequentialGroup()
-                .addGroup(panNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnComandas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnClientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnIngredientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(btnInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panNavegacionLayout.createSequentialGroup()
-                        .addGroup(panNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panNavegacionLayout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(lblAnalisis))
-                            .addGroup(panNavegacionLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(lblOperacion))
-                            .addGroup(panNavegacionLayout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(lblPrincipal))
-                            .addGroup(panNavegacionLayout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(lblCatalogo)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panNavegacionLayout.setVerticalGroup(
-            panNavegacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panNavegacionLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblPrincipal)
-                .addGap(12, 12, 12)
-                .addComponent(btnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(lblCatalogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnIngredientes, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(lblOperacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnComandas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(lblAnalisis)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
-        );
+        panNavegacion.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 513, 218, 44));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panNavegacion, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -229,6 +187,7 @@ public class PanelMenu extends javax.swing.JPanel {
             btnReportes.setVisible(false);
             lblCatalogo.setVisible(false);
             lblAnalisis.setVisible(false);
+            lblPrincipal.setVisible(false);
         }
     }
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed

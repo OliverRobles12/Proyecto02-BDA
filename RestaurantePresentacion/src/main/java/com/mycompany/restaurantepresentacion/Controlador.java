@@ -17,7 +17,7 @@ import itson.org.restaurantenegocio.NegocioException;
  */
 public class Controlador {
    
-    private RolEmpleado rolActual;
+    private RolEmpleado rolActual ;
     private static Controlador instancia;
     private IClienteFrecuenteBO clientesBO;
     
@@ -37,18 +37,27 @@ public class Controlador {
         }
         return instancia;
     }
-    
-    public void abrirMenuPrincipal(javax.swing.JFrame pantallaActual) {
-
-    }
-    
     /**
      * Este metodo abre la pantalla del menu principal
      * @param pantallaActual 
      */
-    public void abrirClientes(javax.swing.JFrame pantallaActual) {
-        PantallaCliente menu = new PantallaCliente();
+    
+    public void abrirMenuPrincipal(javax.swing.JFrame pantallaActual) {
+        PantallaMenuPrincipal menu = new PantallaMenuPrincipal();
         menu.setVisible(true);
+        
+        if (pantallaActual != null) {
+            pantallaActual.dispose(); 
+        }
+    }
+    
+    /**
+     * Este metodo abre la pantalla de clientes
+     * @param pantallaActual 
+     */
+    public void abrirClientes(javax.swing.JFrame pantallaActual) {
+        PantallaCliente cliente = new PantallaCliente();
+        cliente.setVisible(true);
         
         if (pantallaActual != null) {
             pantallaActual.dispose(); 
@@ -152,7 +161,28 @@ public class Controlador {
         return rolActual == RolEmpleado.ADMINISTRADOR;
     }
     public boolean esMesero(){
-        return rolActual == RolEmpleado.ADMINISTRADOR;
+        return rolActual == RolEmpleado.MESERO;
     }
+    
+    public boolean noRol(){
+        return rolActual == null;
+    }
+    
+   public int contarComandasHoy() {
+        // return comandaBO.contarComandasHoy();
+        return 12; // por ahora
+    }
+    public double calcularVentasHoy() {
+        // return comandaBO.calcularVentasHoy();
+        return 4380.00; // por ahora
+    }
+    public int contarMesasAbiertas() {
+        // return comandaBO.contarMesasAbiertas();
+        return 3; // por ahora
+    }
+    public int contarProductosActivos() {
+        // return productoBO.contarProductosActivos();
+        return 47; // por ahora
+    } 
     
 }

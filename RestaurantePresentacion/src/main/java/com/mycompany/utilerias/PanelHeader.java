@@ -4,18 +4,22 @@
  */
 package com.mycompany.utilerias;
 
+import com.mycompany.restaurantepresentacion.Controlador;
+
 /**
  *
  * @author joset
  */
 public class PanelHeader extends javax.swing.JPanel {
-
+    private Controlador controlador = Controlador.getIntancia();
+    
     /**
      * Creates new form PanelHeader
      */
     public PanelHeader() {
         initComponents();
         utilerias.colocarLogo(btnLogo);
+        configurarSegunRol();
     }
 
     /**
@@ -58,9 +62,15 @@ public class PanelHeader extends javax.swing.JPanel {
             .addComponent(panSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    public void configurarSegunRol() {
+        if (Controlador.getIntancia().esMesero() || Controlador.getIntancia().noRol() ) {
+            btnLogo.setEnabled(false);
+        }
+    }
     private void btnLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoActionPerformed
-        // TODO add your handling code here:
+       controlador.abrirMenuPrincipal(
+                (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
+        );
     }//GEN-LAST:event_btnLogoActionPerformed
 
     
