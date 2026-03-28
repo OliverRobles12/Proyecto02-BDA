@@ -10,6 +10,7 @@ import itson.org.restaurantenegocio.ClienteFrecuenteBO;
 import itson.org.restaurantenegocio.IClienteFrecuenteBO;
 import itson.org.restaurantenegocio.NegocioException;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -248,7 +249,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
             listaClientes = clienteBO.consultarClienteFiltro(textoBusqueda);
 
             if (listaClientes.isEmpty()) {
-                if (!alertaSinResultados) {
+                if (!alertaSinResultados && evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     JOptionPane.showMessageDialog(this,
                             "No se encontró ningún cliente",
                             "Sin resultados",
