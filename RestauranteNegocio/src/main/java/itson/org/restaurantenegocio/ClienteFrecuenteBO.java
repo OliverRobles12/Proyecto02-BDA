@@ -1,6 +1,8 @@
 
 package itson.org.restaurantenegocio;
 
+import static adapters.ClienteFrecuenteAClienteDTOAdapter.convertirADTO;
+import static adapters.ClienteFrecuenteAClienteDTOAdapter.convertirListaClientesADTO;
 import com.mycompany.restaurantedtos.ClienteFrecuenteActualizadoDTO;
 import com.mycompany.restaurantedtos.ClienteFrecuenteDTO;
 import com.mycompany.restaurantedtos.NuevoClienteFrecuenteDTO;
@@ -9,10 +11,8 @@ import itson.org.restaurantedominio.ClienteFrecuente;
 import itson.org.restaurantepersistencia.ClienteDAO;
 import itson.org.restaurantepersistencia.PersistenciaException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
+import java.util.List;
 /**
  *
  * @author juanl
@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
     private final ClienteDAO clientesDAO;
-    private static final Logger LOGGER = Logger.getLogger(ClienteFrecuenteBO.class.getName());
 
     public ClienteFrecuenteBO() {
         this.clientesDAO = new ClienteDAO();
@@ -159,22 +158,8 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
                     clienteActualizado.getCorreo()
             );
             ClienteFrecuente cliente = clientesDAO.actualizarClienteFrecuente(clienteConversion);
-            //TODO
-            //LocalDate fechaUltimaComanda = clientesDAO.consultarFechaUltimaComanda(cliente.getId());
-            LocalDate fechaUltimaComanda = LocalDate.now(); //Eliminar esto
-            return new ClienteFrecuenteDTO(
-                    cliente.getId(),
-                    cliente.getNombre(),
-                    cliente.getApellidoPaterno(),
-                    cliente.getApellidoMaterno(),
-                    cliente.getTelefono(),
-                    cliente.getCorreo(),
-                    cliente.getFechaRegistro(),
-                    cliente.getPuntosAcumulados(),
-                    cliente.getTotalGastado(),
-                    cliente.getNumeroVisitas(),
-                    fechaUltimaComanda
-            );
+            
+            return convertirADTO(cliente);
         } catch (PersistenciaException ex) {
             throw new NegocioException("No fue posible actualizar al cliente", ex);
         }
@@ -193,27 +178,8 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
             List<ClienteFrecuente> clientes = clientesDAO.consultarClientesFrecuentesFiltro(filtro);
 
-            List<ClienteFrecuenteDTO> clientesDTO = new ArrayList<>();
 
-            for (ClienteFrecuente c : clientes) {
-                //TODO
-                //LocalDate fechaUltimaComanda = clientesDAO.consultarFechaUltimaComanda(cliente.getId());
-                LocalDate fechaUltimaComanda = LocalDate.now(); //Eliminar esto
-                clientesDTO.add(new ClienteFrecuenteDTO(
-                        c.getId(),
-                        c.getNombre(),
-                        c.getApellidoPaterno(),
-                        c.getApellidoMaterno(),
-                        c.getTelefono(),
-                        c.getCorreo(),
-                        c.getFechaRegistro(),
-                        c.getPuntosAcumulados(),
-                        c.getTotalGastado(),
-                        c.getNumeroVisitas(),
-                        fechaUltimaComanda
-                ));
-            }
-            return clientesDTO;
+            return convertirListaClientesADTO(clientes);
 
         } catch (PersistenciaException ex) {
             throw new NegocioException("No fue posible consultar al cliente", ex);
@@ -233,27 +199,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
             List<ClienteFrecuente> clientes = clientesDAO.consultarClientesFrecuentes();
 
-            List<ClienteFrecuenteDTO> clientesDTO = new ArrayList<>();
-
-            for (ClienteFrecuente c : clientes) {
-                //TODO
-                //LocalDate fechaUltimaComanda = clientesDAO.consultarFechaUltimaComanda(cliente.getId());
-                LocalDate fechaUltimaComanda = LocalDate.now(); //Eliminar esto
-                clientesDTO.add(new ClienteFrecuenteDTO(
-                        c.getId(),
-                        c.getNombre(),
-                        c.getApellidoPaterno(),
-                        c.getApellidoMaterno(),
-                        c.getTelefono(),
-                        c.getCorreo(),
-                        c.getFechaRegistro(),
-                        c.getPuntosAcumulados(),
-                        c.getTotalGastado(),
-                        c.getNumeroVisitas(),
-                        fechaUltimaComanda
-                ));
-            }
-            return clientesDTO;
+            return convertirListaClientesADTO(clientes);
 
         } catch (PersistenciaException ex) {
             throw new NegocioException("No fue posible consultar a los cliente", ex);
