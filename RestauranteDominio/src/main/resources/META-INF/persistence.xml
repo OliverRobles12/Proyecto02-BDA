@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>itson.org.restaurantedominio.Cliente</class>
     <class>itson.org.restaurantedominio.ClienteFrecuente</class>
+    <class>utilerias.CryptoConverter</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/restaurante?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
