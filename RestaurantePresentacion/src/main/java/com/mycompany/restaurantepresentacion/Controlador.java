@@ -27,7 +27,7 @@ public class Controlador {
     }
     
     /**
-     * Este metodo nos una única instancia del COntrolador
+     * Este metodo nos una única instancia del Controlador
      * y si no existe la crea
      * @return La instancia estatica de controlador
      */
@@ -79,7 +79,7 @@ public class Controlador {
             formulario.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
-                    pantallaActual.setVisible(true); // Vuelve a mostrar el menú
+                    pantallaActual.setVisible(true); 
                 }
             });
         }
@@ -116,7 +116,7 @@ public class Controlador {
         formulario.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
-                    pantallaActual.setVisible(true); // Vuelve a mostrar el menú
+                    pantallaActual.setVisible(true); 
                 }
             });
         }
