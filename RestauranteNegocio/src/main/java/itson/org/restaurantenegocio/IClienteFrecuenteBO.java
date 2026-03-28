@@ -19,8 +19,6 @@ public interface IClienteFrecuenteBO {
     
     public abstract ClienteFrecuenteDTO actualizarCliente(ClienteFrecuenteDTO nuevoCliente) throws NegocioException;
     
-    public abstract ClienteFrecuenteDTO EliminarCliente() throws NegocioException;
-    
     public abstract  List<ClienteFrecuenteDTO> consultarClienteFiltro(String filtro) throws NegocioException;
     
     public abstract  List<ClienteFrecuenteDTO> consultarClientes( ) throws NegocioException;

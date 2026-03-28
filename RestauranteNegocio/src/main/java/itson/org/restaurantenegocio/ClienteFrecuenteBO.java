@@ -26,6 +26,15 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         this.clientesDAO = new ClienteDAO();
     }
 
+    /**
+     * Registra un nuevo cliente frecuente en el sistema tras validar sus datos.
+     * Valida que los campos obligatorios no estén vacíos, que los nombres no contengan números,
+     * y que el formato del correo y teléfono sean correctos.
+     *
+     * @param nuevoCliente Objeto DTO con los datos del nuevo cliente a registrar.
+     * @return ClienteFrecuenteDTO Objeto DTO con los datos del cliente ya registrado
+     * @throws NegocioException Si algún dato es inválido o si ocurre un error en la capa de persistencia.
+     */
     @Override
     public ClienteFrecuenteDTO registrarCliente(NuevoClienteFrecuenteDTO nuevoCliente) throws NegocioException {
 
@@ -93,6 +102,14 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Actualiza la información de un cliente frecuente existente.
+     * Realiza las mismas validaciones de formato antes de actualizarlo.
+     *
+     * @param clienteActualizado Objeto DTO con los datos actualizados del cliente.
+     * @return ClienteFrecuenteDTO Objeto DTO con los datos del cliente ya actualizado.
+     * @throws NegocioException Si algún dato es inválido o si ocurre un error en la capa de persistencia.
+     */
     @Override
     public ClienteFrecuenteDTO actualizarCliente(ClienteFrecuenteDTO clienteActualizado) throws NegocioException {
         if (clienteActualizado.getNombre() == null || clienteActualizado.getNombre().isBlank()) {
@@ -159,11 +176,17 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
                     fechaUltimaComanda
             );
         } catch (PersistenciaException ex) {
-            throw new NegocioException("No fue posible registrar al cliente", ex);
+            throw new NegocioException("No fue posible actualizar al cliente", ex);
         }
 
     }
-
+    
+    /**
+     * Consulta una lista de clientes frecuentes que se encuentren con el filtro
+     * @param filtro parametro para filtrar la búsqueda
+     * @return List&lt;ClienteFrecuenteDTO&gt; Lista de clientes que coinciden con el criterio de búsqueda.
+     * @throws NegocioException Si ocurre un error al realizar la consulta
+     */
     @Override
     public List<ClienteFrecuenteDTO> consultarClienteFiltro(String filtro) throws NegocioException {
         try {
@@ -193,15 +216,17 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             return clientesDTO;
 
         } catch (PersistenciaException ex) {
-            throw new NegocioException("No fue posible registrar al cliente", ex);
+            throw new NegocioException("No fue posible consultar al cliente", ex);
         }
     }
 
-    @Override
-    public ClienteFrecuenteDTO EliminarCliente() throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    
+    /**
+     * Consulta y devuelve la lista completa de todos los clientes frecuentes registrados en el sistema.
+     *
+     * @return List&lt;ClienteFrecuenteDTO&gt; Lista con todos los clientes frecuentes.
+     * @throws NegocioException Si ocurre un error al realizar la consulta
+     */
     @Override
     public List<ClienteFrecuenteDTO> consultarClientes() throws NegocioException {
         try {
@@ -231,7 +256,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             return clientesDTO;
 
         } catch (PersistenciaException ex) {
-            throw new NegocioException("No fue posible registrar al cliente", ex);
+            throw new NegocioException("No fue posible consultar a los cliente", ex);
         }
     }
 
