@@ -81,15 +81,13 @@ public class IngredientesBO implements IIngredientesBO {
             throw new NegocioException("El stock no puede ser nulo ni negativo", null);
         
         try {
-            
-            IngredienteActualizadoDTO ingredienteActualizado = new IngredienteActualizadoDTO(
+            IngredienteActualizadoDTO inrgedienteActualizado = new IngredienteActualizadoDTO( 
                     ingrediente.getId(),
                     ingrediente.getNombre(),
                     ingrediente.getStock(),
                     ingrediente.getImagen()
             );
-            
-            Ingrediente actualizado = ingredientesDAO.actualizarIngrediente(ingredienteActualizado);
+            Ingrediente actualizado = ingredientesDAO.actualizarIngrediente(inrgedienteActualizado);
             
             
             return IngredienteAIngredienteDTO.convertirADTO(actualizado);

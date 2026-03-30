@@ -137,11 +137,11 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         PantallaBusquedaIngrediente dialogo = new PantallaBusquedaIngrediente((java.awt.Frame) SwingUtilities.getWindowAncestor(this), true);
         dialogo.setVisible(true);
 
-//        IngredienteDTO ingrediente = dialogo.getClienteSeleccionado();
+        IngredienteDTO ingrediente = dialogo.getIngredienteSeleccionado();
 
-//        if (ingrediente != null) {
-//            Controlador.getIntancia().abrirFormularioEditarIngrediente(ingrediente, this);
-//        }
+        if (ingrediente != null) {
+            Controlador.getIntancia().abrirFormularioEditarIngrediente(ingrediente, this);
+        }
     }//GEN-LAST:event_btnEditarIngredienteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

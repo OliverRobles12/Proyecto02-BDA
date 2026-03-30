@@ -243,7 +243,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
 
             JOptionPane.showMessageDialog(this,
-                    "Ningún campo puede estar vacío",
+                    "Ningún campo obligatorio puede estar vacío",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -290,7 +290,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         // validacion de los campos vacios
         if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "Ningún campo puede estar vacío",
+                    "Ningún campo obligatorio puede estar vacío",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;

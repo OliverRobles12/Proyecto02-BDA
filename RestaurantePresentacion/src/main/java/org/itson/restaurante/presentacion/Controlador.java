@@ -2,11 +2,15 @@
 package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
+import org.itson.restaurante.dtos.IngredienteActualizadoDTO;
 import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
+import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 import org.itson.restaurante.dtos.RolEmpleado;
 import org.itson.restaurante.negocio.ClienteFrecuenteBO;
 import org.itson.restaurante.negocio.IClienteFrecuenteBO;
+import org.itson.restaurante.negocio.IIngredientesBO;
+import org.itson.restaurante.negocio.IngredientesBO;
 import org.itson.restaurante.negocio.NegocioException;
 
 /**
@@ -21,10 +25,11 @@ public class Controlador {
     private RolEmpleado rolActual ;
     private static Controlador instancia;
     private IClienteFrecuenteBO clientesBO;
-    
+    private IIngredientesBO ingredientesBO;
     
     private Controlador() {
        this.clientesBO = new ClienteFrecuenteBO();
+       this.ingredientesBO = new IngredientesBO();
     }
     
     /**
@@ -198,7 +203,24 @@ public class Controlador {
         return this.clientesBO.actualizarCliente(clienteActualizado);
     
     }
-
+    /**
+     * @param nuevoCliente
+     * @return 
+     * @throws org.itson.restaurante.negocio.NegocioException */
+    public IngredienteDTO registrarIngrediente(NuevoIngredienteDTO nuevoCliente)throws NegocioException{
+        return this.ingredientesBO.registrarIngrediente(nuevoCliente);
+    }
+    /**
+     * 
+     * @param clienteActualizado
+     * @return 
+     * @throws org.itson.restaurante.negocio.NegocioException
+     */
+    public IngredienteDTO actualizarIngrediente(IngredienteDTO clienteActualizado)throws NegocioException{
+        return this.ingredientesBO.actualizarIngrediente(clienteActualizado);
+    
+    }
+    
     public RolEmpleado getRolActual() {
         return rolActual;
     }
@@ -218,7 +240,10 @@ public class Controlador {
         return rolActual == null;
     }
     
-   public int contarComandasHoy() {
+    
+    
+    //METODOS QUE LLENAN EL MENUPRINCIPAL
+    public int contarComandasHoy() {
         // return comandaBO.contarComandasHoy();
         return 12; // por ahora
     }
@@ -234,5 +259,6 @@ public class Controlador {
         // return productoBO.contarProductosActivos();
         return 47; // por ahora
     } 
+
     
 }

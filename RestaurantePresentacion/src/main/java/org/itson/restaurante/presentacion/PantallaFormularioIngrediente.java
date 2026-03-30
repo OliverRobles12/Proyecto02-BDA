@@ -4,13 +4,17 @@
  */
 package org.itson.restaurante.presentacion;
 
-import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
-import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import org.itson.restaurante.utilerias.utilerias;
-import org.itson.restaurante.negocio.NegocioException;
-import java.time.LocalDate;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.itson.restaurante.dtos.IngredienteDTO;
+import org.itson.restaurante.dtos.NuevoIngredienteDTO;
+import org.itson.restaurante.dtos.UnidadMedidaDTO;
+import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -20,32 +24,33 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  * @author joset
  */
 public class PantallaFormularioIngrediente extends javax.swing.JFrame {
-
     private IngredienteDTO ingredienteForm = null;
+    private byte[] imagen;
 
     /**
      * Creates new form PantallaFormularioCliente
      */
     public PantallaFormularioIngrediente() {
         initComponents();
-        
+
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
-        
-        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));       
+
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
-        
+
         panelNavegacion.setPantallasNavegacion("Ingredientes", "Formulario");
-        
+
         utilerias.estilizarBotonPrimario(btnEditarIngrediente);
 
         utilerias.estilizarBotonPrimario(btnGuardarIngrediente);
-        
+
         utilerias.estilizarBotonSinFondo(btnCancelar);
+        
+        utilerias.estilizarBotonPrimario(btnExaminarImagen);
 
         btnGuardarIngrediente.setVisible(true);
         btnEditarIngrediente.setVisible(false);
-        
 
         this.setLocationRelativeTo(null);
 
@@ -53,28 +58,34 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
 
     public PantallaFormularioIngrediente(IngredienteDTO ingrediente) {
         initComponents();
-        
+
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
-        
-        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));       
+
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
-        
+
         panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
-        
+
         utilerias.estilizarBotonPrimario(btnEditarIngrediente);
 
         utilerias.estilizarBotonPrimario(btnGuardarIngrediente);
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
         
+        utilerias.estilizarBotonPrimario(btnExaminarImagen);
+
         btnGuardarIngrediente.setVisible(false);
         btnEditarIngrediente.setVisible(true);
-
+        cboUnidadMedida.removeAllItems();
+        cboUnidadMedida.addItem(UnidadMedidaDTO.PIEZAS);
+        cboUnidadMedida.addItem(UnidadMedidaDTO.GRAMOS);
+        cboUnidadMedida.addItem(UnidadMedidaDTO.MILILITROS);
+        
         this.setLocationRelativeTo(null);
 
         this.ingredienteForm = ingrediente;
-        
+
         llenarCampos(this.ingredienteForm);
 
     }
@@ -91,20 +102,20 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
         panPrincipal = new javax.swing.JPanel();
         lblPantalla = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
-        btnCancelar = new javax.swing.JButton();
-        btnGuardarIngrediente = new javax.swing.JButton();
-        txtApellidoP = new javax.swing.JTextField();
-        lblApellidoPaterno = new javax.swing.JLabel();
-        lblNombres = new javax.swing.JLabel();
-        txtNombres = new javax.swing.JTextField();
-        txtCorreoElectronico = new javax.swing.JTextField();
-        lblCorreo = new javax.swing.JLabel();
-        lblApellidoMaterno = new javax.swing.JLabel();
-        txtApellidoMaterno = new javax.swing.JTextField();
-        lblTelefonod = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JTextField();
-        btnEditarIngrediente = new javax.swing.JButton();
+        txtStock = new javax.swing.JTextField();
+        lblStock = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblImagen = new javax.swing.JLabel();
+        txtImagenSeleccionada = new javax.swing.JTextField();
         panContenido = new javax.swing.JPanel();
+        cboUnidadMedida = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        btnExaminarImagen = new javax.swing.JButton();
+        lblImagenSeleccionada = new javax.swing.JLabel();
+        btnGuardarIngrediente = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnEditarIngrediente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario Cliente");
@@ -121,17 +132,44 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
 
         sep.setForeground(new java.awt.Color(18, 44, 79));
         panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 1060, 10));
+        panPrincipal.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 300, 30));
 
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(18, 44, 79));
-        btnCancelar.setText("Cancelar ");
-        btnCancelar.setOpaque(true);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        lblStock.setText("stock");
+        panPrincipal.add(lblStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, -1, -1));
+
+        lblNombre.setText("Nombre  *");
+        panPrincipal.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, -1, -1));
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                txtNombreActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 550, 190, 30));
+        panPrincipal.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 300, 30));
+
+        lblImagen.setText("imagen (opcional)");
+        panPrincipal.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, -1, -1));
+
+        txtImagenSeleccionada.setToolTipText("");
+        panPrincipal.add(txtImagenSeleccionada, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, 210, 30));
+
+        panContenido.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setText("Unidad de medida");
+
+        btnExaminarImagen.setBackground(new java.awt.Color(18, 44, 79));
+        btnExaminarImagen.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnExaminarImagen.setForeground(new java.awt.Color(255, 255, 255));
+        btnExaminarImagen.setText("Examinar");
+        btnExaminarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExaminarImagenActionPerformed(evt);
+            }
+        });
+
+        lblImagenSeleccionada.setMaximumSize(new java.awt.Dimension(360, 240));
+        lblImagenSeleccionada.setMinimumSize(new java.awt.Dimension(306, 221));
+        lblImagenSeleccionada.setPreferredSize(new java.awt.Dimension(306, 221));
 
         btnGuardarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
         btnGuardarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -146,35 +184,16 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
                 btnGuardarIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnGuardarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 550, 190, 30));
-        panPrincipal.add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 280, 300, 30));
 
-        lblApellidoPaterno.setText("Apellido Paterno *");
-        panPrincipal.add(lblApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, -1, -1));
-
-        lblNombres.setText("Nombres  *");
-        panPrincipal.add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, -1, -1));
-
-        txtNombres.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(18, 44, 79));
+        btnCancelar.setText("Cancelar ");
+        btnCancelar.setOpaque(true);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombresActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
-        panPrincipal.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 300, 30));
-        panPrincipal.add(txtCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, 300, 30));
-
-        lblCorreo.setText("Correo electronico (opcional)");
-        panPrincipal.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 450, -1, -1));
-
-        lblApellidoMaterno.setText("Apellido Materno *");
-        panPrincipal.add(lblApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, -1, -1));
-
-        txtApellidoMaterno.setToolTipText("");
-        panPrincipal.add(txtApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, 300, 30));
-
-        lblTelefonod.setText("Teléfono *");
-        panPrincipal.add(lblTelefonod, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 350, -1, -1));
-        panPrincipal.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 370, 300, 30));
 
         btnEditarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
         btnEditarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -189,19 +208,50 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
                 btnEditarIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnEditarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 550, 190, 30));
-
-        panContenido.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
         panContenido.setLayout(panContenidoLayout);
         panContenidoLayout.setHorizontalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1370, Short.MAX_VALUE)
+            .addGroup(panContenidoLayout.createSequentialGroup()
+                .addGap(293, 293, 293)
+                .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panContenidoLayout.createSequentialGroup()
+                        .addComponent(btnEditarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(220, 220, 220)
+                        .addComponent(btnGuardarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panContenidoLayout.createSequentialGroup()
+                        .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panContenidoLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnExaminarImagen))
+                            .addComponent(lblImagenSeleccionada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(197, 197, 197)
+                        .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(cboUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(477, 477, 477))))
         );
         panContenidoLayout.setVerticalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGroup(panContenidoLayout.createSequentialGroup()
+                .addGap(173, 173, 173)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cboUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExaminarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addComponent(lblImagenSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEditarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 177, 1370, 590));
@@ -230,129 +280,164 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarIngredienteActionPerformed
-//        String nombre = txtNombres.getText().trim();
-//
-//        String apellidoP = txtApellidoP.getText().trim();
-//
-//        String apellidoM = txtApellidoMaterno.getText().trim();
-//
-//        String telefono = txtTelefono.getText().trim();
-//
-//        String correo = txtCorreoElectronico.getText().trim();
-//
-//        // validacion de los campos vacios
-//        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
-//
-//            JOptionPane.showMessageDialog(this,
-//                    "Ningún campo puede estar vacío",
-//                    "Error",
-//                    JOptionPane.ERROR_MESSAGE);
-//            return;
-//
-//        }
-//        try {
-//            NuevoClienteFrecuenteDTO nuevoCliente = new NuevoClienteFrecuenteDTO(
-//                    nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now()
-//            );
-//
-//            Controlador.getIntancia().registrarClienteC(nuevoCliente);
-//
-//            JOptionPane.showMessageDialog(this,
-//                    "Cliente guardado correctamente",
-//                    "Éxito",
-//                    JOptionPane.INFORMATION_MESSAGE);
-//
-//            this.dispose(); // se cierra esta y lanza el windowClosed
-//        } catch (NegocioException ex) {
-//            JOptionPane.showMessageDialog(this,
-//                    ex.getMessage(), 
-//                    "Aviso", 
-//                    JOptionPane.WARNING_MESSAGE);
-//        }
+        String nombre = txtNombre.getText().trim();
+        String stockStr = txtStock.getText().trim();
+        UnidadMedidaDTO unidadMedida = UnidadMedidaDTO.values()[cboUnidadMedida.getSelectedIndex()];
+
+        if (nombre.isEmpty() || stockStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Nombre y stock son obligatorios",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            Integer stock = Integer.valueOf(stockStr);
+
+            NuevoIngredienteDTO nuevoIngrediente = new NuevoIngredienteDTO(
+                nombre,
+                unidadMedida,
+                stock,
+                this.imagen 
+            );
+
+            Controlador.getIntancia().registrarIngrediente(nuevoIngrediente);
+
+            JOptionPane.showMessageDialog(this,
+                "Ingrediente guardado correctamente",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+
+            this.dispose();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                "El stock debe ser un número entero",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this,
+                ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarIngredienteActionPerformed
 
-    private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombresActionPerformed
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnEditarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarIngredienteActionPerformed
-//        String nombre = txtNombres.getText().trim();
-//
-//        String apellidoP = txtApellidoP.getText().trim();
-//
-//        String apellidoM = txtApellidoMaterno.getText().trim();
-//
-//        String telefono = txtTelefono.getText().trim();
-//
-//        String correo = txtCorreoElectronico.getText().trim();
-//
-//        LocalDate fechaRegistro = ingredienteForm.getFechaRegistro();
-//
-//        // validacion de los campos vacios
-//        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
-//            JOptionPane.showMessageDialog(this,
-//                    "Ningún campo puede estar vacío",
-//                    "Error",
-//                    JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        ClienteFrecuenteDTO clienteActualizado = new ClienteFrecuenteDTO(
-//                ingredienteForm.getId(), nombre, apellidoP, apellidoM, telefono, correo, fechaRegistro, ingredienteForm.getNumeroVisitas(),
-//                ingredienteForm.getTotalGastado(), ingredienteForm.getPuntosAcumulados(), ingredienteForm.getFechaUltimaComanda()
-//        );
-//        try {
-//            Controlador.getIntancia().actualizarClienteC(clienteActualizado);
-//
-//            this.ingredienteForm = clienteActualizado;
-//
-//            JOptionPane.showMessageDialog(this,
-//                    "Cliente actualizado correctamente",
-//                    "Éxito",
-//                    JOptionPane.INFORMATION_MESSAGE);
-//
-//            this.dispose(); // cierra y lanza el windowClosed
-//        } catch (NegocioException ex) {
-//            JOptionPane.showMessageDialog(this,
-//                    ex.getMessage(), 
-//                    "Aviso", 
-//                    JOptionPane.WARNING_MESSAGE);
-//        }
+        String nombre = txtNombre.getText().trim();
+        String stockStr = txtStock.getText().trim();
+
+        if (nombre.isEmpty() || stockStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Nombre y stock son obligatorios",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            Integer stock = Integer.valueOf(stockStr);
+            
+            byte[] imagenAct;
+            if (this.imagen != null) {
+                imagenAct = this.imagen; //si se cambio la imagen
+            } else {
+                imagenAct = ingredienteForm.getImagen(); //si no se usa la original
+            }
+            IngredienteDTO ingredienteActualizado = new IngredienteDTO(
+                ingredienteForm.getId(),
+                nombre,
+                ingredienteForm.getUnidadMedida(),
+                stock,
+                imagenAct    
+            );
+
+            Controlador.getIntancia().actualizarIngrediente(ingredienteActualizado);
+
+            JOptionPane.showMessageDialog(this,
+                "Ingrediente actualizado correctamente",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+
+            this.dispose();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                "El stock debe ser un número entero",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this,
+                ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        } 
     }//GEN-LAST:event_btnEditarIngredienteActionPerformed
+
+    private void btnExaminarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarImagenActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                "Imágenes", "jpg", "jpeg", "png", "gif"
+        ));
+
+        int resultado = fileChooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivo = fileChooser.getSelectedFile();
+            txtImagenSeleccionada.setText(archivo.getAbsolutePath());
+
+            try {
+                imagen = java.nio.file.Files.readAllBytes(archivo.toPath());
+                // mostrar preview
+                ImageIcon icono = new ImageIcon(imagen);
+                Image escalada = icono.getImage().getScaledInstance(306, 221, Image.SCALE_SMOOTH);
+                lblImagenSeleccionada.setIcon(new ImageIcon(escalada));
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al cargar la imagen");
+            }
+        }
+    }//GEN-LAST:event_btnExaminarImagenActionPerformed
 
     public IngredienteDTO getIngredienteDTO() {
         return ingredienteForm;
     }
 
     private void llenarCampos(IngredienteDTO ingrediente) {
-//
-//        txtNombres.setText(ingrediente.getNombre());
-//
-//        txtApellidoP.setText(ingrediente.getUnidad());
-//
-//        txtApellidoMaterno.setText(ingrediente.getStock());
-//
-//        txtTelefono.setText(ingrediente.getImagen());
+        txtNombre.setText(ingrediente.getNombre());
+        txtStock.setText(String.valueOf(ingrediente.getStock()));
+        cboUnidadMedida.setSelectedItem(ingrediente.getUnidadMedida());
+        cboUnidadMedida.setEnabled(false);
+
+        if (ingrediente.getImagen() != null) {
+            ImageIcon icono = new ImageIcon(ingrediente.getImagen());
+            Image escalada = icono.getImage().getScaledInstance(306, 221, Image.SCALE_SMOOTH);
+            lblImagenSeleccionada.setIcon(new ImageIcon(escalada));
+        }
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditarIngrediente;
+    private javax.swing.JButton btnExaminarImagen;
     private javax.swing.JButton btnGuardarIngrediente;
-    private javax.swing.JLabel lblApellidoMaterno;
-    private javax.swing.JLabel lblApellidoPaterno;
-    private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblNombres;
+    private javax.swing.JComboBox<UnidadMedidaDTO> cboUnidadMedida;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblImagenSeleccionada;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPantalla;
-    private javax.swing.JLabel lblTelefonod;
+    private javax.swing.JLabel lblStock;
     private javax.swing.JPanel panContenido;
     private javax.swing.JPanel panPrincipal;
     private javax.swing.JSeparator sep;
-    private javax.swing.JTextField txtApellidoMaterno;
-    private javax.swing.JTextField txtApellidoP;
-    private javax.swing.JTextField txtCorreoElectronico;
-    private javax.swing.JTextField txtNombres;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtImagenSeleccionada;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
     private org.itson.restaurante.utilerias.PanelHeader panelHeader;
     private org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales panelNavegacion;
