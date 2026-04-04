@@ -1,6 +1,7 @@
 
 package org.itson.restaurante.presentacion;
 
+import javax.swing.JFrame;
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
 import org.itson.restaurante.dtos.IngredienteActualizadoDTO;
 import org.itson.restaurante.dtos.IngredienteDTO;
@@ -48,7 +49,7 @@ public class Controlador {
      * @param pantallaActual 
      */
     
-    public void abrirMenuPrincipal(javax.swing.JFrame pantallaActual) {
+    public void abrirMenuPrincipal(JFrame pantallaActual) {
         PantallaMenuPrincipal menu = new PantallaMenuPrincipal();
         menu.setVisible(true);
         
@@ -61,7 +62,7 @@ public class Controlador {
      * Este metodo abre la pantalla de clientes
      * @param pantallaActual 
      */
-    public void abrirClientes(javax.swing.JFrame pantallaActual) {
+    public void abrirClientes(JFrame pantallaActual) {
         PantallaCliente cliente = new PantallaCliente();
         cliente.setVisible(true);
         
@@ -74,7 +75,7 @@ public class Controlador {
      * Este metodo abre la pantalla del Formulario de registro
      * @param pantallaActual la pantalla actual es ocultada temporalmente
      */
-    public void abrirFomularioCliente(javax.swing.JFrame pantallaActual){
+    public void abrirFomularioCliente(JFrame pantallaActual){
         PantallaFormularioCliente formulario = new PantallaFormularioCliente();
         formulario.setVisible(true);
         
@@ -96,7 +97,7 @@ public class Controlador {
      * 
      * @param pantallaActual la pantalla actual es ocultada temporalmente
      */
-    public void abrirFomularioIngrediente(javax.swing.JFrame pantallaActual){
+    public void abrirFomularioIngrediente(JFrame pantallaActual){
         PantallaFormularioIngrediente formulario = new PantallaFormularioIngrediente();
         formulario.setVisible(true);
         
@@ -113,7 +114,7 @@ public class Controlador {
         formulario.setVisible(true);
     }
 
-    public void abrirIngredientes(javax.swing.JFrame pantallaActual){
+    public void abrirIngredientes(JFrame pantallaActual){
         PantallaIngredientes ingrediente = new PantallaIngredientes();
         ingrediente.setVisible(true);
         
@@ -122,13 +123,32 @@ public class Controlador {
         }
 
     }
-    public void abrirProductos(javax.swing.JFrame pantallaActual){
+    
+    public void abrirProductos(JFrame pantallaActual){
 
     }
-    public void abrirComandas(javax.swing.JFrame pantallaActual){
-
+    
+    public void abrirComandas(JFrame pantallaActual){
+        PantallaComandas comandas = new PantallaComandas();
+        comandas.setVisible(true);
+        
+        if (pantallaActual != null) {
+            pantallaActual.dispose(); 
+        }
+        
     }
-    public void abrirReportes(javax.swing.JFrame pantallaActual){
+    
+    public void abrirFormularioComanda(JFrame pantallaActual) {
+        PantallaFormularioComanda formulario = new PantallaFormularioComanda();
+        formulario.setVisible(true);
+        
+        if (pantallaActual != null) {
+            pantallaActual.dispose(); 
+        }
+        
+    }
+    
+    public void abrirReportes(JFrame pantallaActual){
 
     }
     
@@ -139,7 +159,7 @@ public class Controlador {
      * @param cliente la DTO con los datos que se van a editar
      * @param pantallaActual la ventana actual será oculta temporalmente
      */
-    public void abrirFormularioEditarCliente(ClienteFrecuenteDTO cliente, javax.swing.JFrame pantallaActual){
+    public void abrirFormularioEditarCliente(ClienteFrecuenteDTO cliente, JFrame pantallaActual){
         PantallaFormularioCliente formulario = new PantallaFormularioCliente(cliente);
         formulario.setVisible(true);
         
@@ -161,7 +181,7 @@ public class Controlador {
      * @param ingrediente la DTO con los datos que se van a editar
      * @param pantallaActual la ventana actual será oculta temporalmente
      */
-    public void abrirFormularioEditarIngrediente(IngredienteDTO ingrediente, javax.swing.JFrame pantallaActual){
+    public void abrirFormularioEditarIngrediente(IngredienteDTO ingrediente, JFrame pantallaActual){
         PantallaFormularioIngrediente formulario = new PantallaFormularioIngrediente(ingrediente);
         formulario.setVisible(true);
         
