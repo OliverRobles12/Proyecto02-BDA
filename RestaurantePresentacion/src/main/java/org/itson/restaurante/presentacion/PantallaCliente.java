@@ -17,6 +17,7 @@ public class PantallaCliente extends javax.swing.JFrame {
      */
     public PantallaCliente() {
         initComponents();
+        utilerias.aplicarIcono(this);
         //paneles reutilizables
         panelHeader = new PanelHeader();
         panelMenu = new PanelMenu();

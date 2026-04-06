@@ -27,24 +27,23 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
      */
     public PantallaFormularioCliente() {
         initComponents();
-        
+        utilerias.aplicarIcono(this);
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
-        
-        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));       
+
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
-        
+
         panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
-        
+
         utilerias.estilizarBotonPrimario(btnEditarCliente);
 
         utilerias.estilizarBotonPrimario(btnGuardarCliente);
-        
+
         utilerias.estilizarBotonSinFondo(btnCancelar);
 
         btnGuardarCliente.setVisible(true);
         btnEditarCliente.setVisible(false);
-        
 
         this.setLocationRelativeTo(null);
 
@@ -52,28 +51,28 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     public PantallaFormularioCliente(ClienteFrecuenteDTO cliente) {
         initComponents();
-        
+
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
-        
-        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));       
+
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
-        
+
         panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
-        
+
         utilerias.estilizarBotonPrimario(btnEditarCliente);
 
         utilerias.estilizarBotonPrimario(btnGuardarCliente);
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
-        
+
         btnGuardarCliente.setVisible(false);
         btnEditarCliente.setVisible(true);
 
         this.setLocationRelativeTo(null);
 
         this.clienteForm = cliente;
-        
+
         llenarCampos(this.clienteForm);
 
     }
@@ -239,7 +238,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
         String correo = txtCorreoElectronico.getText().trim();
 
-        // validacion de los campos vacios
         if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
 
             JOptionPane.showMessageDialog(this,
@@ -261,12 +259,9 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            this.dispose(); // se cierra esta y lanza el windowClosed
+            this.dispose(); // se cierra y lanza el windowClosed
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage(), 
-                    "Aviso", 
-                    JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
@@ -287,7 +282,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
         LocalDate fechaRegistro = clienteForm.getFechaRegistro();
 
-        // validacion de los campos vacios
         if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Ningún campo obligatorio puede estar vacío",
@@ -310,11 +304,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
 
             this.dispose(); // cierra y lanza el windowClosed
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage(), 
-                    "Aviso", 
-                    JOptionPane.WARNING_MESSAGE);
+        } catch (NegocioException ex) {JOptionPane.showMessageDialog(this,ex.getMessage(), "Aviso",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 

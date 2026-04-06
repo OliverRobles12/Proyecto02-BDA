@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -115,9 +117,93 @@ public class utilerias {
                     c.setBackground(Color.WHITE);
                     c.setForeground(new Color(18, 44, 79));
                 }
+
                 return c;
             }
         });
+    }
+
+    /**
+     * Aplica un estilo personalizado a una tabla que contenga imagenes, incluyendo colores, altura de
+     * filas, encabezado y comportamiento visual al seleccionar filas.
+     *
+     * @param tbl Tabla a estilizar
+     */
+    public static void estilizarTablaImagenes(JTable tbl) {
+        tbl.setBackground(Color.WHITE);
+
+        tbl.setGridColor(new Color(220, 220, 220));
+
+        tbl.setRowHeight(30);
+
+        tbl.getTableHeader().setBackground(new Color(18, 44, 79));
+        tbl.getTableHeader().setForeground(Color.WHITE);
+        tbl.getTableHeader().setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+        tbl.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                setHorizontalAlignment(CENTER);
+                setVerticalAlignment(CENTER);
+
+                if (isSelected) {
+                    c.setBackground(new Color(18, 44, 79));
+                    c.setForeground(Color.WHITE);
+                } else {
+                    c.setBackground(Color.WHITE);
+                    c.setForeground(new Color(18, 44, 79));
+                }
+
+                if (column == 3 && value != null) {
+                    int stock = Integer.parseInt(value.toString());
+                    if (stock >= 20) {
+                        c.setBackground(Color.WHITE);
+                        c.setForeground(new Color(18, 44, 79));
+
+                    } else if (stock >= 10) {
+                        c.setBackground(new Color(224, 235, 255));
+                        c.setForeground(new Color(18, 44, 79));
+
+                    } else {
+                        c.setBackground(new Color(91, 136, 178));
+                        c.setForeground(Color.WHITE);
+                    }
+                }
+                return c;
+            }
+        });
+        tbl.setDefaultRenderer(ImageIcon.class, new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            
+            
+            
+            JLabel label = new JLabel();
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setVerticalAlignment(JLabel.CENTER);
+            label.setOpaque(true);
+
+            if (isSelected) {
+                label.setBackground(new Color(18, 44, 79));
+            } else {
+                label.setBackground(Color.WHITE);
+            }
+
+            if (value instanceof ImageIcon) {
+                label.setIcon((ImageIcon) value);
+            } else {
+                label.setIcon(null);
+            }
+
+            return label;
+        }
+    });
     }
 
     /**
@@ -131,5 +217,13 @@ public class utilerias {
         btn.setForeground(new Color(18, 44, 79));
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    public static void aplicarIcono(JFrame frame) {
+        ImageIcon icono = new ImageIcon("src/main/java/org/itson/restaurante/recursos/logo3.jpg");
+        Image escalada = icono.getImage().getScaledInstance(
+                64, 64, Image.SCALE_SMOOTH
+        );
+        frame.setIconImage(escalada);
     }
 }

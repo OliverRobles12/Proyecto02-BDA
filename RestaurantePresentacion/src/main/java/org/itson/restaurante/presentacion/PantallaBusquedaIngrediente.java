@@ -4,21 +4,19 @@
  */
 package org.itson.restaurante.presentacion;
 
-import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
 import org.itson.restaurante.utilerias.utilerias;
-import org.itson.restaurante.negocio.ClienteFrecuenteBO;
-import org.itson.restaurante.negocio.IClienteFrecuenteBO;
 import org.itson.restaurante.negocio.NegocioException;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import org.itson.restaurante.dtos.IngredienteDTO;
-import org.itson.restaurante.negocio.IIngredientesBO;
-import org.itson.restaurante.negocio.IngredientesBO;
+import org.itson.restaurante.dtos.UnidadMedidaDTO;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -34,9 +32,6 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
      */
     private IngredienteDTO ingredienteSeleccionado = null;
     private List<IngredienteDTO> listaIngredientes = new ArrayList<>();
-
-    private final IIngredientesBO ingredienteBO = new IngredientesBO();
-
     private boolean alertaSinResultados = false;
 
     public PantallaBusquedaIngrediente(java.awt.Frame parent, boolean modal) {
@@ -44,11 +39,12 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         super(parent, modal);
 
         initComponents();
+
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
 
-        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
-        panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1390, 130));
+        panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1370, 45));
 
         panelNavegacion.setPantallasNavegacion("Ingrediente", "Busqueda Ingrediente");
 
@@ -76,15 +72,15 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         panPrincipal = new javax.swing.JPanel();
         lblPantalla = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
-        btnCancelar = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblIngredientes = new javax.swing.JTable();
-        btnSeleccionarCliente = new javax.swing.JButton();
         panContenido = new javax.swing.JPanel();
+        btnCancelar = new javax.swing.JButton();
+        btnSeleccionarCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Busqueda Cliente");
+        setTitle("Busqueda Ingrediente");
         setResizable(false);
 
         panPrincipal.setBackground(new java.awt.Color(255, 255, 255));
@@ -98,17 +94,6 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
 
         sep.setForeground(new java.awt.Color(18, 44, 79));
         panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 243, 1060, 10));
-
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(18, 44, 79));
-        btnCancelar.setText("Cancelar ");
-        btnCancelar.setOpaque(true);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-        panPrincipal.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 700, 190, -1));
 
         txtBusqueda.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtBusqueda.setToolTipText("");
@@ -155,7 +140,19 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblIngredientes);
 
-        panPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 1060, 350));
+        panPrincipal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 1060, 380));
+
+        panContenido.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(18, 44, 79));
+        btnCancelar.setText("Cancelar ");
+        btnCancelar.setOpaque(true);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnSeleccionarCliente.setBackground(new java.awt.Color(18, 44, 79));
         btnSeleccionarCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -167,19 +164,26 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
                 btnSeleccionarClienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnSeleccionarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 700, 190, -1));
-
-        panContenido.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
         panContenido.setLayout(panContenidoLayout);
         panContenidoLayout.setHorizontalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1370, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panContenidoLayout.createSequentialGroup()
+                .addContainerGap(870, Short.MAX_VALUE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(btnSeleccionarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90))
         );
         panContenidoLayout.setVerticalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panContenidoLayout.createSequentialGroup()
+                .addContainerGap(535, Short.MAX_VALUE)
+                .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSeleccionarCliente))
+                .addGap(23, 23, 23))
         );
 
         panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 177, 1370, 590));
@@ -188,9 +192,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 1364, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,7 +212,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
     private void txtBusquedaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusGained
         if (this.txtBusqueda.getText().equals("Buscar por nombre o unidad...")) {
 
-            this.txtBusqueda.setText(" ");
+            this.txtBusqueda.setText("");
 
             this.txtBusqueda.setForeground(Color.BLACK);
         }
@@ -252,7 +254,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         String textoBusqueda = this.txtBusqueda.getText().trim();
         try {
-            listaIngredientes = ingredienteBO.consultarIngredientesFiltro(textoBusqueda);
+            listaIngredientes = Controlador.getIntancia().consultarIngredientesFiltro(textoBusqueda);
 
             if (listaIngredientes.isEmpty()) {
                 if (!alertaSinResultados && evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -264,19 +266,19 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
                 }
                 return;
             }
-            alertaSinResultados= false;
+            alertaSinResultados = false;
             cargarIngredientes(listaIngredientes);
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this,
-                    ex.getMessage(), 
-                    "Aviso", 
+                    ex.getMessage(),
+                    "Aviso",
                     JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
 
     private void inicializarTabla() {
 
-        String[] columnas = {"Id", "Nombre", "Unidad", "Stock", "Imagen"};//Columnas
+        String[] columnas = {"Id", "Nombre", "Unidad", "Stock", "Imagen"};
 
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
             @Override
@@ -284,24 +286,38 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
                 return false;
             }
 
+            @Override
+            public Class<?> getColumnClass(int columnIndex) { //tipo de cada columna 
+                return switch (columnIndex) {
+                    case 0 ->
+                        Object.class;// uso object para no tener que hacer un render en utilerias por cada tipo, con el objet uso el render default. 
+                    case 1 ->
+                        String.class;
+                    case 2 ->
+                        UnidadMedidaDTO.class;
+                    case 3 ->
+                        Object.class; // uso object para no tener que hacer un render en utilerias por cada tipo. 
+                    case 4 ->
+                        ImageIcon.class;
+                    default ->
+                        Object.class;
+                };
+            }
         };
 
         tblIngredientes.setModel(modelo);
-
         tblIngredientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
         tblIngredientes.setRowSelectionAllowed(true);
 
-        utilerias.estilizarTabla(tblIngredientes);
+        utilerias.estilizarTablaImagenes(tblIngredientes);
+
+        tblIngredientes.setRowHeight(100);
 
         try {
-            List<IngredienteDTO> ingrediente = ingredienteBO.consultarIngredientes();
-            cargarIngredientes(ingrediente);
+            listaIngredientes = Controlador.getIntancia().consultarIngredientes();
+            cargarIngredientes(listaIngredientes);
         } catch (NegocioException ex) {
-             JOptionPane.showMessageDialog(this,
-                    ex.getMessage(), 
-                    "Aviso", 
-                    JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,ex.getMessage(),"Aviso",JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -315,24 +331,30 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
 
             modelo.addRow(new Object[]{
                 i.getId(),
-                i.getNombre() ,
+                i.getNombre(),
                 i.getUnidadMedida(),
                 i.getStock(),
-                i.getImagen(),
-            });
+                convertirImagen(i.getImagen()),});
         }
 
         this.listaIngredientes = ingredientes;
     }
 
+    private ImageIcon convertirImagen(byte[] imagenBytes) {
+        ImageIcon icono;
+        if (imagenBytes == null) {
+            icono = new ImageIcon("src/main/java/org/itson/restaurante/recursos/placeHolderIngredienteSinSubir.png");
+        } else {
+            icono = new ImageIcon(imagenBytes);
+        }
+        Image imgEscalada = icono.getImage().getScaledInstance(180, 130, Image.SCALE_SMOOTH);
+        return new ImageIcon(imgEscalada);
+    }
+
     private void seleccionarIngredienteTabla() {
-
         int fila = this.tblIngredientes.getSelectedRow();
-
         if (fila >= 0) {
-
             this.ingredienteSeleccionado = this.listaIngredientes.get(fila);
-
         }
     }
 

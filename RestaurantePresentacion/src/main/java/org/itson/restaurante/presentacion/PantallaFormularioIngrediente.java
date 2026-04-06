@@ -32,7 +32,8 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
      */
     public PantallaFormularioIngrediente() {
         initComponents();
-
+        
+        utilerias.aplicarIcono(this);
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
 
@@ -51,6 +52,10 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
 
         btnGuardarIngrediente.setVisible(true);
         btnEditarIngrediente.setVisible(false);
+        cboUnidadMedida.removeAllItems();
+        cboUnidadMedida.addItem(UnidadMedidaDTO.PIEZAS);
+        cboUnidadMedida.addItem(UnidadMedidaDTO.GRAMOS);
+        cboUnidadMedida.addItem(UnidadMedidaDTO.MILILITROS);
 
         this.setLocationRelativeTo(null);
 
@@ -118,7 +123,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
         btnEditarIngrediente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Formulario Cliente");
+        setTitle("Formulario Ingrediente");
         setSize(new java.awt.Dimension(1366, 768));
 
         panPrincipal.setBackground(new java.awt.Color(255, 255, 255));
@@ -154,6 +159,12 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
         panPrincipal.add(txtImagenSeleccionada, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, 210, 30));
 
         panContenido.setBackground(new java.awt.Color(255, 255, 255));
+
+        cboUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboUnidadMedidaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Unidad de medida");
 
@@ -260,9 +271,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 1364, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +295,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
 
         if (nombre.isEmpty() || stockStr.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Nombre y stock son obligatorios",
+                "Nombre y stock  son obligatorios",
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
             return;
@@ -401,6 +410,10 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnExaminarImagenActionPerformed
+
+    private void cboUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboUnidadMedidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboUnidadMedidaActionPerformed
 
     public IngredienteDTO getIngredienteDTO() {
         return ingredienteForm;

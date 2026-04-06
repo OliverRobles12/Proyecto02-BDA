@@ -7,6 +7,7 @@ package org.itson.restaurante.presentacion;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
+import org.itson.restaurante.utilerias.utilerias;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
@@ -20,6 +21,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
      */
     public PantallaMenuPrincipal() {
         initComponents();
+        utilerias.aplicarIcono(this);
         panelHeader = new PanelHeader();
         panelMenu = new PanelMenu();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
@@ -79,6 +81,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         lblCantProductosActivos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu Principal");
         setResizable(false);
         setSize(new java.awt.Dimension(1366, 768));
 

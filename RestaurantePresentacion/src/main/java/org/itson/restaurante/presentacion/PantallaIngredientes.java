@@ -1,9 +1,10 @@
 package org.itson.restaurante.presentacion;
 
-import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
+import javax.swing.JOptionPane;
 import org.itson.restaurante.utilerias.utilerias;
 import javax.swing.SwingUtilities;
 import org.itson.restaurante.dtos.IngredienteDTO;
+import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
@@ -20,6 +21,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
      */
     public PantallaIngredientes() {
         initComponents();
+        utilerias.aplicarIcono(this);
         //paneles reutilizables
         panelHeader = new PanelHeader();
         panelMenu = new PanelMenu();
@@ -34,6 +36,8 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         utilerias.estilizarBotonPrimario(btnEditarIngrediente);
 
         utilerias.estilizarBotonPrimario(btnNuevoIngrediente);
+        
+        utilerias.estilizarBotonSinFondo(btnEliminarIngrediente);
 
         this.setLocationRelativeTo(null);
     }
@@ -50,12 +54,13 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         panPrincipal = new javax.swing.JPanel();
         lblPrincipal1 = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
+        panContenido = new javax.swing.JPanel();
+        btnEliminarIngrediente = new javax.swing.JButton();
         btnNuevoIngrediente = new javax.swing.JButton();
         btnEditarIngrediente = new javax.swing.JButton();
-        panContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(" Clientes Menu");
+        setTitle("Menu Ingredientes");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         setSize(new java.awt.Dimension(1366, 768));
@@ -72,6 +77,17 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         sep.setForeground(new java.awt.Color(18, 44, 79));
         panPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 1080, -1));
 
+        panContenido.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnEliminarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
+        btnEliminarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEliminarIngrediente.setText("Eliminar Ingrediente");
+        btnEliminarIngrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarIngredienteActionPerformed(evt);
+            }
+        });
+
         btnNuevoIngrediente.setBackground(new java.awt.Color(18, 44, 79));
         btnNuevoIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnNuevoIngrediente.setForeground(new java.awt.Color(255, 255, 255));
@@ -82,7 +98,6 @@ public class PantallaIngredientes extends javax.swing.JFrame {
                 btnNuevoIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnNuevoIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, 240, -1));
 
         btnEditarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
         btnEditarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -93,19 +108,29 @@ public class PantallaIngredientes extends javax.swing.JFrame {
                 btnEditarIngredienteActionPerformed(evt);
             }
         });
-        panPrincipal.add(btnEditarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 230, -1));
-
-        panContenido.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
         panContenido.setLayout(panContenidoLayout);
         panContenidoLayout.setHorizontalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1150, Short.MAX_VALUE)
+            .addGroup(panContenidoLayout.createSequentialGroup()
+                .addContainerGap(137, Short.MAX_VALUE)
+                .addComponent(btnNuevoIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(btnEditarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(btnEliminarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(139, 139, 139))
         );
         panContenidoLayout.setVerticalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGroup(panContenidoLayout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevoIngrediente)
+                    .addComponent(btnEditarIngrediente)
+                    .addComponent(btnEliminarIngrediente))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
 
         panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 1150, 590));
@@ -144,8 +169,25 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarIngredienteActionPerformed
 
+    private void btnEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIngredienteActionPerformed
+        PantallaBusquedaIngrediente dialogo = new PantallaBusquedaIngrediente((java.awt.Frame) SwingUtilities.getWindowAncestor(this), true);
+        dialogo.setVisible(true);
+
+        IngredienteDTO ingrediente = dialogo.getIngredienteSeleccionado();
+
+        if (ingrediente != null) {
+            try {
+               IngredienteDTO ingredienteEliminado = Controlador.getIntancia().eliminarIngrediente(ingrediente);
+                JOptionPane.showMessageDialog(this,"Se elimino el ingrediente: "+ ingredienteEliminado.getNombre(),"Ingrediente Eliminado",JOptionPane.INFORMATION_MESSAGE);
+            } catch (NegocioException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarIngrediente;
+    private javax.swing.JButton btnEliminarIngrediente;
     private javax.swing.JButton btnNuevoIngrediente;
     private javax.swing.JLabel lblPrincipal1;
     private javax.swing.JPanel panContenido;

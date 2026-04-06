@@ -5,7 +5,6 @@
 package org.itson.restaurante.negocio;
 
 import java.util.List;
-import org.itson.restaurante.dtos.IngredienteActualizadoDTO;
 import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 
@@ -14,11 +13,14 @@ import org.itson.restaurante.dtos.NuevoIngredienteDTO;
  * @author joset
  */
 public interface IIngredientesBO {
+
     public abstract IngredienteDTO registrarIngrediente(NuevoIngredienteDTO nuevoIngrediente) throws NegocioException;
-    
+
     public abstract IngredienteDTO actualizarIngrediente(IngredienteDTO ingrediente) throws NegocioException;
+
+    public abstract List<IngredienteDTO> consultarIngredientesFiltro(String filtro) throws NegocioException;
+
+    public abstract List<IngredienteDTO> consultarIngredientes() throws NegocioException;
     
-    public abstract  List<IngredienteDTO> consultarIngredientesFiltro(String filtro) throws NegocioException;
-    
-    public abstract  List<IngredienteDTO> consultarIngredientes( ) throws NegocioException; 
+    public abstract IngredienteDTO eliminarIngrediente(IngredienteDTO nuevoIngrediente) throws NegocioException; 
 }

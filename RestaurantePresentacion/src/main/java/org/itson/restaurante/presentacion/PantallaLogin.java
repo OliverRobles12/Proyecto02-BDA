@@ -27,11 +27,12 @@ public class PantallaLogin extends javax.swing.JFrame {
      */
     public PantallaLogin() {
         initComponents();
-
+        utilerias.aplicarIcono(this);
+        
         //paneles reutilizables
         panelHeader = new PanelHeader();
 
-        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1000, 768));
+        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1020, 768));
         panSecundario.setLayout(new AbsoluteLayout());
 
         PanelBordeRedondo panelCentral = new PanelBordeRedondo(30, new Color(251, 249, 228));
@@ -95,6 +96,8 @@ public class PantallaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
         setBackground(new java.awt.Color(18, 44, 79));
+        setMinimumSize(new java.awt.Dimension(1000, 768));
+        setPreferredSize(new java.awt.Dimension(1000, 768));
         setResizable(false);
         setSize(new java.awt.Dimension(1000, 768));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

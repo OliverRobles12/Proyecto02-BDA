@@ -25,5 +25,7 @@ public interface IIngredientesDAO {
     
     public List<Ingrediente> consultarIngredientesFiltro(String nombre) throws PersistenciaException;
     
-   // public boolean existeIngrediente(String nombre, UnidadMedidaDTO unidad) throws PersistenciaException; // METODO QUE DEVOLVERA SI HAY UN INGREDIENTE CON LOS MISMOS DATOS QUE SE ESTAN INGRESANDO
+    public Ingrediente eliminarIngrediente(Long id) throws PersistenciaException;
+    
+    public boolean existeIngrediente(Long idExcluir,String nombre, UnidadMedidaDTO unidad) throws PersistenciaException; // METODO QUE DEVOLVERA SI HAY UN INGREDIENTE CON LOS MISMOS DATOS QUE SE ESTAN INGRESANDO
 }

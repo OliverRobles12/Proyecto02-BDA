@@ -20,3 +20,4 @@ Restaurante/pom.xml
 RestauranteDominio/src/main/resources/META-INF/persistence.xml
 RestaurantePersistencia/src/test/java/itson/org/restaurantepersistencia/ClienteDAOTest.java
 RestaurantePresentacion/pom.xml
+/RestauranteNegocio/nbproject/
