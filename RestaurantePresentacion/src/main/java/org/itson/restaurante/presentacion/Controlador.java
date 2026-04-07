@@ -2,6 +2,7 @@ package org.itson.restaurante.presentacion;
 
 import java.util.List;
 import javax.swing.JFrame;
+import org.itson.restaurante.controladores.ControladorClientes;
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
 import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
@@ -28,6 +29,8 @@ public class Controlador {
     private IClienteFrecuenteBO clientesBO;
     private IIngredientesBO ingredientesBO;
 
+    private ControladorClientes controladorClientes;
+    
     private Controlador() {
         this.clientesBO = new ClienteFrecuenteBO();
         this.ingredientesBO = new IngredientesBO();
@@ -46,6 +49,14 @@ public class Controlador {
         return instancia;
     }
 
+    public ControladorClientes getControladorClientes() {
+        if (controladorClientes == null) {
+            controladorClientes = new ControladorClientes();
+        }
+        return controladorClientes;
+    }
+    
+    
     /**
      * Este metodo abre la pantalla del menu principal
      *
@@ -58,42 +69,6 @@ public class Controlador {
         if (pantallaActual != null) {
             pantallaActual.dispose();
         }
-    }
-
-    /**
-     * Este metodo abre la pantalla de clientes
-     *
-     * @param pantallaActual
-     */
-    public void abrirClientes(JFrame pantallaActual) {
-        PantallaCliente cliente = new PantallaCliente();
-        cliente.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-        }
-    }
-
-    /**
-     * Este metodo abre la pantalla del Formulario de registro
-     *
-     * @param pantallaActual la pantalla actual es ocultada temporalmente
-     */
-    public void abrirFomularioCliente(JFrame pantallaActual) {
-        PantallaFormularioCliente formulario = new PantallaFormularioCliente();
-        formulario.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-
-            formulario.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e) {
-                    pantallaActual.setVisible(true);
-                }
-            });
-        }
-        formulario.setVisible(true);
     }
 
     /**
@@ -144,6 +119,7 @@ public class Controlador {
 
     }
 
+
     /**
      * Este método abre la pantalla de comandas.
      *
@@ -182,32 +158,11 @@ public class Controlador {
      * @param pantallaActual la ventana actual que será cerrada al abrir la
      * nueva
      */
+
     public void abrirReportes(JFrame pantallaActual) {
 
     }
 
-    /**
-     * Este metodo abre la pantalla del formulario en modo de edicion y carga
-     * los datos del cliente que se seleccionó.
-     *
-     * @param cliente la DTO con los datos que se van a editar
-     * @param pantallaActual la ventana actual será oculta temporalmente
-     */
-    public void abrirFormularioEditarCliente(ClienteFrecuenteDTO cliente, JFrame pantallaActual) {
-        PantallaFormularioCliente formulario = new PantallaFormularioCliente(cliente);
-        formulario.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-
-            formulario.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e) {
-                    pantallaActual.setVisible(true);
-                }
-            });
-        }
-    }
 
     /**
      * Este metodo abre la pantalla del formulario en modo de edicion y carga
@@ -233,6 +188,7 @@ public class Controlador {
     }
 
     /**
+
      * Recibe los datos de un nuevo cliente desde el formulario y los envia a la
      * capa de negocio para su validacion y despues a la capa de persistencia
      * para que los registre

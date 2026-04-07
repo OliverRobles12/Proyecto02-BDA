@@ -10,6 +10,7 @@ import org.itson.restaurante.utilerias.utilerias;
 import org.itson.restaurante.negocio.NegocioException;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
+import org.itson.restaurante.controladores.ControladorClientes;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -21,25 +22,27 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     private ClienteFrecuenteDTO clienteForm = null;
-
+    private ControladorClientes control;
+    
     /**
      * Creates new form PantallaFormularioCliente
      */
-    public PantallaFormularioCliente() {
+    public PantallaFormularioCliente(ControladorClientes control) {
+        this.control = control;
+        
         initComponents();
         utilerias.aplicarIcono(this);
+        
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
 
         panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
 
-        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
+        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Nuevo cliente");
 
         utilerias.estilizarBotonPrimario(btnEditarCliente);
-
         utilerias.estilizarBotonPrimario(btnGuardarCliente);
-
         utilerias.estilizarBotonSinFondo(btnCancelar);
 
         btnGuardarCliente.setVisible(true);
@@ -49,32 +52,41 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     }
 
-    public PantallaFormularioCliente(ClienteFrecuenteDTO cliente) {
-        initComponents();
-
-        panelHeader = new PanelHeader();
-        panelNavegacion = new PanelNavegacionPantallasPrincipales();
-
-        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
-        panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
-
-        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
-
-        utilerias.estilizarBotonPrimario(btnEditarCliente);
-
-        utilerias.estilizarBotonPrimario(btnGuardarCliente);
-
-        utilerias.estilizarBotonSinFondo(btnCancelar);
-
+//    public PantallaFormularioCliente(ClienteFrecuenteDTO cliente) {
+//        initComponents();
+//
+//        panelHeader = new PanelHeader();
+//        panelNavegacion = new PanelNavegacionPantallasPrincipales();
+//
+//        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
+//        panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
+//
+//        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
+//
+//        utilerias.estilizarBotonPrimario(btnEditarCliente);
+//
+//        utilerias.estilizarBotonPrimario(btnGuardarCliente);
+//
+//        utilerias.estilizarBotonSinFondo(btnCancelar);
+//
+//        btnGuardarCliente.setVisible(false);
+//        btnEditarCliente.setVisible(true);
+//
+//        this.setLocationRelativeTo(null);
+//
+//        this.clienteForm = cliente;
+//
+//        llenarCampos(this.clienteForm);
+//
+//    }
+    
+    public PantallaFormularioCliente(ControladorClientes control, ClienteFrecuenteDTO cliente) {
+        this(control);
+        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Editar cliente");
         btnGuardarCliente.setVisible(false);
         btnEditarCliente.setVisible(true);
-
-        this.setLocationRelativeTo(null);
-
         this.clienteForm = cliente;
-
-        llenarCampos(this.clienteForm);
-
+        llenarCampos(cliente);
     }
 
     /**
@@ -252,7 +264,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     nombre, apellidoP, apellidoM, telefono, correo, LocalDate.now()
             );
 
-            Controlador.getIntancia().registrarClienteC(nuevoCliente);
+            control.registrarClienteC(nuevoCliente);
 
             JOptionPane.showMessageDialog(this,
                     "Cliente guardado correctamente",
@@ -294,7 +306,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                 clienteForm.getTotalGastado(), clienteForm.getPuntosAcumulados(), clienteForm.getFechaUltimaComanda()
         );
         try {
-            Controlador.getIntancia().actualizarClienteC(clienteActualizado);
+            control.actualizarClienteC(clienteActualizado);
 
             this.clienteForm = clienteActualizado;
 

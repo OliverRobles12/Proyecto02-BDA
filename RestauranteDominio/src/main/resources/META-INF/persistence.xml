@@ -8,6 +8,9 @@
     <class>org.itson.restaurante.dominio.Ingrediente</class>
     <class>org.itson.restaurante.dominio.Producto</class>
     <class>org.itson.restaurante.dominio.ProductoIngrediente</class>
+    <class>org.itson.restaurante.dominio.Comanda</class>
+    <class>org.itson.restaurante.dominio.Mesa</class>
+    <class>org.itson.restaurante.dominio.ProductoComanda</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/restaurante?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

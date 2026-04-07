@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import org.itson.restaurante.controladores.ControladorClientes;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -31,10 +32,12 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
     private boolean alertaSinResultados = false;
 
-    public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
-
+    ControladorClientes control;
+    
+    public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal, ControladorClientes control) {
+        this.control = control;
+        
         super(parent, modal);
-
         initComponents();
         
         panelHeader = new PanelHeader();
@@ -251,7 +254,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         String textoBusqueda = this.txtBusqueda.getText().trim();
         try {
-            listaClientes = Controlador.getIntancia().consultarClientesFiltro(textoBusqueda);
+            listaClientes = control.consultarClientesFiltro(textoBusqueda);
 
             if (listaClientes.isEmpty()) {
                 if (!alertaSinResultados && evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -291,7 +294,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         utilerias.estilizarTabla(tblClientes);
 
         try {
-            listaClientes  = Controlador.getIntancia().consultarClientes();
+            listaClientes  = control.consultarClientes();
             cargarClientes(listaClientes);
         } catch (NegocioException ex) {
              JOptionPane.showMessageDialog(this, ex.getMessage(),"Aviso", JOptionPane.WARNING_MESSAGE);
