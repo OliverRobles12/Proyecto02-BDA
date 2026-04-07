@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
@@ -237,19 +234,14 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         clienteForm = null;
-        this.dispose();
-        
+        control.mostarPantallaClientes(this);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
         String nombre = txtNombres.getText().trim();
-
         String apellidoP = txtApellidoP.getText().trim();
-
         String apellidoM = txtApellidoMaterno.getText().trim();
-
         String telefono = txtTelefono.getText().trim();
-
         String correo = txtCorreoElectronico.getText().trim();
 
         if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || telefono.isEmpty()) {
@@ -272,8 +264,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     "Cliente guardado correctamente",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
-
-            this.dispose(); // se cierra y lanza el windowClosed
+            control.mostarPantallaClientes(this);
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -317,7 +308,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            this.dispose(); // cierra y lanza el windowClosed
+            control.mostarPantallaClientes(this);
         } catch (NegocioException ex) {JOptionPane.showMessageDialog(this,ex.getMessage(), "Aviso",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed

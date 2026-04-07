@@ -1,5 +1,6 @@
 package org.itson.restaurante.presentacion;
 
+import javax.swing.JOptionPane;
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
 import org.itson.restaurante.utilerias.utilerias;
 import org.itson.restaurante.controladores.ControladorClientes;
@@ -134,7 +135,7 @@ public class PantallaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-        ClienteFrecuenteDTO clienteElegido = control.mostrarBuscadorClienteDialog(this);;
+        ClienteFrecuenteDTO clienteElegido = control.mostrarBuscadorClienteDialog(this);
 
         if (clienteElegido != null) {
             control.mostrarFormularioEditarCliente(this, clienteElegido);

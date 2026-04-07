@@ -1,11 +1,8 @@
 
 package org.itson.restaurante.controladores;
 
-import java.awt.Component;
-import java.awt.Frame;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
 import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
 import org.itson.restaurante.negocio.ClienteFrecuenteBO;
@@ -60,26 +57,19 @@ public class ControladorClientes {
         vistaFormulario.setVisible(true);
         
         if (pantallaActual != null) {
-            pantallaActual.setVisible(false);
-            
-            vistaFormulario.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e){
-                    pantallaActual.setVisible(true);
-                }
-            });
-            
+            pantallaActual.dispose(); 
         }
+        
     }
     
     /**
-     * 
-     * @param componentePadre
-     * @return 
+     * Metodo encargado de crear la PantallaBusquedaClienteDialog y hacerla visible,
+     * al finalizar la pantalla recoge al cliente seleccionado dentro del dialog.
+     * @param pantallaActual Pantalla desde donde se invoca el buscador.
+     * @return Regresa el cliente seleccionado en el buscardorCLienteDialog.
      */
-    public ClienteFrecuenteDTO mostrarBuscadorClienteDialog(Component componentePadre) {
-        Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(componentePadre);
-        PantallaBusquedaClienteD dialog = new PantallaBusquedaClienteD(parentFrame, true, this);
+    public ClienteFrecuenteDTO mostrarBuscadorClienteDialog(JFrame pantallaActual) {
+        PantallaBusquedaClienteD dialog = new PantallaBusquedaClienteD(pantallaActual, true, this);
         dialog.setVisible(true);
         return dialog.getClienteSeleccionado();
     }

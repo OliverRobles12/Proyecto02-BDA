@@ -1,5 +1,6 @@
 package org.itson.restaurante.presentacion;
 
+import org.itson.restaurante.controladores.Controlador;
 import javax.swing.JOptionPane;
 import org.itson.restaurante.utilerias.utilerias;
 import javax.swing.SwingUtilities;

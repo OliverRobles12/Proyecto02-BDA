@@ -2,7 +2,7 @@
 package org.itson.restaurante.utilerias;
 
 import javax.swing.JOptionPane;
-import org.itson.restaurante.presentacion.Controlador;
+import org.itson.restaurante.controladores.Controlador;
 
 /**
  *
@@ -238,9 +238,9 @@ public class PanelMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActionPerformed
-//        controlador.getControladorComandas().mostarPantallaComandas(
-//                (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
-//        );
+        controlador.getControladorComandas().mostarPantallaComandas(
+                (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
+        );
     }//GEN-LAST:event_btnComandasActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed

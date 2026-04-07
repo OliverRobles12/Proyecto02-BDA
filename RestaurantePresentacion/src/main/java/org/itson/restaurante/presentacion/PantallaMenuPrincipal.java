@@ -4,6 +4,7 @@
  */
 package org.itson.restaurante.presentacion;
 
+import org.itson.restaurante.controladores.Controlador;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;

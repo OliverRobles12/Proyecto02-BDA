@@ -1,6 +1,7 @@
 
 package org.itson.restaurante.presentacion;
 
+import org.itson.restaurante.controladores.Controlador;
 import org.itson.restaurante.dtos.RolEmpleado;
 import org.itson.restaurante.utilerias.PanelBordeRedondo;
 import org.itson.restaurante.utilerias.utilerias;
@@ -60,7 +61,7 @@ public class PantallaLogin extends javax.swing.JFrame {
 
         btnMesero.addActionListener(e -> {
             Controlador.getIntancia().setRolActual(RolEmpleado.MESERO);
-//            Controlador.getIntancia().getControladorComandas().mostarPantallaComandas(this);
+            Controlador.getIntancia().getControladorComandas().mostarPantallaComandas(this);
         });
         btnAdmin.addActionListener(e -> {
             Controlador.getIntancia().setRolActual(RolEmpleado.ADMINISTRADOR);

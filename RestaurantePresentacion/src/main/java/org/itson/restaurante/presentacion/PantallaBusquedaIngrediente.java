@@ -4,6 +4,7 @@
  */
 package org.itson.restaurante.presentacion;
 
+import org.itson.restaurante.controladores.Controlador;
 import org.itson.restaurante.utilerias.utilerias;
 import org.itson.restaurante.negocio.NegocioException;
 import java.awt.Color;

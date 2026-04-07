@@ -4,7 +4,7 @@
  */
 package org.itson.restaurante.utilerias;
 
-import org.itson.restaurante.presentacion.Controlador;
+import org.itson.restaurante.controladores.Controlador;
 
 /**
  *

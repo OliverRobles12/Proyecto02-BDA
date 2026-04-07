@@ -2,6 +2,11 @@
 package org.itson.restaurante.presentacion;
 
 import java.awt.Color;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.itson.restaurante.controladores.ControladorComandas;
+import org.itson.restaurante.dtos.ComandaDTO;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
@@ -19,14 +24,16 @@ public class PantallaComandas extends javax.swing.JFrame {
     private PanelMenu panelMenu;
     private PanelNavegacionPantallasPrincipales panelNavegacion;
     
+    private ControladorComandas control;
+    
     String placeholder = "Buscar por nombre, numero telefonico o correo..";
     
     /**
      * Creates new form PantallaComanda
      */
-    public PantallaComandas() {
+    public PantallaComandas(ControladorComandas control) {
+        this.control = control;
         initComponents();
-        LlenarTabla();
         
         panelHeader = new PanelHeader();
         panelMenu = new PanelMenu();
@@ -39,7 +46,7 @@ public class PantallaComandas extends javax.swing.JFrame {
         panelNavegacion.setPantallasNavegacion("Comandas", "Lista");
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,11 +99,11 @@ public class PantallaComandas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Folio", "Fecha/Hora", "Mesa", "Cliente", "Total", "Estado"
+                "Folio", "Cliente", "Mesa", "Fecha/Hora", "Total", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -116,9 +123,12 @@ public class PantallaComandas extends javax.swing.JFrame {
             tblComandas.getColumnModel().getColumn(0).setResizable(false);
             tblComandas.getColumnModel().getColumn(1).setResizable(false);
             tblComandas.getColumnModel().getColumn(2).setResizable(false);
+            tblComandas.getColumnModel().getColumn(2).setPreferredWidth(10);
             tblComandas.getColumnModel().getColumn(3).setResizable(false);
             tblComandas.getColumnModel().getColumn(4).setResizable(false);
+            tblComandas.getColumnModel().getColumn(4).setPreferredWidth(20);
             tblComandas.getColumnModel().getColumn(5).setResizable(false);
+            tblComandas.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
         txtFiltro.setForeground(new java.awt.Color(128, 128, 128));
@@ -132,8 +142,13 @@ public class PantallaComandas extends javax.swing.JFrame {
                 txtFiltroFocusLost(evt);
             }
         });
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyPressed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los estados", "Abierta", "Entregada", "Cancelada" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(150, 30));
 
         javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
@@ -199,7 +214,7 @@ public class PantallaComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private void btnNuevaComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaComandaActionPerformed
-        Controlador.getIntancia().abrirFormularioComanda(this);
+        control.mostrarPantallaFomulario(this);
     }//GEN-LAST:event_btnNuevaComandaActionPerformed
 
     private void txtFiltroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusGained
@@ -216,36 +231,38 @@ public class PantallaComandas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtFiltroFocusLost
 
-    private void LlenarTabla() {
+    private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
+        
+    }//GEN-LAST:event_txtFiltroKeyPressed
+
+    public void LlenarTabla(List<ComandaDTO> lista) {
+        
+        DefaultTableModel modelo = (DefaultTableModel) tblComandas.getModel();
+        modelo.setRowCount(0); // Limpiamos la tabla
+        
+        if (lista == null || lista.isEmpty()) {
+            return;
+        }
+        
+        for (ComandaDTO comanda : lista) {
+            Object[] fila = {
+                comanda.getFolio(),
+                comanda.getNombreCompleto(),
+                comanda.getNoMesa(),
+                comanda.getFechaHora(),
+                "$" + comanda.getTotalAcumulado(),
+                comanda.getEstado()
+            };
+            modelo.addRow(fila);;
+        }
         
     }    
     
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaComandas().setVisible(true));
+    public void mostarMensaje(String msj, boolean esError) {
+        int tipo = esError ? JOptionPane.ERROR_MESSAGE : JOptionPane.INFORMATION_MESSAGE;
+        JOptionPane.showMessageDialog(this, msj, "Sistema", tipo);
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetalles;
     private javax.swing.JButton btnNuevaComanda;

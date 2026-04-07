@@ -4,6 +4,7 @@
  */
 package org.itson.restaurante.presentacion;
 
+import org.itson.restaurante.controladores.Controlador;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
