@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package org.itson.restaurante.utilerias;
 
 import org.itson.restaurante.presentacion.Controlador;
@@ -203,7 +200,7 @@ public class PanelMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btnIngredientesActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        controlador.abrirClientes(
+        controlador.getControladorClientes().mostarPantallaClientes(
                 (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
         );
     }//GEN-LAST:event_btnClientesActionPerformed
@@ -215,7 +212,7 @@ public class PanelMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActionPerformed
-        controlador.abrirComandas(
+        controlador.getControladorComandas().mostarPantallaComandas(
                 (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
         );
     }//GEN-LAST:event_btnComandasActionPerformed

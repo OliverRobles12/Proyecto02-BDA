@@ -2,9 +2,8 @@ package org.itson.restaurante.presentacion;
 
 import java.util.List;
 import javax.swing.JFrame;
-import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
+import org.itson.restaurante.controladores.ControladorClientes;
 import org.itson.restaurante.dtos.IngredienteDTO;
-import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
 import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 import org.itson.restaurante.dtos.RolEmpleado;
 import org.itson.restaurante.negocio.ClienteFrecuenteBO;
@@ -28,6 +27,8 @@ public class Controlador {
     private IClienteFrecuenteBO clientesBO;
     private IIngredientesBO ingredientesBO;
 
+    private ControladorClientes controladorClientes;
+    
     private Controlador() {
         this.clientesBO = new ClienteFrecuenteBO();
         this.ingredientesBO = new IngredientesBO();
@@ -46,6 +47,14 @@ public class Controlador {
         return instancia;
     }
 
+    public ControladorClientes getControladorClientes() {
+        if (controladorClientes == null) {
+            controladorClientes = new ControladorClientes();
+        }
+        return controladorClientes;
+    }
+    
+    
     /**
      * Este metodo abre la pantalla del menu principal
      *
@@ -59,42 +68,6 @@ public class Controlador {
         if (pantallaActual != null) {
             pantallaActual.dispose();
         }
-    }
-
-    /**
-     * Este metodo abre la pantalla de clientes
-     *
-     * @param pantallaActual
-     */
-    public void abrirClientes(JFrame pantallaActual) {
-        PantallaCliente cliente = new PantallaCliente();
-        cliente.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-        }
-    }
-
-    /**
-     * Este metodo abre la pantalla del Formulario de registro
-     *
-     * @param pantallaActual la pantalla actual es ocultada temporalmente
-     */
-    public void abrirFomularioCliente(JFrame pantallaActual) {
-        PantallaFormularioCliente formulario = new PantallaFormularioCliente();
-        formulario.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-
-            formulario.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e) {
-                    pantallaActual.setVisible(true);
-                }
-            });
-        }
-        formulario.setVisible(true);
     }
 
     /**
@@ -140,34 +113,7 @@ public class Controlador {
     public void abrirProductos(JFrame pantallaActual) {
 
     }
-/**
- * Este método abre la pantalla de comandas.
- *
- * @param pantallaActual la ventana actual que será cerrada al abrir la nueva
- */
-    public void abrirComandas(JFrame pantallaActual) {
-        PantallaComandas comandas = new PantallaComandas();
-        comandas.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-        }
-
-    }
-/**
- * Este método abre la pantalla del formulario de comandas.
- *
- * @param pantallaActual la ventana actual que será cerrada al abrir la nueva
- */
-    public void abrirFormularioComanda(JFrame pantallaActual) {
-        PantallaFormularioComanda formulario = new PantallaFormularioComanda();
-        formulario.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-        }
-
-    }
+    
 /**
  * Este método abre la pantalla de reportes.
  *
@@ -177,28 +123,6 @@ public class Controlador {
 
     }
 
-    /**
-     * Este metodo abre la pantalla del formulario en modo de edicion y carga
-     * los datos del cliente que se seleccionó.
-     *
-     * @param cliente la DTO con los datos que se van a editar
-     * @param pantallaActual la ventana actual será oculta temporalmente
-     */
-    public void abrirFormularioEditarCliente(ClienteFrecuenteDTO cliente, JFrame pantallaActual) {
-        PantallaFormularioCliente formulario = new PantallaFormularioCliente(cliente);
-        formulario.setVisible(true);
-
-        if (pantallaActual != null) {
-            pantallaActual.dispose();
-
-            formulario.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e) {
-                    pantallaActual.setVisible(true);
-                }
-            });
-        }
-    }
 
     /**
      * Este metodo abre la pantalla del formulario en modo de edicion y carga
@@ -221,57 +145,6 @@ public class Controlador {
                 }
             });
         }
-    }
-
-    /**
-     * Recibe los datos de un nuevo cliente desde el formulario y los envia a la
-     * capa de negocio para su validacion y despues a la capa de persistencia
-     * para que los registre
-     *
-     * @param nuevoCliente es la dto que contiene todos lo datos que se
-     * ingresaron en el formulario
-     * @return devuelve al cliente ya registrado con todos sus atributos
-     * @throws NegocioException Si ocurre un error en la validacion y si la
-     * conexion se rechaza
-     */
-    public ClienteFrecuenteDTO registrarClienteC(NuevoClienteFrecuenteDTO nuevoCliente) throws NegocioException {
-        return this.clientesBO.registrarCliente(nuevoCliente);
-    }
-
-    /**
-     * Envia los datos modificados de un cliente que ya existe a la capa de
-     * negocio para que los vuelva a validar y posteriormente actualiza el
-     * registro en el sistema
-     *
-     * @param clienteActualizado La DTO con los nuevos datos del cliente
-     * ingresados
-     * @return devuelve al cliente con la informacion ya actualizada
-     * @throws NegocioException Si los datos son invalidos o si el cliente no
-     * existe
-     */
-    public ClienteFrecuenteDTO actualizarClienteC(ClienteFrecuenteDTO clienteActualizado) throws NegocioException {
-        return this.clientesBO.actualizarCliente(clienteActualizado);
-
-    }
-/**
- * Consulta todos los clientes frecuentes registrados en el sistema.
- *
- * @return una lista con todos los clientes frecuentes registrados
- * @throws NegocioException si ocurre un error al consultar los clientes
- */
-    public List<ClienteFrecuenteDTO> consultarClientes() throws NegocioException {
-        return this.clientesBO.consultarClientes();
-    }
-/**
- * Consulta los clientes frecuentes que coincidan con el filtro proporcionado.
- *
- * @param filtro texto que se utilizará para buscar clientes por nombre,
- * teléfono o correo
- * @return una lista de clientes que cumplen con el criterio de búsqueda
- * @throws NegocioException si ocurre un error al realizar la consulta
- */
-    public List<ClienteFrecuenteDTO> consultarClientesFiltro(String filtro) throws NegocioException {
-        return this.clientesBO.consultarClienteFiltro(filtro);
     }
 
     /**

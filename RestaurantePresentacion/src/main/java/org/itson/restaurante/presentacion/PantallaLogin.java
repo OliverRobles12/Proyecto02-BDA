@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.dtos.RolEmpleado;
@@ -63,7 +60,7 @@ public class PantallaLogin extends javax.swing.JFrame {
 
         btnMesero.addActionListener(e -> {
             Controlador.getIntancia().setRolActual(RolEmpleado.MESERO);
-            Controlador.getIntancia().abrirComandas(this);
+            Controlador.getIntancia().getControladorComandas().mostarPantallaComandas(this);
         });
         btnAdmin.addActionListener(e -> {
             Controlador.getIntancia().setRolActual(RolEmpleado.ADMINISTRADOR);

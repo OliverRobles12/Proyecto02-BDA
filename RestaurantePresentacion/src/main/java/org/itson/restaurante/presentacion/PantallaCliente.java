@@ -2,7 +2,7 @@ package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
 import org.itson.restaurante.utilerias.utilerias;
-import javax.swing.SwingUtilities;
+import org.itson.restaurante.controladores.ControladorClientes;
 import org.itson.restaurante.utilerias.*;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
@@ -12,10 +12,13 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  */
 public class PantallaCliente extends javax.swing.JFrame {
 
+    private ControladorClientes control;
+    
     /**
      * Creates new form PantallaCliente
      */
-    public PantallaCliente() {
+    public PantallaCliente(ControladorClientes control) {
+        this.control = control;
         initComponents();
         utilerias.aplicarIcono(this);
         //paneles reutilizables
@@ -127,18 +130,14 @@ public class PantallaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
-
-        Controlador.getIntancia().abrirFomularioCliente(this);
+        control.mostrarFormularioNuevoCliente(this);
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
-        PantallaBusquedaClienteD dialogo = new PantallaBusquedaClienteD((java.awt.Frame) SwingUtilities.getWindowAncestor(this), true);
-        dialogo.setVisible(true);
-
-        ClienteFrecuenteDTO clienteElegido = dialogo.getClienteSeleccionado();
+        ClienteFrecuenteDTO clienteElegido = control.mostrarBuscadorClienteDialog(this);;
 
         if (clienteElegido != null) {
-            Controlador.getIntancia().abrirFormularioEditarCliente(clienteElegido, this);
+            control.mostrarFormularioEditarCliente(this, clienteElegido);
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 

@@ -2,6 +2,8 @@ package org.itson.restaurante.dominio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.DiscriminatorColumn;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.itson.restaurante.utilerias.CryptoConverter;
 
@@ -29,16 +32,16 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCliente", nullable = false)
+    @Column(name = "id_cliente", nullable = false)
     private Long id;
 
-    @Column(name = "nombreCliente", nullable = false, length = 100)
+    @Column(name = "nombre_cliente", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "apellidoPaterno", nullable = false, length = 50)
+    @Column(name = "apellido_paterno", nullable = false, length = 50)
     private String apellidoPaterno;
 
-    @Column(name = "apellidoMaterno", nullable = false, length = 50)
+    @Column(name = "apellido_materno", nullable = false, length = 50)
     private String apellidoMaterno;
     
     @Convert(converter = CryptoConverter.class)
@@ -49,8 +52,11 @@ public class Cliente implements Serializable {
     @Column(name = "correo", length = 255)
     private String correo;
 
-    @Column(name = "fechaRegistro", nullable = false)
+    @Column(name = "fecha_registro", nullable = false)
     private LocalDate fechaRegistro;
+    
+    @OneToMany(mappedBy = "cliente")
+    private List<Comanda> comandas = new ArrayList<>();
 
     public Cliente() {
     }
