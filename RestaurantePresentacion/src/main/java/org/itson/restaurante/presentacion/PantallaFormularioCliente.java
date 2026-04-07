@@ -26,6 +26,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
     
     /**
      * Creates new form PantallaFormularioCliente
+     * @param control
      */
     public PantallaFormularioCliente(ControladorClientes control) {
         this.control = control;
@@ -237,6 +238,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         clienteForm = null;
         this.dispose();
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed

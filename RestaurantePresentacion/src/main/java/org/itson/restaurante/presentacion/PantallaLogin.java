@@ -60,7 +60,7 @@ public class PantallaLogin extends javax.swing.JFrame {
 
         btnMesero.addActionListener(e -> {
             Controlador.getIntancia().setRolActual(RolEmpleado.MESERO);
-            Controlador.getIntancia().getControladorComandas().mostarPantallaComandas(this);
+//            Controlador.getIntancia().getControladorComandas().mostarPantallaComandas(this);
         });
         btnAdmin.addActionListener(e -> {
             Controlador.getIntancia().setRolActual(RolEmpleado.ADMINISTRADOR);
