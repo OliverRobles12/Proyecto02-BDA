@@ -4,6 +4,7 @@
  */
 package org.itson.restaurante.utilerias;
 
+import javax.swing.JOptionPane;
 import org.itson.restaurante.presentacion.Controlador;
 
 /**
@@ -32,6 +33,8 @@ public class PanelMenu extends javax.swing.JPanel {
 
         utilerias.estilizarBotonMenu(btnReportes);
         
+        utilerias.estilizarBotonMenu(btnCerrarSesion);
+        
         configurarSegunRol();
     }
 
@@ -48,13 +51,16 @@ public class PanelMenu extends javax.swing.JPanel {
         lblPrincipal = new javax.swing.JLabel();
         lblOperacion = new javax.swing.JLabel();
         lblCatalogo = new javax.swing.JLabel();
-        lblAnalisis = new javax.swing.JLabel();
+        lblSistema = new javax.swing.JLabel();
         btnInicio = new javax.swing.JButton();
         btnIngredientes = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         btnComandas = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
+        lblAnalisis = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         panNavegacion.setBackground(new java.awt.Color(18, 44, 79));
         panNavegacion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -66,22 +72,22 @@ public class PanelMenu extends javax.swing.JPanel {
         lblPrincipal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPrincipal.setForeground(new java.awt.Color(204, 204, 204));
         lblPrincipal.setText("PRINCIPAL");
-        panNavegacion.add(lblPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 21, -1, -1));
+        panNavegacion.add(lblPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         lblOperacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblOperacion.setForeground(new java.awt.Color(204, 204, 204));
         lblOperacion.setText("OPERACIÓN");
-        panNavegacion.add(lblOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 365, -1, -1));
+        panNavegacion.add(lblOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         lblCatalogo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblCatalogo.setForeground(new java.awt.Color(204, 204, 204));
         lblCatalogo.setText("CATÁLOGOS");
-        panNavegacion.add(lblCatalogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 137, -1, -1));
+        panNavegacion.add(lblCatalogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
-        lblAnalisis.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblAnalisis.setForeground(new java.awt.Color(204, 204, 204));
-        lblAnalisis.setText("ANÁLISIS");
-        panNavegacion.add(lblAnalisis, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 481, -1, -1));
+        lblSistema.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblSistema.setForeground(new java.awt.Color(204, 204, 204));
+        lblSistema.setText("SISTEMA");
+        panNavegacion.add(lblSistema, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 520, -1, -1));
 
         btnInicio.setBackground(new java.awt.Color(17, 50, 93));
         btnInicio.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -94,7 +100,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnInicioActionPerformed(evt);
             }
         });
-        panNavegacion.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 53, 212, 44));
+        panNavegacion.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 44));
 
         btnIngredientes.setBackground(new java.awt.Color(17, 50, 93));
         btnIngredientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -107,7 +113,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnIngredientesActionPerformed(evt);
             }
         });
-        panNavegacion.add(btnIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 169, 212, 44));
+        panNavegacion.add(btnIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 220, 44));
 
         btnClientes.setBackground(new java.awt.Color(17, 50, 93));
         btnClientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -120,7 +126,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnClientesActionPerformed(evt);
             }
         });
-        panNavegacion.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 225, 212, 44));
+        panNavegacion.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 220, 44));
 
         btnProductos.setBackground(new java.awt.Color(17, 50, 93));
         btnProductos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -133,7 +139,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnProductosActionPerformed(evt);
             }
         });
-        panNavegacion.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 281, 218, 44));
+        panNavegacion.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 218, 44));
 
         btnComandas.setBackground(new java.awt.Color(17, 50, 93));
         btnComandas.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -147,7 +153,21 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnComandasActionPerformed(evt);
             }
         });
-        panNavegacion.add(btnComandas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 397, 212, 44));
+        panNavegacion.add(btnComandas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 220, 44));
+
+        btnCerrarSesion.setBackground(new java.awt.Color(17, 50, 93));
+        btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesion.setText("Cerrar Sesion");
+        btnCerrarSesion.setToolTipText("");
+        btnCerrarSesion.setBorder(null);
+        btnCerrarSesion.setBorderPainted(false);
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
+        panNavegacion.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 218, 44));
 
         btnReportes.setBackground(new java.awt.Color(17, 50, 93));
         btnReportes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -161,7 +181,13 @@ public class PanelMenu extends javax.swing.JPanel {
                 btnReportesActionPerformed(evt);
             }
         });
-        panNavegacion.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 513, 218, 44));
+        panNavegacion.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 218, 44));
+
+        lblAnalisis.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblAnalisis.setForeground(new java.awt.Color(204, 204, 204));
+        lblAnalisis.setText("ANÁLISIS");
+        panNavegacion.add(lblAnalisis, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, -1, -1));
+        panNavegacion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -220,24 +246,39 @@ public class PanelMenu extends javax.swing.JPanel {
         );
     }//GEN-LAST:event_btnComandasActionPerformed
 
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog((javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this),
+        "¿Estás seguro que deseas cerrar sesión?",
+        "Cerrar sesión",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            Controlador.getIntancia().cerrarSesion((javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this));
+        }
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        controlador.abrirReportes(
+       controlador.abrirReportes(
                 (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
         );
     }//GEN-LAST:event_btnReportesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnComandas;
     private javax.swing.JButton btnIngredientes;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnReportes;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAnalisis;
     private javax.swing.JLabel lblCatalogo;
     private javax.swing.JLabel lblOperacion;
     private javax.swing.JLabel lblPrincipal;
+    private javax.swing.JLabel lblSistema;
     private javax.swing.JPanel panNavegacion;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,7 +51,6 @@ public class Controlador {
      *
      * @param pantallaActual
      */
-
     public void abrirMenuPrincipal(JFrame pantallaActual) {
         PantallaMenuPrincipal menu = new PantallaMenuPrincipal();
         menu.setVisible(true);
@@ -118,11 +117,13 @@ public class Controlador {
         }
         formulario.setVisible(true);
     }
-/**
- * Este método abre la pantalla de ingredientes.
- *
- * @param pantallaActual la ventana actual que será cerrada al abrir la nueva
- */
+
+    /**
+     * Este método abre la pantalla de ingredientes.
+     *
+     * @param pantallaActual la ventana actual que será cerrada al abrir la
+     * nueva
+     */
     public void abrirIngredientes(JFrame pantallaActual) {
         PantallaIngredientes ingrediente = new PantallaIngredientes();
         ingrediente.setVisible(true);
@@ -132,19 +133,23 @@ public class Controlador {
         }
 
     }
-/**
- * Este método abre la pantalla de productos.
- *
- * @param pantallaActual la ventana actual que será cerrada al abrir la nueva
- */
+
+    /**
+     * Este método abre la pantalla de productos.
+     *
+     * @param pantallaActual la ventana actual que será cerrada al abrir la
+     * nueva
+     */
     public void abrirProductos(JFrame pantallaActual) {
 
     }
-/**
- * Este método abre la pantalla de comandas.
- *
- * @param pantallaActual la ventana actual que será cerrada al abrir la nueva
- */
+
+    /**
+     * Este método abre la pantalla de comandas.
+     *
+     * @param pantallaActual la ventana actual que será cerrada al abrir la
+     * nueva
+     */
     public void abrirComandas(JFrame pantallaActual) {
         PantallaComandas comandas = new PantallaComandas();
         comandas.setVisible(true);
@@ -154,11 +159,13 @@ public class Controlador {
         }
 
     }
-/**
- * Este método abre la pantalla del formulario de comandas.
- *
- * @param pantallaActual la ventana actual que será cerrada al abrir la nueva
- */
+
+    /**
+     * Este método abre la pantalla del formulario de comandas.
+     *
+     * @param pantallaActual la ventana actual que será cerrada al abrir la
+     * nueva
+     */
     public void abrirFormularioComanda(JFrame pantallaActual) {
         PantallaFormularioComanda formulario = new PantallaFormularioComanda();
         formulario.setVisible(true);
@@ -168,11 +175,13 @@ public class Controlador {
         }
 
     }
-/**
- * Este método abre la pantalla de reportes.
- *
- * @param pantallaActual la ventana actual que será cerrada al abrir la nueva
- */
+
+    /**
+     * Este método abre la pantalla de reportes.
+     *
+     * @param pantallaActual la ventana actual que será cerrada al abrir la
+     * nueva
+     */
     public void abrirReportes(JFrame pantallaActual) {
 
     }
@@ -253,23 +262,26 @@ public class Controlador {
         return this.clientesBO.actualizarCliente(clienteActualizado);
 
     }
-/**
- * Consulta todos los clientes frecuentes registrados en el sistema.
- *
- * @return una lista con todos los clientes frecuentes registrados
- * @throws NegocioException si ocurre un error al consultar los clientes
- */
+
+    /**
+     * Consulta todos los clientes frecuentes registrados en el sistema.
+     *
+     * @return una lista con todos los clientes frecuentes registrados
+     * @throws NegocioException si ocurre un error al consultar los clientes
+     */
     public List<ClienteFrecuenteDTO> consultarClientes() throws NegocioException {
         return this.clientesBO.consultarClientes();
     }
-/**
- * Consulta los clientes frecuentes que coincidan con el filtro proporcionado.
- *
- * @param filtro texto que se utilizará para buscar clientes por nombre,
- * teléfono o correo
- * @return una lista de clientes que cumplen con el criterio de búsqueda
- * @throws NegocioException si ocurre un error al realizar la consulta
- */
+
+    /**
+     * Consulta los clientes frecuentes que coincidan con el filtro
+     * proporcionado.
+     *
+     * @param filtro texto que se utilizará para buscar clientes por nombre,
+     * teléfono o correo
+     * @return una lista de clientes que cumplen con el criterio de búsqueda
+     * @throws NegocioException si ocurre un error al realizar la consulta
+     */
     public List<ClienteFrecuenteDTO> consultarClientesFiltro(String filtro) throws NegocioException {
         return this.clientesBO.consultarClienteFiltro(filtro);
     }
@@ -290,94 +302,114 @@ public class Controlador {
         return this.ingredientesBO.registrarIngrediente(nuevoIngrediente);
     }
 
-/**
- * Envia los datos modificados de un ingrediente que ya existe a la capa de
- * negocio para que los vuelva a validar y posteriormente actualiza el
- * registro en el sistema.
- *
- * @param ingredienteActualizado La DTO con los nuevos datos del ingrediente
- * ingresados
- * @return devuelve el ingrediente con la informacion ya actualizada
- * @throws NegocioException Si los datos son invalidos o si el ingrediente no
- * existe
- */
+    /**
+     * Envia los datos modificados de un ingrediente que ya existe a la capa de
+     * negocio para que los vuelva a validar y posteriormente actualiza el
+     * registro en el sistema.
+     *
+     * @param ingredienteActualizado La DTO con los nuevos datos del ingrediente
+     * ingresados
+     * @return devuelve el ingrediente con la informacion ya actualizada
+     * @throws NegocioException Si los datos son invalidos o si el ingrediente
+     * no existe
+     */
     public IngredienteDTO actualizarIngrediente(IngredienteDTO ingredienteActualizado) throws NegocioException {
         return this.ingredientesBO.actualizarIngrediente(ingredienteActualizado);
 
     }
 
-/**
- * Envia los datos de un ingrediente existente a la capa de negocio para
- * realizar su eliminacion logica o actualizacion de estado dentro del sistema.
- *
- * @param ingredienteElegido La DTO del ingrediente que se desea eliminar
- * @return devuelve el ingrediente con la informacion ya actualizada
- * @throws NegocioException Si los datos son invalidos o si el ingrediente no
- * existe
- */
+    /**
+     * Envia los datos de un ingrediente existente a la capa de negocio para
+     * realizar su eliminacion logica o actualizacion de estado dentro del
+     * sistema.
+     *
+     * @param ingredienteElegido La DTO del ingrediente que se desea eliminar
+     * @return devuelve el ingrediente con la informacion ya actualizada
+     * @throws NegocioException Si los datos son invalidos o si el ingrediente
+     * no existe
+     */
     public IngredienteDTO eliminarIngrediente(IngredienteDTO ingredienteElegido) throws NegocioException {
         return this.ingredientesBO.eliminarIngrediente(ingredienteElegido);
 
     }
-/**
- * Consulta todos los ingredientes registrados en el sistema.
- *
- * @return una lista con todos los ingredientes registrados
- * @throws NegocioException si ocurre un error al consultar los ingredientes
- */
+
+    /**
+     * Consulta todos los ingredientes registrados en el sistema.
+     *
+     * @return una lista con todos los ingredientes registrados
+     * @throws NegocioException si ocurre un error al consultar los ingredientes
+     */
     public List<IngredienteDTO> consultarIngredientes() throws NegocioException {
         return this.ingredientesBO.consultarIngredientes();
     }
-/**
- * Consulta los ingredientes que coincidan con el filtro proporcionado.
- *
- * @param filtro texto que se utilizará para buscar ingredientes por nombre o
- * unidad de medida
- * @return una lista de ingredientes que cumplen con el criterio de búsqueda
- * @throws NegocioException si ocurre un error al realizar la consulta
- */
+
+    /**
+     * Consulta los ingredientes que coincidan con el filtro proporcionado.
+     *
+     * @param filtro texto que se utilizará para buscar ingredientes por nombre
+     * o unidad de medida
+     * @return una lista de ingredientes que cumplen con el criterio de búsqueda
+     * @throws NegocioException si ocurre un error al realizar la consulta
+     */
     public List<IngredienteDTO> consultarIngredientesFiltro(String filtro) throws NegocioException {
         return this.ingredientesBO.consultarIngredientesFiltro(filtro);
     }
 
     //METODOS LOGIN
+    public void cerrarSesion(JFrame pantallaActual) {
+        this.rolActual = null; // limpiar el rol
+        abrirLogin(pantallaActual);
+    }
+
+    public void abrirLogin(JFrame pantallaActual) {
+        PantallaLogin login = new PantallaLogin();
+        login.setVisible(true);
+        if (pantallaActual != null) {
+            pantallaActual.dispose();
+        }
+    }
+
     /**
-    * Obtiene el rol del empleado que ha iniciado sesión actualmente.
-    *
-    * @return el rol actual del empleado en el sistema
-    */
+     * Obtiene el rol del empleado que ha iniciado sesión actualmente.
+     *
+     * @return el rol actual del empleado en el sistema
+     */
     public RolEmpleado getRolActual() {
         return rolActual;
     }
-/**
- * Establece el rol del empleado que ha iniciado sesión en el sistema.
- *
- * @param rolActual el rol que se asignará como actual
- */
+
+    /**
+     * Establece el rol del empleado que ha iniciado sesión en el sistema.
+     *
+     * @param rolActual el rol que se asignará como actual
+     */
     public void setRolActual(RolEmpleado rolActual) {
         this.rolActual = rolActual;
     }
-/**
- * Verifica si el rol actual corresponde a un administrador.
- *
- * @return true si el rol actual es administrador, false en caso contrario
- */
+
+    /**
+     * Verifica si el rol actual corresponde a un administrador.
+     *
+     * @return true si el rol actual es administrador, false en caso contrario
+     */
     public boolean esAdministrador() {
         return rolActual == RolEmpleado.ADMINISTRADOR;
     }
-/**
- * Verifica si el rol actual corresponde a un mesero.
- *
- * @return true si el rol actual es mesero, false en caso contrario
- */
+
+    /**
+     * Verifica si el rol actual corresponde a un mesero.
+     *
+     * @return true si el rol actual es mesero, false en caso contrario
+     */
     public boolean esMesero() {
         return rolActual == RolEmpleado.MESERO;
     }
-/**
- * Verifica si actualmente no hay ningún rol asignado.
- *
- * @return true si no existe un rol actual, false en caso contrario
- */
+
+    /**
+     * Verifica si actualmente no hay ningún rol asignado.
+     *
+     * @return true si no existe un rol actual, false en caso contrario
+     */
     public boolean noRol() {
         return rolActual == null;
     }

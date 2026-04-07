@@ -68,9 +68,13 @@ public class PanelHeader extends javax.swing.JPanel {
         }
     }
     private void btnLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoActionPerformed
-       controlador.abrirMenuPrincipal(
+       try{
+        controlador.abrirMenuPrincipal(
                 (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this)
         );
+       }catch(ClassCastException ex){ //Si es un dialog no permite navegar a Menu Principal 
+           
+       }
     }//GEN-LAST:event_btnLogoActionPerformed
 
     

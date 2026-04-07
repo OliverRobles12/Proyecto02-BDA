@@ -22,8 +22,14 @@ import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
+ * Pantalla de diálogo que permite buscar y seleccionar un ingrediente
+ * registrado en el sistema.
+ *
+ * Muestra una tabla con los ingredientes disponibles, permite filtrarlos por
+ * nombre o unidad de medida y devuelve el ingrediente seleccionado.
  *
  * @author joset
+ *
  */
 public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
 
@@ -32,8 +38,20 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
      */
     private IngredienteDTO ingredienteSeleccionado = null;
     private List<IngredienteDTO> listaIngredientes = new ArrayList<>();
+    //es una bandedr que alerta si ya salio una alerta 
     private boolean alertaSinResultados = false;
 
+    /**
+     * Crea una nueva pantalla de búsqueda de ingredientes.
+     *
+     * Inicializa los componentes gráficos, configura los paneles de encabezado
+     * y navegación, aplica estilos visuales y carga los ingredientes en la
+     * tabla.
+     *
+     * @param parent Ventana padre desde la cual se abre el diálogo
+     * @param modal Indica si el diálogo debe bloquear la interacción con la
+     * ventana padre mientras esté abierto
+     */
     public PantallaBusquedaIngrediente(java.awt.Frame parent, boolean modal) {
 
         super(parent, modal);
@@ -203,12 +221,21 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Cancela la selección actual y cierra la ventana.
+     *
+     * @param evt Evento de acción generado por el botón cancelar
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         ingredienteSeleccionado = null;
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+    /**
+     * Limpia el texto de ayuda del campo de búsqueda cuando el usuario obtiene
+     * el foco sobre él.
+     *
+     * @param evt Evento de foco ganado
+     */
     private void txtBusquedaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusGained
         if (this.txtBusqueda.getText().equals("Buscar por nombre o unidad...")) {
 
@@ -217,7 +244,12 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
             this.txtBusqueda.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtBusquedaFocusGained
-
+    /**
+     * Restaura el texto de ayuda en el campo de búsqueda si el usuario lo deja
+     * vacío al perder el foco.
+     *
+     * @param evt Evento de foco perdido
+     */
     private void txtBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBusquedaFocusLost
         if (this.txtBusqueda.getText().isEmpty()) {
 
@@ -230,15 +262,25 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
 
     }//GEN-LAST:event_txtBusquedaActionPerformed
-
+    /**
+     * Permite seleccionar un ingrediente mediante doble clic en la tabla.
+     *
+     * @param evt Evento del mouse generado sobre la tabla
+     */
     private void tblIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIngredientesMouseClicked
         if (evt.getClickCount() == 2) {
 
             seleccionarIngredienteTabla();
+            this.dispose();
 
         }
     }//GEN-LAST:event_tblIngredientesMouseClicked
-
+    /**
+     * Valida que exista una fila seleccionada en la tabla, guarda el
+     * ingrediente seleccionado y cierra la ventana.
+     *
+     * @param evt Evento de acción generado por el botón seleccionar
+     */
     private void btnSeleccionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClienteActionPerformed
         if (tblIngredientes.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this,
@@ -250,7 +292,12 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         seleccionarIngredienteTabla();
         this.dispose();
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
-
+    /**
+     * Realiza la búsqueda de ingredientes conforme el usuario escribe en el
+     * campo de búsqueda y actualiza la tabla con los resultados encontrados.
+     *
+     * @param evt Evento de tecla presionada
+     */
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         String textoBusqueda = this.txtBusqueda.getText().trim();
         try {
@@ -275,7 +322,10 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
                     JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
-
+    /**
+     * Inicializa la tabla de ingredientes configurando sus columnas, modelo,
+     * renderizado, modo de selección y datos iniciales.
+     */
     private void inicializarTabla() {
 
         String[] columnas = {"Id", "Nombre", "Unidad", "Stock", "Imagen"};
@@ -306,6 +356,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         };
 
         tblIngredientes.setModel(modelo);
+        tblIngredientes.getTableHeader().setReorderingAllowed(false);
         tblIngredientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblIngredientes.setRowSelectionAllowed(true);
 
@@ -317,10 +368,15 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
             listaIngredientes = Controlador.getIntancia().consultarIngredientes();
             cargarIngredientes(listaIngredientes);
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage(),"Aviso",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
 
+    /**
+     * Carga en la tabla la lista de ingredientes recibida.
+     *
+     * @param ingredientes Lista de ingredientes que se mostrarán en la tabla
+     */
     private void cargarIngredientes(List<IngredienteDTO> ingredientes) {
 
         DefaultTableModel modelo = (DefaultTableModel) this.tblIngredientes.getModel();
@@ -340,6 +396,14 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         this.listaIngredientes = ingredientes;
     }
 
+    /**
+     * Convierte un arreglo de bytes en un icono escalado para mostrarse en la
+     * tabla. Si la imagen es nula, se utiliza una imagen por defecto.
+     *
+     * @param imagenBytes Arreglo de bytes que representa la imagen del
+     * ingrediente
+     * @return Imagen convertida y escalada como {@link ImageIcon}
+     */
     private ImageIcon convertirImagen(byte[] imagenBytes) {
         ImageIcon icono;
         if (imagenBytes == null) {
@@ -351,6 +415,10 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         return new ImageIcon(imgEscalada);
     }
 
+    /**
+     * Obtiene el ingrediente correspondiente a la fila seleccionada en la tabla
+     * y lo guarda como ingrediente seleccionado.
+     */
     private void seleccionarIngredienteTabla() {
         int fila = this.tblIngredientes.getSelectedRow();
         if (fila >= 0) {
@@ -358,6 +426,11 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Devuelve el ingrediente seleccionado por el usuario.
+     *
+     * @return Ingrediente seleccionado, o {@code null} si no se eligió ninguno
+     */
     public IngredienteDTO getIngredienteSeleccionado() {
         return this.ingredienteSeleccionado;
     }

@@ -226,7 +226,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         if (evt.getClickCount() == 2) {
 
             seleccionarClienteTabla();
-
+            this.dispose();
         }
     }//GEN-LAST:event_tblClientesMouseClicked
 
@@ -242,6 +242,12 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
 
+/**
+ * Realiza la búsqueda de clientes conforme el usuario escribe en el campo
+ * de búsqueda y actualiza la tabla con los resultados encontrados.
+ * 
+ * @param evt Evento de tecla presionada
+ */
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         String textoBusqueda = this.txtBusqueda.getText().trim();
         try {
