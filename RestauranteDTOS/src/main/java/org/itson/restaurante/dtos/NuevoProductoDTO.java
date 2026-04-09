@@ -19,6 +19,10 @@ public class NuevoProductoDTO {
     private byte[] imagen;
     private List<IngredienteRecetaDTO> receta;
 
+    public NuevoProductoDTO() {
+    }
+
+    
     public NuevoProductoDTO(String nombre, Double precio, TipoProducto tipoProducto, String descripcion, byte[] imagen, List<IngredienteRecetaDTO> receta) {
         this.nombre = nombre;
         this.precio = precio;

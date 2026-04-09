@@ -30,9 +30,9 @@ import org.itson.restaurante.dtos.ProductoActualizadoDTO;
  *
  * @author juanl
  */
-public class ProductosDAO implements IProductosDAO{
+public class ProductoDAO implements IProductoDAO{
 
-    private static final Logger LOGGER = Logger.getLogger(ProductosDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ProductoDAO.class.getName());
 
     
     /**
@@ -160,7 +160,7 @@ public class ProductosDAO implements IProductosDAO{
      * @throws PersistenciaException Si ocurre un error al realizar la consulta
      */
     @Override
-    public List<Producto> ConsultarProductos() throws PersistenciaException {
+    public List<Producto> consultarProductos() throws PersistenciaException {
         EntityManager entityManager = null;
         
         try{
@@ -193,7 +193,7 @@ public class ProductosDAO implements IProductosDAO{
      * @throws PersistenciaException Si ocurre un error en la ejecucion del Criteria query
      */
     @Override
-    public List<Producto> ConsultarProductosFiltro(String nombre, TipoProducto categoria) throws PersistenciaException {
+    public List<Producto> consultarProductosFiltro(String nombre, TipoProducto categoria) throws PersistenciaException {
        EntityManager entityManager = null; 
        try{
             entityManager = ManejadorConexiones.crearEntityManager();
@@ -239,7 +239,7 @@ public class ProductosDAO implements IProductosDAO{
      * @throws PersistenciaException Si hay un error en la consulta
      */
     @Override
-    public Producto ProductoExistente(String nombre) throws PersistenciaException {
+    public Producto productoExistente(String nombre) throws PersistenciaException {
         EntityManager entityManager = null; 
         try{
             entityManager = ManejadorConexiones.crearEntityManager();
@@ -274,7 +274,7 @@ public class ProductosDAO implements IProductosDAO{
      * @throws PersistenciaException Si el producto no existe
      */
     @Override
-    public void CambiarEstadoProducto(Long id) throws PersistenciaException {
+    public void cambiarEstadoProducto(Long id) throws PersistenciaException {
         EntityManager entityManager = null; 
         try{
             entityManager = ManejadorConexiones.crearEntityManager();

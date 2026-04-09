@@ -15,18 +15,18 @@ import org.itson.restaurante.dtos.ProductoActualizadoDTO;
  *
  * @author juanl
  */
-public interface IProductosDAO {
+public interface IProductoDAO {
     
     public Producto registrarProducto (NuevoProductoDTO nuevoProducto) throws PersistenciaException;
     
     public Producto actualizarProducto (ProductoActualizadoDTO  productoActualizado)throws PersistenciaException;
     
-    public List<Producto> ConsultarProductos () throws PersistenciaException;
+    public List<Producto> consultarProductos () throws PersistenciaException;
     
-    public List<Producto> ConsultarProductosFiltro (String nombre, TipoProducto categoria) throws PersistenciaException;
+    public List<Producto> consultarProductosFiltro (String nombre, TipoProducto categoria) throws PersistenciaException;
     
-    public Producto ProductoExistente(String nombre)throws PersistenciaException;
+    public Producto productoExistente(String nombre)throws PersistenciaException;
     
-    public void CambiarEstadoProducto(Long id) throws PersistenciaException;
+    public void cambiarEstadoProducto(Long id) throws PersistenciaException;
     
 }
