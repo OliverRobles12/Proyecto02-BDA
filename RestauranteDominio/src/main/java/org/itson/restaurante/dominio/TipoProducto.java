@@ -9,7 +9,7 @@ package org.itson.restaurante.dominio;
  * @author juanl
  */
 public enum TipoProducto {
-    platillo,
-    bebida,
-    postre
+    PLATILLO,
+    BEBIDA,
+    POSTRE
 }

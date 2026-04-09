@@ -131,6 +131,14 @@ public class Producto implements Serializable {
         this.imagen = imagen;
     }
 
+    public List<ProductoIngrediente> getReceta() {
+        return receta;
+    }
+
+    public void setReceta(List<ProductoIngrediente> receta) {
+        this.receta = receta;
+    }
+
     
    
     

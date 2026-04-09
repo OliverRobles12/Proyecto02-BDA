@@ -31,7 +31,7 @@ public class ProductoIngrediente implements Serializable {
     private Long id;
 
     @Column(name = "cantidad", nullable = false)
-    private Integer cantidad;
+    private Double cantidad;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idProducto", nullable = false)
@@ -43,7 +43,7 @@ public class ProductoIngrediente implements Serializable {
 
     public ProductoIngrediente() {}
 
-    public ProductoIngrediente(Integer cantidad) {
+    public ProductoIngrediente(Double cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -55,11 +55,11 @@ public class ProductoIngrediente implements Serializable {
         this.id = id;
     }
 
-    public Integer getCantidad() {
+    public Double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
 
