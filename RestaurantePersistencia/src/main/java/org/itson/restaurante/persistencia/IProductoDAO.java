@@ -25,6 +25,8 @@ public interface IProductoDAO {
     
     public List<Producto> consultarProductosFiltro (String nombre, TipoProducto categoria) throws PersistenciaException;
     
+    public Producto consultarProductoPorId(Long id) throws PersistenciaException;
+    
     public Producto productoExistente(String nombre)throws PersistenciaException;
     
     public void cambiarEstadoProducto(Long id) throws PersistenciaException;

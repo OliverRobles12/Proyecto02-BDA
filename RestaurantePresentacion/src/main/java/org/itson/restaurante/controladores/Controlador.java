@@ -2,6 +2,7 @@ package org.itson.restaurante.controladores;
 
 import javax.swing.JFrame;
 import org.itson.restaurante.dtos.RolEmpleado;
+import org.itson.restaurante.presentacion.PantallaBusquedaIngrediente;
 import org.itson.restaurante.presentacion.PantallaFormularioIngrediente;
 import org.itson.restaurante.presentacion.PantallaIngredientes;
 import org.itson.restaurante.presentacion.PantallaLogin;
@@ -20,6 +21,7 @@ public class Controlador {
     private RolEmpleado rolActual;
     private static Controlador instancia;
 
+    private ControladorProductos controladorProducos;
     private ControladorComandas controladorComandas;
     private ControladorClientes controladorClientes;
 
@@ -52,6 +54,13 @@ public class Controlador {
             controladorComandas = new ControladorComandas();
         }
         return controladorComandas;
+    }
+    
+    public ControladorProductos getControladorProductos(){
+        if(controladorProducos == null){
+            controladorProducos = new ControladorProductos();
+        }
+        return controladorProducos;
     }
 
     /**
@@ -104,6 +113,16 @@ public class Controlador {
             pantallaActual.dispose();
         }
 
+    }
+    
+    public void abrirBusquedaIngredientes(JFrame pantallaActual){
+        PantallaBusquedaIngrediente busqueda = new PantallaBusquedaIngrediente(pantallaActual, true);
+        busqueda.setModal(true);
+        busqueda.setVisible(true);
+        
+        if (pantallaActual != null) {
+            pantallaActual.dispose();
+        }
     }
 
     /**

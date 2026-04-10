@@ -5,10 +5,12 @@
 package org.itson.restaurante.negocio;
 
 import java.util.List;
+import org.itson.restaurante.dominio.Producto;
 import org.itson.restaurante.dtos.NuevoProductoDTO;
 import org.itson.restaurante.dtos.ProductoActualizadoDTO;
 import org.itson.restaurante.dtos.ProductoDTO;
 import org.itson.restaurante.dtos.TipoProducto;
+import org.itson.restaurante.persistencia.PersistenciaException;
 
 /**
  *
@@ -23,6 +25,8 @@ public interface IProductoBO {
     public List<ProductoDTO> consultarProductos() throws NegocioException;
     
     public List<ProductoDTO> consultarProductosFiltro(String nombre, TipoProducto categoria) throws NegocioException;
+    
+    public Producto consultarProductoPorId(Long id) throws NegocioException;
     
     public ProductoDTO productoExistente(String nombre) throws NegocioException;
     

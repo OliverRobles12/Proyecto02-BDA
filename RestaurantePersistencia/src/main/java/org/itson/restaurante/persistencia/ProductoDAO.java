@@ -229,6 +229,31 @@ public class ProductoDAO implements IProductoDAO{
         }
     
     }
+    
+    @Override
+    public Producto consultarProductoPorId(Long id) throws PersistenciaException {
+        EntityManager entityManager = null; 
+        try {
+            entityManager = ManejadorConexiones.crearEntityManager();
+            
+            Producto producto = entityManager.find(Producto.class, id);
+            
+            if (producto == null) {
+                throw new PersistenciaException("No se encontró ningún producto con el ID: " + id);
+            }
+            
+            return producto;
+            
+        } catch(PersistenceException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new PersistenciaException("Error al conectar con la base de datos", ex);
+            
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
 
     
     /**

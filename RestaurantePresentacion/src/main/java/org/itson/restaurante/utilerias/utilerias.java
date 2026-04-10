@@ -208,6 +208,39 @@ public class utilerias {
         }
     });
     }
+    
+    public static void estilizarTablaProductos(JTable tbl) {
+        
+        tbl.setBackground(Color.WHITE);
+        tbl.setGridColor(new Color(220, 220, 220));
+        tbl.getTableHeader().setBackground(new Color(18, 44, 79));
+        tbl.getTableHeader().setForeground(Color.WHITE);
+        tbl.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 20));
+        tbl.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        
+        tbl.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                setHorizontalAlignment(CENTER);
+                setVerticalAlignment(CENTER);
+                
+                if (isSelected) {
+                    c.setBackground(new Color(18, 44, 79));
+                    c.setForeground(Color.WHITE);
+                } else {
+                    c.setBackground(Color.WHITE);
+                    c.setForeground(new Color(18, 44, 79));
+                }
+                return c;
+            }
+        });
+        
+        
+    }
 
     /**
      * Aplica un estilo a un botón sin fondo, con colores personalizados y

@@ -15,6 +15,7 @@ import org.itson.restaurante.dtos.ProductoDTO;
 import org.itson.restaurante.dtos.TipoProducto;
 import org.itson.restaurante.persistencia.IProductoDAO;
 import org.itson.restaurante.persistencia.PersistenciaException;
+import org.itson.restaurante.persistencia.ProductoDAO;
 
 /**
  *
@@ -25,9 +26,9 @@ public class ProductoBO implements IProductoBO{
     private final IProductoDAO productoDAO;
     private final ProductoAProductoDTO adapter;
 
-    public ProductoBO(IProductoDAO productoDAO, ProductoAProductoDTO adapter) {
-        this.productoDAO = productoDAO;
-        this.adapter = adapter;
+    public ProductoBO() {
+        this.productoDAO = new ProductoDAO(); 
+        this.adapter = new ProductoAProductoDTO();
     }
 
     
@@ -186,6 +187,19 @@ public class ProductoBO implements IProductoBO{
             throw new NegocioException("Error al cambiar el estado del producto.", ex);
         }
         
+    }
+
+    @Override
+    public Producto consultarProductoPorId(Long id) throws NegocioException {
+         if (id == null) {
+            throw new NegocioException("Se requiere el ID del producto para buscarlo", null);
+        }
+        try {
+            return productoDAO.consultarProductoPorId(id);
+            
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al cambiar el estado del producto.", ex);
+        }
     }
     
 }
