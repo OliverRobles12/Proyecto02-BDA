@@ -31,9 +31,7 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
 
     ControladorClientes control;
     
-    public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal, ControladorClientes control) {
-        this.control = control;
-        
+    public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         

@@ -4,6 +4,7 @@ import org.itson.restaurante.controladores.Controlador;
 import javax.swing.JOptionPane;
 import org.itson.restaurante.utilerias.utilerias;
 import javax.swing.SwingUtilities;
+import org.itson.restaurante.controladores.ControladorIngrediente;
 import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.utilerias.PanelHeader;
@@ -16,7 +17,7 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  * @author joset
  */
 public class PantallaIngredientes extends javax.swing.JFrame {
-
+     private ControladorIngrediente control;
     /**
      * Creates new form PantallaCliente
      */
@@ -166,7 +167,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         IngredienteDTO ingrediente = dialogo.getIngredienteSeleccionado();
 
         if (ingrediente != null) {
-            Controlador.getIntancia().abrirFormularioEditarIngrediente(ingrediente, this);
+            control.abrirFormularioEditarIngrediente(ingrediente, this);
         }
     }//GEN-LAST:event_btnEditarIngredienteActionPerformed
 
@@ -178,7 +179,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
 
         if (ingrediente != null) {
             try {
-               IngredienteDTO ingredienteEliminado = Controlador.getIntancia().eliminarIngrediente(ingrediente);
+               IngredienteDTO ingredienteEliminado = control.eliminarIngrediente(ingrediente);
                 JOptionPane.showMessageDialog(this,"Se elimino el ingrediente: "+ ingredienteEliminado.getNombre(),"Ingrediente Eliminado",JOptionPane.INFORMATION_MESSAGE);
             } catch (NegocioException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);

@@ -161,7 +161,7 @@ public class IngredientesBO implements IIngredientesBO {
     public IngredienteDTO eliminarIngrediente(IngredienteDTO ingrediente) throws NegocioException {
         if (ingrediente.getStock() != 0) {
             throw new NegocioException("No es posible eliminar un ingrediente con stock disponible", null);
-        }
+        }//TODO
         
         //si pertenece a un producto no se puede eliminar
 //        if () { 

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import org.itson.restaurante.dtos.ComandaDTO;
 import org.itson.restaurante.negocio.ComandaBO;
+import org.itson.restaurante.negocio.IComandaBO;
 import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.presentacion.PantallaComandas;
 import org.itson.restaurante.presentacion.PantallaFormularioComanda;
@@ -15,9 +16,11 @@ import org.itson.restaurante.presentacion.PantallaFormularioComanda;
  */
 public class ControladorComandas {
 
-    private ComandaBO comandaBO = new ComandaBO();;
+    private IComandaBO comandaBO ;
     
     public ControladorComandas() {
+        this.comandaBO = new ComandaBO();
+        
     }
     
     public void mostarPantallaComandas(JFrame pantallaActual) {

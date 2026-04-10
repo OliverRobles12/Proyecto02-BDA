@@ -12,6 +12,7 @@ import org.itson.restaurante.utilerias.utilerias;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.itson.restaurante.controladores.ControladorIngrediente;
 import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 import org.itson.restaurante.dtos.UnidadMedidaDTO;
@@ -25,15 +26,17 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  * @author joset
  */
 public class PantallaFormularioIngrediente extends javax.swing.JFrame {
+
     private IngredienteDTO ingredienteForm = null;
     private byte[] imagen;
+    private ControladorIngrediente control;
 
     /**
      * Creates new form PantallaFormularioCliente
      */
     public PantallaFormularioIngrediente() {
         initComponents();
-        
+
         utilerias.aplicarIcono(this);
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
@@ -48,7 +51,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
         utilerias.estilizarBotonPrimario(btnGuardarIngrediente);
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
-        
+
         utilerias.estilizarBotonPrimario(btnExaminarImagen);
 
         btnGuardarIngrediente.setVisible(true);
@@ -78,7 +81,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
         utilerias.estilizarBotonPrimario(btnGuardarIngrediente);
 
         utilerias.estilizarBotonSinFondo(btnCancelar);
-        
+
         utilerias.estilizarBotonPrimario(btnExaminarImagen);
 
         btnGuardarIngrediente.setVisible(false);
@@ -87,7 +90,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
         cboUnidadMedida.addItem(UnidadMedidaDTO.PIEZAS);
         cboUnidadMedida.addItem(UnidadMedidaDTO.GRAMOS);
         cboUnidadMedida.addItem(UnidadMedidaDTO.MILILITROS);
-        
+
         this.setLocationRelativeTo(null);
 
         this.ingredienteForm = ingrediente;
@@ -296,9 +299,9 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
 
         if (nombre.isEmpty() || stockStr.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Nombre y stock  son obligatorios",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Nombre y stock  son obligatorios",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -306,31 +309,31 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
             Integer stock = Integer.valueOf(stockStr);
 
             NuevoIngredienteDTO nuevoIngrediente = new NuevoIngredienteDTO(
-                nombre,
-                unidadMedida,
-                stock,
-                this.imagen 
+                    nombre,
+                    unidadMedida,
+                    stock,
+                    this.imagen
             );
 
-            Controlador.getIntancia().registrarIngrediente(nuevoIngrediente);
+            control.registrarIngrediente(nuevoIngrediente);
 
             JOptionPane.showMessageDialog(this,
-                "Ingrediente guardado correctamente",
-                "Éxito",
-                JOptionPane.INFORMATION_MESSAGE);
+                    "Ingrediente guardado correctamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
 
             this.dispose();
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                "El stock debe ser un número entero",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "El stock debe ser un número entero",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this,
-                ex.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarIngredienteActionPerformed
 
@@ -344,15 +347,15 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
 
         if (nombre.isEmpty() || stockStr.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Nombre y stock son obligatorios",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Nombre y stock son obligatorios",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             Integer stock = Integer.valueOf(stockStr);
-            
+
             byte[] imagenAct;
             if (this.imagen != null) {
                 imagenAct = this.imagen; //si se cambio la imagen
@@ -360,33 +363,33 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
                 imagenAct = ingredienteForm.getImagen(); //si no se usa la original
             }
             IngredienteDTO ingredienteActualizado = new IngredienteDTO(
-                ingredienteForm.getId(),
-                nombre,
-                ingredienteForm.getUnidadMedida(),
-                stock,
-                imagenAct    
+                    ingredienteForm.getId(),
+                    nombre,
+                    ingredienteForm.getUnidadMedida(),
+                    stock,
+                    imagenAct
             );
 
-            Controlador.getIntancia().actualizarIngrediente(ingredienteActualizado);
+            control.actualizarIngrediente(ingredienteActualizado);
 
             JOptionPane.showMessageDialog(this,
-                "Ingrediente actualizado correctamente",
-                "Éxito",
-                JOptionPane.INFORMATION_MESSAGE);
+                    "Ingrediente actualizado correctamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
 
             this.dispose();
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                "El stock debe ser un número entero",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "El stock debe ser un número entero",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this,
-                ex.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-        } 
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEditarIngredienteActionPerformed
 
     private void btnExaminarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarImagenActionPerformed

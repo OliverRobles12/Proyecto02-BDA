@@ -4,7 +4,6 @@
  */
 package org.itson.restaurante.presentacion;
 
-import org.itson.restaurante.controladores.Controlador;
 import org.itson.restaurante.utilerias.utilerias;
 import org.itson.restaurante.negocio.NegocioException;
 import java.awt.Color;
@@ -16,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import org.itson.restaurante.controladores.ControladorIngrediente;
 import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.UnidadMedidaDTO;
 import org.itson.restaurante.utilerias.PanelHeader;
@@ -41,6 +41,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
     private List<IngredienteDTO> listaIngredientes = new ArrayList<>();
     //es una bandedr que alerta si ya salio una alerta 
     private boolean alertaSinResultados = false;
+    private ControladorIngrediente control;
 
     /**
      * Crea una nueva pantalla de búsqueda de ingredientes.
@@ -302,7 +303,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         String textoBusqueda = this.txtBusqueda.getText().trim();
         try {
-            listaIngredientes = Controlador.getIntancia().consultarIngredientesFiltro(textoBusqueda);
+            listaIngredientes = control.consultarIngredientesFiltro(textoBusqueda);
 
             if (listaIngredientes.isEmpty()) {
                 if (!alertaSinResultados && evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -366,7 +367,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
         tblIngredientes.setRowHeight(100);
 
         try {
-            listaIngredientes = Controlador.getIntancia().consultarIngredientes();
+            listaIngredientes = control.consultarIngredientes();
             cargarIngredientes(listaIngredientes);
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
