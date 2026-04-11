@@ -44,7 +44,7 @@ public class ControladorProductos {
         
     }
     
-    public void mostrarPantallaBusquedaProductos (JFrame pantallaActual) {
+    public ProductoDTO mostrarPantallaBusquedaProductos (JFrame pantallaActual) {
        
         PantallaBusquedaProductos busquedaProductos = new PantallaBusquedaProductos(pantallaActual, true, this);
         busquedaProductos.setModal(true);
@@ -59,13 +59,12 @@ public class ControladorProductos {
                 pantallaActual.dispose(); 
             }
             
-            if (elegido != null) {
             mostrarPantallaFormularioProductos(pantallaActual, elegido); 
-            } 
             
         } else {
             System.out.println("Búsqueda cancelada.");
         }
+        return elegido;
         
     }
     
