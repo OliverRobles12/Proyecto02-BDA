@@ -11,18 +11,18 @@ public class NuevaComandaDTO {
     
     private Long idMesa;
     private Long idCliente;
-    private List<ProductoComandaDTO> productosComanda;
+    private List<NuevoProductoComandaDTO> productosComanda;
     
     public NuevaComandaDTO() {
     }
 
-    public NuevaComandaDTO(Long idMesa, Long idCliente, List<ProductoComandaDTO> productosComanda) {
+    public NuevaComandaDTO(Long idMesa, Long idCliente, List<NuevoProductoComandaDTO> productosComanda) {
         this.idMesa = idMesa;
         this.idCliente = idCliente;
         this.productosComanda = productosComanda;
     }
 
-    public NuevaComandaDTO(Long idMesa, List<ProductoComandaDTO> productosComanda) {
+    public NuevaComandaDTO(Long idMesa, List<NuevoProductoComandaDTO> productosComanda) {
         this.idMesa = idMesa;
         this.productosComanda = productosComanda;
     }
@@ -35,7 +35,11 @@ public class NuevaComandaDTO {
         return idCliente;
     }
 
-    public List<ProductoComandaDTO> getProductosComanda() {
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public List<NuevoProductoComandaDTO> getProductosComanda() {
         return productosComanda;
     }
     

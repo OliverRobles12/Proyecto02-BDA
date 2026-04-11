@@ -15,7 +15,7 @@ import org.itson.restaurante.dominio.Mesa;
 import org.itson.restaurante.dominio.Producto;
 import org.itson.restaurante.dominio.ProductoComanda;
 import org.itson.restaurante.dtos.NuevaComandaDTO;
-import org.itson.restaurante.dtos.ProductoComandaDTO;
+import org.itson.restaurante.dtos.NuevoProductoComandaDTO;
 import org.itson.restaurante.utilerias.GeneradorFolio;
 
 /**
@@ -63,7 +63,7 @@ public class ComandaDAO implements IComandaDAO{
             
             Double totalAcumulado = 0d;
             
-            for (ProductoComandaDTO productoComandaDTO : nuevaComanda.getProductosComanda()) {
+            for (NuevoProductoComandaDTO productoComandaDTO : nuevaComanda.getProductosComanda()) {
                 Producto producto = em.find(Producto.class, productoComandaDTO.getIdProducto());
                 ProductoComanda pc = new ProductoComanda(
                         productoComandaDTO.getCantidad(), 

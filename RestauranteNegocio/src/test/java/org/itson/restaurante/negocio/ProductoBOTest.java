@@ -11,8 +11,8 @@ import org.itson.restaurante.dtos.IngredienteRecetaDTO;
 import org.itson.restaurante.dtos.NuevoProductoDTO;
 import org.itson.restaurante.dtos.ProductoDTO;
 import org.itson.restaurante.dtos.TipoProducto;
-import org.itson.restaurante.persistencia.IProductoDAO;
-import org.itson.restaurante.persistencia.ProductoDAO;
+// import org.itson.restaurante.persistencia.IProductoDAO;
+// import org.itson.restaurante.persistencia.ProductoDAO;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,12 +28,12 @@ public class ProductoBOTest {
     public ProductoBOTest() {
     }
 
-    @BeforeEach
-    public void init() {
-        IProductoDAO dao = new ProductoDAO();
-        ProductoAProductoDTO adapter = new ProductoAProductoDTO();
-        bo = new ProductoBO(dao, adapter);
-    }
+//    @BeforeEach
+//    public void init() {
+//        IProductoDAO dao = new ProductoDAO();
+//        ProductoAProductoDTO adapter = new ProductoAProductoDTO();
+//        bo = new ProductoBO(dao, adapter);
+//    }
 
     
 }

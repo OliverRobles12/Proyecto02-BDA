@@ -10,6 +10,7 @@ import org.itson.restaurante.dtos.ComandaDTO;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
+import org.itson.restaurante.utilerias.utilerias;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
@@ -18,8 +19,6 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
  */
 public class PantallaComandas extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaComandas.class.getName());
-
     private PanelHeader panelHeader;
     private PanelMenu panelMenu;
     private PanelNavegacionPantallasPrincipales panelNavegacion;
@@ -42,6 +41,8 @@ public class PantallaComandas extends javax.swing.JFrame {
         panelPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
         panelPrincipal.add(panelMenu, new AbsoluteConstraints(0, 130, 215, 640));
         panelPrincipal.add(panelNavegacion, new AbsoluteConstraints(215, 130, 1151, 45));
+        
+        utilerias.estilizarTabla(tblComandas);
         
         panelNavegacion.setPantallasNavegacion("Comandas", "Lista");
         
@@ -159,17 +160,20 @@ public class PantallaComandas extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelContenidoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(btnNuevaComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblPrincipal1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sep, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelContenidoLayout.createSequentialGroup()
-                            .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelContenidoLayout.createSequentialGroup()
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelContenidoLayout.createSequentialGroup()
+                        .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPrincipal1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sep, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(25, 25, 25))
         );
         panelContenidoLayout.setVerticalGroup(
@@ -185,11 +189,11 @@ public class PantallaComandas extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDetalles)
                     .addComponent(btnNuevaComanda))
-                .addGap(49, 49, 49))
+                .addGap(50, 50, 50))
         );
 
         panelPrincipal.add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 175, 1150, 595));
@@ -214,7 +218,7 @@ public class PantallaComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private void btnNuevaComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaComandaActionPerformed
-        control.mostrarPantallaFomulario(this);
+        control.mostrarPantallaFomularioComandas(this);
     }//GEN-LAST:event_btnNuevaComandaActionPerformed
 
     private void txtFiltroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusGained

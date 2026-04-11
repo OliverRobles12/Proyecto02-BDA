@@ -202,4 +202,14 @@ public class ProductoBO implements IProductoBO{
         }
     }
     
+    public ProductoDTO consultarProductoPorIdd(Long id) throws NegocioException {
+        try {
+            Producto producto = productoDAO.consultarProductoPorId(id);
+            return adapter.entidadADtoCompleto(producto);
+        } catch (PersistenciaException ex) {
+            
+        }
+        return null;
+    }
+    
 }

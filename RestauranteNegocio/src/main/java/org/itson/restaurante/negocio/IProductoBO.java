@@ -31,4 +31,6 @@ public interface IProductoBO {
     public ProductoDTO productoExistente(String nombre) throws NegocioException;
     
     public void cambiarEstadoProducto(Long id) throws NegocioException;
+    
+    public ProductoDTO consultarProductoPorIdd(Long id) throws NegocioException;
 }
