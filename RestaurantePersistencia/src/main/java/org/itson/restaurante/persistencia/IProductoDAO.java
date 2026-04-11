@@ -10,6 +10,7 @@ import org.itson.restaurante.dominio.Producto;
 import org.itson.restaurante.dominio.TipoProducto;
 import org.itson.restaurante.dtos.NuevoProductoDTO;
 import org.itson.restaurante.dtos.ProductoActualizadoDTO;
+import org.itson.restaurante.dtos.ProductoDTO;
 
 /**
  *
@@ -25,7 +26,7 @@ public interface IProductoDAO {
     
     public List<Producto> consultarProductosFiltro (String nombre, TipoProducto categoria) throws PersistenciaException;
     
-    public Producto consultarProductoPorId(Long id) throws PersistenciaException;
+    public ProductoDTO consultarProductoPorId(Long id) throws PersistenciaException;
     
     public Producto productoExistente(String nombre)throws PersistenciaException;
     

@@ -5,6 +5,7 @@
 package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.controladores.ControladorProductos;
+import org.itson.restaurante.dtos.ProductoDTO;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
 import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
@@ -160,7 +161,11 @@ public class PantallaProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoProductoActionPerformed
 
     private void btnEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProductoActionPerformed
-        controlador.mostrarPantallaBusquedaProductos(this);
+        ProductoDTO productoElegido = controlador.mostrarPantallaBusquedaProductos(this);
+        
+        if (productoElegido != null){
+            controlador.mostrarPantallaFormularioProductos(this, productoElegido);
+        }
     }//GEN-LAST:event_btnEditarProductoActionPerformed
 
     /**

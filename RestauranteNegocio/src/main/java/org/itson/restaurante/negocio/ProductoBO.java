@@ -190,7 +190,7 @@ public class ProductoBO implements IProductoBO{
     }
 
     @Override
-    public Producto consultarProductoPorId(Long id) throws NegocioException {
+    public ProductoDTO consultarProductoPorId(Long id) throws NegocioException {
          if (id == null) {
             throw new NegocioException("Se requiere el ID del producto para buscarlo", null);
         }
@@ -202,14 +202,6 @@ public class ProductoBO implements IProductoBO{
         }
     }
     
-    public ProductoDTO consultarProductoPorIdd(Long id) throws NegocioException {
-        try {
-            Producto producto = productoDAO.consultarProductoPorId(id);
-            return adapter.entidadADtoCompleto(producto);
-        } catch (PersistenciaException ex) {
-            
-        }
-        return null;
-    }
+    
     
 }

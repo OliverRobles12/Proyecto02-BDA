@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.itson.restaurante.adapters.ProductoDTOADominioAdapter;
+import org.itson.restaurante.adapters.ProductoDominioADTO;
 import org.itson.restaurante.dominio.EstadoProducto;
 import org.itson.restaurante.dominio.Ingrediente;
 import org.itson.restaurante.dominio.Producto;
@@ -25,6 +26,8 @@ import org.itson.restaurante.dtos.IngredienteRecetaDTO;
 import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 import org.itson.restaurante.dtos.NuevoProductoDTO;
 import org.itson.restaurante.dtos.ProductoActualizadoDTO;
+import org.itson.restaurante.dtos.ProductoDTO;
+
 
 /**
  *
@@ -231,7 +234,7 @@ public class ProductoDAO implements IProductoDAO{
     }
     
     @Override
-    public Producto consultarProductoPorId(Long id) throws PersistenciaException {
+    public ProductoDTO consultarProductoPorId(Long id) throws PersistenciaException {
         EntityManager entityManager = null; 
         try {
             entityManager = ManejadorConexiones.crearEntityManager();
@@ -242,7 +245,8 @@ public class ProductoDAO implements IProductoDAO{
                 throw new PersistenciaException("No se encontró ningún producto con el ID: " + id);
             }
             
-            return producto;
+            
+            return ProductoDominioADTO.productoADTO(producto);
             
         } catch(PersistenceException ex) {
             LOGGER.severe(ex.getMessage());

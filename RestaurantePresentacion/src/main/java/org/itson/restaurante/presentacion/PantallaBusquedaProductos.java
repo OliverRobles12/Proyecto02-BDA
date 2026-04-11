@@ -37,6 +37,7 @@ public class PantallaBusquedaProductos extends javax.swing.JDialog {
      * Creates new form PantallaProductos
      */
     public PantallaBusquedaProductos(java.awt.Frame parent, boolean modal, ControladorProductos controlador) {
+        super(parent, "Búsqueda de Producto", true);
         this.controlador = controlador;
         setLocationRelativeTo(null);
         initComponents();

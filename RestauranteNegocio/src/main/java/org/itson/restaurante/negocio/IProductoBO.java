@@ -26,11 +26,10 @@ public interface IProductoBO {
     
     public List<ProductoDTO> consultarProductosFiltro(String nombre, TipoProducto categoria) throws NegocioException;
     
-    public Producto consultarProductoPorId(Long id) throws NegocioException;
+    public ProductoDTO consultarProductoPorId(Long id) throws NegocioException;
     
     public ProductoDTO productoExistente(String nombre) throws NegocioException;
     
     public void cambiarEstadoProducto(Long id) throws NegocioException;
     
-    public ProductoDTO consultarProductoPorIdd(Long id) throws NegocioException;
 }

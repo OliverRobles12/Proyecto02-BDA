@@ -36,6 +36,7 @@ public class ControladorProductos {
     
     public void mostarPantallaProductos(JFrame pantallaActual) {
         PantallaProductos productos = new PantallaProductos(this);
+        productos.setLocationRelativeTo(pantallaActual);
         productos.setVisible(true);
         
         if (pantallaActual != null) {
@@ -48,28 +49,19 @@ public class ControladorProductos {
        
         PantallaBusquedaProductos busquedaProductos = new PantallaBusquedaProductos(pantallaActual, true, this);
         busquedaProductos.setModal(true);
+        busquedaProductos.setLocationRelativeTo(pantallaActual);
         busquedaProductos.setVisible(true); 
         
         
         ProductoDTO elegido = busquedaProductos.getProductoSeleccionado();
         
-        if (elegido != null) {
-            
-            if (pantallaActual != null) {
-                pantallaActual.dispose(); 
-            }
-            
-            mostrarPantallaFormularioProductos(pantallaActual, elegido); 
-            
-        } else {
-            System.out.println("Búsqueda cancelada.");
-        }
         return elegido;
         
     }
     
     public void mostrarPantallaFormularioProductos(JFrame pantallaActual) {
         PantallaFormularioProducto formularioProductos = new PantallaFormularioProducto(this, null);
+        formularioProductos.setLocationRelativeTo(pantallaActual);
         formularioProductos.setVisible(true);
         
         if (pantallaActual != null) {
@@ -79,6 +71,7 @@ public class ControladorProductos {
 
     public void mostrarPantallaFormularioProductos(JFrame pantallaActual, ProductoDTO productoAEditar) {
         PantallaFormularioProducto formularioProductos = new PantallaFormularioProducto(this, productoAEditar);
+        formularioProductos.setLocationRelativeTo(pantallaActual);
         formularioProductos.setVisible(true);
         
         if (pantallaActual != null) {
