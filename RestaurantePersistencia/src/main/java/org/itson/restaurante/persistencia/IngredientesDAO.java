@@ -205,4 +205,26 @@ public class IngredientesDAO implements IIngredientesDAO {
             throw new PersistenciaException("No ha sido posible eliminar el ingrediente", ex);
         }
     }
+    /**
+     * Busca el ingrediente seleccionado por su id.
+     * 
+     * @param id ingrediente que se desea eliminar
+     * @return Ingrediente objeto  con todos los datos del ingrediente eliminado
+     * @throws PersistenciaException Si algún dato es inválido o si ocurre un error
+     * al comunicarse con la base de datos.
+     */
+    @Override
+    public Ingrediente consultarIngrediente(Long id) throws PersistenciaException {
+
+        try {
+            EntityManager em = ManejadorConexiones.crearEntityManager();
+            em.getTransaction().begin();
+            Ingrediente ingrediente = em.find(Ingrediente.class, id);
+            em.getTransaction().commit();
+            return ingrediente;
+        } catch (PersistenceException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new PersistenciaException("No ha sido posible eliminar el ingrediente", ex);
+        }
+    }
 }
