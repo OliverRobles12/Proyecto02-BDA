@@ -2,6 +2,9 @@ package org.itson.restaurante.controladores;
 
 import javax.swing.JFrame;
 import org.itson.restaurante.dtos.RolEmpleado;
+import org.itson.restaurante.negocio.IMesaBO;
+import org.itson.restaurante.negocio.MesaBO;
+import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.presentacion.PantallaBusquedaIngrediente;
 import org.itson.restaurante.presentacion.PantallaFormularioIngrediente;
 import org.itson.restaurante.presentacion.PantallaIngredientes;
@@ -24,9 +27,10 @@ public class Controlador {
     private ControladorProductos controladorProducos;
     private ControladorComandas controladorComandas;
     private ControladorClientes controladorClientes;
+    private IMesaBO mesaBO;
 
     private Controlador() {
-
+        this.mesaBO = new MesaBO();
     }
 
     /**
@@ -63,6 +67,16 @@ public class Controlador {
         return controladorProducos;
     }
 
+    public void registrarMesas(PantallaMenuPrincipal vistaMenuPrincipal, int cantidad) {
+        try {
+            mesaBO.registrarMesa(cantidad);
+        } catch (NegocioException ex) {
+            vistaMenuPrincipal.mostarMensaje("No ha sido posible registrar la mesa.", true);
+            return;
+        }
+        vistaMenuPrincipal.mostarMensaje("Se han agregado " + cantidad + " mesas.", false);
+    }
+    
     /**
      * Este metodo abre la pantalla del menu principal
      *

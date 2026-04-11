@@ -4,6 +4,9 @@
  */
 package org.itson.restaurante.presentacion;
 
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import org.itson.restaurante.controladores.Controlador;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
@@ -32,7 +35,9 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         panPrincipal.add(panelNavegacion, new AbsoluteConstraints(215, 130, 1151, 45));
 
         panelNavegacion.setPantallasNavegacion("Inicio", "Resumen del día");
-        
+        SpinnerNumberModel model = new SpinnerNumberModel(20, 1, 100, 1);
+        spnMesas.setModel(model);
+        ((JSpinner.DefaultEditor) spnMesas.getEditor()).getTextField().setEditable(false);
        
         // conectar datos al dashboard
         lblNumComandas.setText(
@@ -80,6 +85,8 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         panCantProdutosActivos = new javax.swing.JPanel();
         lblProductosActivos = new javax.swing.JLabel();
         lblCantProductosActivos = new javax.swing.JLabel();
+        btnGenerarMesas = new javax.swing.JButton();
+        spnMesas = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -103,6 +110,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
 
         panVentasDiarias.setBackground(new java.awt.Color(221, 234, 246));
         panVentasDiarias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 10, true));
+        panVentasDiarias.setPreferredSize(new java.awt.Dimension(400, 200));
 
         lblVentasDiarias.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblVentasDiarias.setForeground(new java.awt.Color(89, 83, 83));
@@ -116,25 +124,27 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         panVentasDiariasLayout.setHorizontalGroup(
             panVentasDiariasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panVentasDiariasLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(42, 42, 42)
                 .addGroup(panVentasDiariasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCantidadVentas)
                     .addComponent(lblVentasDiarias))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addGap(0, 187, Short.MAX_VALUE))
         );
         panVentasDiariasLayout.setVerticalGroup(
             panVentasDiariasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panVentasDiariasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
                 .addComponent(lblCantidadVentas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblVentasDiarias)
-                .addGap(21, 21, 21))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         panComandasDiarias.setBackground(new java.awt.Color(221, 234, 246));
         panComandasDiarias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 10, true));
         panComandasDiarias.setMinimumSize(new java.awt.Dimension(100, 100));
+        panComandasDiarias.setPreferredSize(new java.awt.Dimension(400, 200));
+        panComandasDiarias.setRequestFocusEnabled(false);
 
         lblComandasDiarias.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblComandasDiarias.setForeground(new java.awt.Color(89, 83, 83));
@@ -148,25 +158,26 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         panComandasDiariasLayout.setHorizontalGroup(
             panComandasDiariasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panComandasDiariasLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(43, 43, 43)
                 .addGroup(panComandasDiariasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNumComandas)
                     .addComponent(lblComandasDiarias))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         panComandasDiariasLayout.setVerticalGroup(
             panComandasDiariasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panComandasDiariasLayout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+            .addGroup(panComandasDiariasLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
                 .addComponent(lblNumComandas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblComandasDiarias)
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         PanMesasDisponibles.setBackground(new java.awt.Color(221, 234, 246));
         PanMesasDisponibles.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 10, true));
         PanMesasDisponibles.setMinimumSize(new java.awt.Dimension(100, 100));
+        PanMesasDisponibles.setPreferredSize(new java.awt.Dimension(400, 200));
 
         lblMesasAbiertas.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblMesasAbiertas.setForeground(new java.awt.Color(89, 83, 83));
@@ -180,25 +191,26 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         PanMesasDisponiblesLayout.setHorizontalGroup(
             PanMesasDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanMesasDisponiblesLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(42, 42, 42)
                 .addGroup(PanMesasDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNumMesasOcupadas)
                     .addComponent(lblMesasAbiertas))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addGap(0, 178, Short.MAX_VALUE))
         );
         PanMesasDisponiblesLayout.setVerticalGroup(
             PanMesasDisponiblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanMesasDisponiblesLayout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
                 .addComponent(lblNumMesasOcupadas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMesasAbiertas)
-                .addGap(21, 21, 21))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         panCantProdutosActivos.setBackground(new java.awt.Color(221, 234, 246));
         panCantProdutosActivos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 10, true));
         panCantProdutosActivos.setMinimumSize(new java.awt.Dimension(100, 100));
+        panCantProdutosActivos.setPreferredSize(new java.awt.Dimension(400, 200));
 
         lblProductosActivos.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblProductosActivos.setForeground(new java.awt.Color(89, 83, 83));
@@ -212,28 +224,39 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         panCantProdutosActivosLayout.setHorizontalGroup(
             panCantProdutosActivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panCantProdutosActivosLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(42, 42, 42)
                 .addGroup(panCantProdutosActivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCantProductosActivos)
                     .addComponent(lblProductosActivos))
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addGap(0, 152, Short.MAX_VALUE))
         );
         panCantProdutosActivosLayout.setVerticalGroup(
             panCantProdutosActivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panCantProdutosActivosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
                 .addComponent(lblCantProductosActivos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblProductosActivos)
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnGenerarMesas.setText("Generar mesas");
+        btnGenerarMesas.setPreferredSize(new java.awt.Dimension(125, 25));
+        btnGenerarMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarMesasActionPerformed(evt);
+            }
+        });
+
+        spnMesas.setOpaque(true);
+        spnMesas.setPreferredSize(new java.awt.Dimension(100, 25));
 
         javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
         panContenido.setLayout(panContenidoLayout);
         panContenidoLayout.setHorizontalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panContenidoLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(43, 43, 43)
                 .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panComandasDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PanMesasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,20 +264,30 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
                 .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panVentasDiarias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panCantProdutosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(256, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panContenidoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spnMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnGenerarMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(267, 267, 267))
         );
         panContenidoLayout.setVerticalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panContenidoLayout.createSequentialGroup()
-                .addContainerGap(86, Short.MAX_VALUE)
+                .addContainerGap(89, Short.MAX_VALUE)
                 .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panVentasDiarias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panComandasDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(panComandasDiarias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panVentasDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panCantProdutosActivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanMesasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51))
+                .addGap(18, 18, 18)
+                .addGroup(panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spnMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGenerarMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52))
         );
 
         panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 177, 1150, 590));
@@ -277,9 +310,19 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGenerarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMesasActionPerformed
+        int cantidad = (Integer) spnMesas.getValue();
+        Controlador.getIntancia().registrarMesas(this, cantidad);
+    }//GEN-LAST:event_btnGenerarMesasActionPerformed
 
+    public void mostarMensaje(String msj, boolean esError) {
+        int tipo = esError ? JOptionPane.ERROR_MESSAGE : JOptionPane.INFORMATION_MESSAGE;
+        JOptionPane.showMessageDialog(this, msj, "Sistema", tipo);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanMesasDisponibles;
+    private javax.swing.JButton btnGenerarMesas;
     private javax.swing.JLabel lblCantProductosActivos;
     private javax.swing.JLabel lblCantidadVentas;
     private javax.swing.JLabel lblComandasDiarias;
@@ -295,6 +338,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel panPrincipal;
     private javax.swing.JPanel panVentasDiarias;
     private javax.swing.JSeparator sep;
+    private javax.swing.JSpinner spnMesas;
     // End of variables declaration//GEN-END:variables
     private org.itson.restaurante.utilerias.PanelHeader panelHeader;
     private org.itson.restaurante.utilerias.PanelMenu panelMenu;
