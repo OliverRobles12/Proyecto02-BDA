@@ -2,7 +2,10 @@ package org.itson.restaurante.persistencia;
 
 import java.util.List;
 import org.itson.restaurante.dominio.Ingrediente;
+import org.itson.restaurante.dominio.Producto;
+import org.itson.restaurante.dominio.ProductoIngrediente;
 import org.itson.restaurante.dtos.IngredienteActualizadoDTO;
+import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 import org.itson.restaurante.dtos.UnidadMedidaDTO;
 import org.junit.jupiter.api.AfterEach;

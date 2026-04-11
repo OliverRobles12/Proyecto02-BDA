@@ -55,7 +55,7 @@ public class PantallaBusquedaIngrediente extends javax.swing.JDialog {
      * ventana padre mientras esté abierto
      */
     public PantallaBusquedaIngrediente(java.awt.Frame parent, boolean modal) {
-
+        this.control = new ControladorIngrediente();
         super(parent, modal);
 
         initComponents();

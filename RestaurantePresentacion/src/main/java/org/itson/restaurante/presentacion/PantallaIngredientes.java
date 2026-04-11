@@ -22,6 +22,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
      * Creates new form PantallaCliente
      */
     public PantallaIngredientes() {
+        this.control = new ControladorIngrediente();
         initComponents();
         utilerias.aplicarIcono(this);
         //paneles reutilizables

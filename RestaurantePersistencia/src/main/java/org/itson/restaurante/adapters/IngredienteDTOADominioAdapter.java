@@ -11,7 +11,7 @@ import org.itson.restaurante.dtos.UnidadMedidaDTO;
 
 public class IngredienteDTOADominioAdapter {
 
-    public static Ingrediente adapter(NuevoIngredienteDTO nuevoIngrediente) {
+    public static Ingrediente NuevoIngredienteAIngrediente(NuevoIngredienteDTO nuevoIngrediente) {
         
         UnidadMedida unidadMedida = UnidadMedida.PIEZAS;
         if (nuevoIngrediente.getUnidadMedida() == UnidadMedidaDTO.GRAMOS) {
@@ -32,4 +32,5 @@ public class IngredienteDTOADominioAdapter {
 
         return ingrediente;
     }
+   
 }

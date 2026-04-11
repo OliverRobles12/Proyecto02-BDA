@@ -7,6 +7,7 @@ package org.itson.restaurante.persistencia;
 import java.util.List;
 import org.itson.restaurante.dominio.Ingrediente;
 import org.itson.restaurante.dtos.IngredienteActualizadoDTO;
+import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 import org.itson.restaurante.dtos.UnidadMedidaDTO;
 
@@ -28,6 +29,8 @@ public interface IIngredientesDAO {
     public Ingrediente eliminarIngrediente(Long id) throws PersistenciaException;
     
     public Ingrediente consultarIngrediente(Long id) throws PersistenciaException;
+    
+    public boolean existeIngredienteEnProductos(IngredienteDTO ingrediente) throws PersistenciaException;
     
     public boolean existeIngrediente(Long idExcluir,String nombre, UnidadMedidaDTO unidad) throws PersistenciaException; // METODO QUE DEVOLVERA SI HAY UN INGREDIENTE CON LOS MISMOS DATOS QUE SE ESTAN INGRESANDO
 }

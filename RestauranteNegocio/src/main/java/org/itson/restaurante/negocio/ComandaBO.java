@@ -43,7 +43,6 @@ public class ComandaBO implements IComandaBO {
         } catch (PersistenciaException ex) {
             throw new NegocioException("No fue posible consultar comandas.", ex);
         }
-        
     }
     
     

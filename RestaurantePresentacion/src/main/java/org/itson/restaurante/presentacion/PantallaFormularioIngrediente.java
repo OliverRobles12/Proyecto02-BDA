@@ -4,7 +4,7 @@
  */
 package org.itson.restaurante.presentacion;
 
-import org.itson.restaurante.controladores.Controlador;
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -35,8 +35,9 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
      * Creates new form PantallaFormularioCliente
      */
     public PantallaFormularioIngrediente() {
+        this.control = new ControladorIngrediente();
         initComponents();
-
+        
         utilerias.aplicarIcono(this);
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
@@ -66,6 +67,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
     }
 
     public PantallaFormularioIngrediente(IngredienteDTO ingrediente) {
+        this.control = new ControladorIngrediente();
         initComponents();
 
         panelHeader = new PanelHeader();

@@ -1,7 +1,10 @@
 package org.itson.restaurante.negocio;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.itson.restaurante.adapters.IngredienteAIngredienteDTO;
+import org.itson.restaurante.adapters.IngredienteDTOADominioAdapter;
 import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.NuevoIngredienteDTO;
 import org.itson.restaurante.persistencia.IIngredientesDAO;
@@ -26,7 +29,8 @@ public class IngredientesBO implements IIngredientesBO {
      *
      * @param nuevoIngrediente Objeto DTO con los datos del nuevo ingrediente a
      * registrar.
-     * @return IngredienteDTO Objeto DTO con los datos del ingrediente ya registrado
+     * @return IngredienteDTO Objeto DTO con los datos del ingrediente ya
+     * registrado
      * @throws NegocioException Si algún dato es inválido o si ocurre un error
      * en la capa de persistencia.
      */
@@ -50,7 +54,7 @@ public class IngredientesBO implements IIngredientesBO {
         }
 
         try {
-            if (ingredientesDAO.existeIngrediente(null,nuevoIngrediente.getNombre(), nuevoIngrediente.getUnidadMedida())) {
+            if (ingredientesDAO.existeIngrediente(null, nuevoIngrediente.getNombre(), nuevoIngrediente.getUnidadMedida())) {
                 throw new NegocioException("Ya existe un ingrediente con estas caracteristicas" + nuevoIngrediente.getNombre() + " y " + nuevoIngrediente.getUnidadMedida(), null);
             }
             Ingrediente ingrediente = ingredientesDAO.registrarIngrediente(nuevoIngrediente);
@@ -60,6 +64,7 @@ public class IngredientesBO implements IIngredientesBO {
             throw new NegocioException("No fue posible registrar el ingrediente", ex);
         }
     }
+
     /**
      * Actualiza un ingrediente del sistema tras validar los datos ingresados.
      * Valida que los campos obligatorios no estén vacíos, que los nombres no
@@ -68,7 +73,8 @@ public class IngredientesBO implements IIngredientesBO {
      *
      * @param ingredienteViejo Objeto DTO con los datos del ingrediente a
      * actualizar.
-     * @return IngredienteDTO Objeto DTO con los datos del ingrediente ya actualizado
+     * @return IngredienteDTO Objeto DTO con los datos del ingrediente ya
+     * actualizado
      * @throws NegocioException Si algún dato es inválido o si ocurre un error
      * en la capa de persistencia.
      */
@@ -92,7 +98,7 @@ public class IngredientesBO implements IIngredientesBO {
         }
 
         try {
-            if (ingredientesDAO.existeIngrediente(ingredienteViejo.getId(),ingredienteViejo.getNombre(), ingredienteViejo.getUnidadMedida())) {
+            if (ingredientesDAO.existeIngrediente(ingredienteViejo.getId(), ingredienteViejo.getNombre(), ingredienteViejo.getUnidadMedida())) {
                 throw new NegocioException("Ya existe un ingrediente con estas caracteristicas" + ingredienteViejo.getNombre() + " y " + ingredienteViejo.getUnidadMedida(), null);
             }
             IngredienteActualizadoDTO inrgedienteActualizado = new IngredienteActualizadoDTO(
@@ -111,10 +117,12 @@ public class IngredientesBO implements IIngredientesBO {
 
         }
     }
+
     /**
      * Consulta todos los ingredientes existentes en el sistema
-     * 
-     * @return ListIngredienteDTO lista de objetos DTO con los datos de cada ingrediente
+     *
+     * @return ListIngredienteDTO lista de objetos DTO con los datos de cada
+     * ingrediente
      * @throws NegocioException Si algún dato es inválido o si ocurre un error
      * en la capa de persistencia.
      */
@@ -129,11 +137,14 @@ public class IngredientesBO implements IIngredientesBO {
             throw new NegocioException("No fue posible consultar los ingredientes", ex);
         }
     }
+
     /**
-     * Consulta todos los ingredientes existentes en el sistema que concuerden con el filtro ingresado
-     * 
-     * @param filtro String que filtrara los ingredientes 
-     * @return ListIngredienteDTO lista de objetos DTO con los datos de cada ingrediente
+     * Consulta todos los ingredientes existentes en el sistema que concuerden
+     * con el filtro ingresado
+     *
+     * @param filtro String que filtrara los ingredientes
+     * @return ListIngredienteDTO lista de objetos DTO con los datos de cada
+     * ingrediente
      * @throws NegocioException Si algún dato es inválido o si ocurre un error
      * en la capa de persistencia.
      */
@@ -148,12 +159,14 @@ public class IngredientesBO implements IIngredientesBO {
             throw new NegocioException("No fue posible filtrar los ingredientes", ex);
         }
     }
+
     /**
-     * Elimina el ingrediente seleccionado luego de haber validado que no existe stock
-     * y que el producto no se este usando en ninguna receta
-     * 
+     * Elimina el ingrediente seleccionado luego de haber validado que no existe
+     * stock y que el producto no se este usando en ninguna receta
+     *
      * @param ingrediente ingrediente que se desea eliminar
-     * @return IngredienteDTO objeto DTO con todos los datos del ingrediente eliminado
+     * @return IngredienteDTO objeto DTO con todos los datos del ingrediente
+     * eliminado
      * @throws NegocioException Si algún dato es inválido o si ocurre un error
      * en la capa de persistencia.
      */
@@ -161,13 +174,16 @@ public class IngredientesBO implements IIngredientesBO {
     public IngredienteDTO eliminarIngrediente(IngredienteDTO ingrediente) throws NegocioException {
         if (ingrediente.getStock() != 0) {
             throw new NegocioException("No es posible eliminar un ingrediente con stock disponible", null);
-        }//TODO
-        
-        //si pertenece a un producto no se puede eliminar
-//        if () { 
-//            throw new NegocioException("No fue posible eliminar el ingrediente", null);
-//        }
-
+        }
+                
+        try {
+            //si pertenece a un producto no se puede eliminar
+            if (ingredientesDAO.existeIngredienteEnProductos(ingrediente)) {
+                throw new NegocioException("No fue posible eliminar el ingrediente porque está en uso", null);
+            }
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No fue posible verificar si el producto existe", null);
+        }
 
         try {
 

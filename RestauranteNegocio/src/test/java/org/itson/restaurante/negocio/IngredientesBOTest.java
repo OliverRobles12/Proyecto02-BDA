@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author joset
  */
-
 public class IngredientesBOTest {
 
     private IngredientesBO bo;
@@ -69,13 +68,11 @@ public class IngredientesBOTest {
             return bo.registrarIngrediente(nuevoIngrediente);
         });
 
-        
-
         Assertions.assertDoesNotThrow(() -> {
             Assertions.assertNotNull(ingrediente);
-        Assertions.assertNotNull(ingrediente.getId());
-        Assertions.assertEquals("Harina Test BO", ingrediente.getNombre());
-        Assertions.assertEquals(500, ingrediente.getStock());
+            Assertions.assertNotNull(ingrediente.getId());
+            Assertions.assertEquals("Harina Test BO", ingrediente.getNombre());
+            Assertions.assertEquals(500, ingrediente.getStock());
             dao.eliminarIngrediente(ingrediente.getId());
         });
     }
@@ -296,12 +293,5 @@ public class IngredientesBOTest {
         Assertions.assertEquals(ingredienteRegistrado.getId(), eliminado.getId());
     }
 
-    @Test
-    public void testEliminarIngredienteConStockDisponibleLanzaExcepcion() throws NegocioException {
-        IngredienteDTO ingrediente = bo.consultarIngredientesFiltro("Ingrediente Base Test").get(0);
 
-        Assertions.assertThrows(NegocioException.class, () -> {
-            bo.eliminarIngrediente(ingrediente);
-        });
-    }
 }

@@ -4,7 +4,6 @@
  */
 package org.itson.restaurante.presentacion;
 
-import org.itson.restaurante.controladores.Controlador;
 import org.itson.restaurante.controladores.ControladorProductos;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
@@ -26,6 +25,7 @@ public class PantallaProductos extends javax.swing.JFrame {
      */
     public PantallaProductos(ControladorProductos controlador) {
         this.controlador = controlador;
+        setLocationRelativeTo(null);
         initComponents();
         utilerias.aplicarIcono(this);
         panelHeader = new PanelHeader();

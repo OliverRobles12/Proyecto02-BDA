@@ -38,6 +38,7 @@ public class PantallaBusquedaProductos extends javax.swing.JDialog {
      */
     public PantallaBusquedaProductos(java.awt.Frame parent, boolean modal, ControladorProductos controlador) {
         this.controlador = controlador;
+        setLocationRelativeTo(null);
         initComponents();
         inicializarTabla();
         
@@ -98,6 +99,7 @@ public class PantallaBusquedaProductos extends javax.swing.JDialog {
         panelContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         PanelPrincipal.setMinimumSize(new java.awt.Dimension(1366, 768));

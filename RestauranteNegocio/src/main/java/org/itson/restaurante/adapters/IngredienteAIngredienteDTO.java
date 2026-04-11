@@ -36,9 +36,7 @@ public class IngredienteAIngredienteDTO {
     }
      public static List<IngredienteDTO> convertirListaIngredientesADTO(List<Ingrediente> ingredientes) {
         List<IngredienteDTO> ingredientesDTO = new ArrayList<>();
-        
-        
-        
+
         for (Ingrediente ingre : ingredientes) {
             UnidadMedidaDTO unidadMedida = UnidadMedidaDTO.PIEZAS; 
 
