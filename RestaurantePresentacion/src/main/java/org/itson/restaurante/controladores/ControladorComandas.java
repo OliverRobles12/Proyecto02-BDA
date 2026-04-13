@@ -183,7 +183,7 @@ public class ControladorComandas {
             for(NuevoProductoComandaDTO pc : vistaNuevaComanda.getProductosSeleccionados()) {
                 if (pc.getIdTemporal() == idRegistro) {
 
-                    ProductoDTO producto = producoBO.consultarProductoPorIdd(pc.getIdProducto());
+                    ProductoDTO producto = producoBO.consultarProductoPorId(pc.getIdProducto());
 
                     Map<Long, Double> ingredientesProyectados = new HashMap<>(vistaNuevaComanda.getIngredientesRequeridos());
                     
@@ -233,7 +233,7 @@ public class ControladorComandas {
                     
                     if (restarOEliminar) {
                         // Consultamos el producto para poder obtener su receta
-                        ProductoDTO producto = producoBO.consultarProductoPorIdd(pc.getIdProducto());
+                        ProductoDTO producto = producoBO.consultarProductoPorId(pc.getIdProducto());
                         // Eliminaremos tambien los ingredientes requeridos
                         for (IngredienteRecetaDTO ingrediente : producto.getReceta()){
                             // En caso de no necesitar mas ese ingrediente lo eliminamos del mapa
