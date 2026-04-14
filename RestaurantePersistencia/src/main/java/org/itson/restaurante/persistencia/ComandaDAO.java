@@ -1,13 +1,19 @@
 
 package org.itson.restaurante.persistencia;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.itson.restaurante.dominio.Cliente;
 import org.itson.restaurante.dominio.Comanda;
 import org.itson.restaurante.dominio.EstadoComanda;
@@ -25,8 +31,6 @@ import org.itson.restaurante.utilerias.GeneradorFolio;
 public class ComandaDAO implements IComandaDAO{
 
     private static final Logger LOGGER = Logger.getLogger(ComandaDAO.class.getName());
-
-    
     
     @Override
     public Comanda registrarNuevaComanda(NuevaComandaDTO nuevaComanda) throws PersistenciaException {
@@ -115,6 +119,35 @@ public class ComandaDAO implements IComandaDAO{
         
     }
 
-    
+    @Override
+    public List<Comanda> consultarComandasFecha(LocalDate fechaInicio, LocalDate fechaFin) throws PersistenciaException {
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.crearEntityManager(); 
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Comanda> cq = cb.createQuery(Comanda.class);
+            Root<Comanda> root = cq.from(Comanda.class);
+            
+            LocalDateTime inicio = fechaInicio.atStartOfDay();
+            LocalDateTime fin = fechaFin.atTime(LocalTime.MAX);
+            
+            Predicate rango = cb.between(root.get("fechaHora"), inicio, fin);
+            
+            cq.select(root).where(rango);
+            cq.orderBy(cb.desc(root.get("fechaHora")));
+            
+            TypedQuery<Comanda> query = em.createQuery(cq);
+            return query.getResultList();
+            
+        } catch (PersistenceException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new PersistenciaException("No ha sido posible consultar comandas con el rango de fechas.", ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
     
 }
