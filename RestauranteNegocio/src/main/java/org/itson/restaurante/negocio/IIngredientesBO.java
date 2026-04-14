@@ -23,4 +23,6 @@ public interface IIngredientesBO {
     public abstract List<IngredienteDTO> consultarIngredientes() throws NegocioException;
     
     public abstract IngredienteDTO eliminarIngrediente(IngredienteDTO nuevoIngrediente) throws NegocioException; 
+    
+    public abstract IngredienteDTO consultarIngredientesFiltro(Long id) throws NegocioException;
 }

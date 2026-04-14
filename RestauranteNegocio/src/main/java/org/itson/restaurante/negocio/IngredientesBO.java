@@ -193,6 +193,28 @@ public class IngredientesBO implements IIngredientesBO {
         } catch (PersistenciaException ex) {
             throw new NegocioException("No fue posible eliminar el ingrediente", ex);
         }
+        
+    }
+    /**
+     * Consulta todos los ingredientes existentes en el sistema que concuerden
+     * con el filtro ingresado
+     *
+     * @param id Long que filtrara los ingredientes
+     * @return IngredienteDTO objetos DTO con los datos del
+     * ingrediente
+     * @throws NegocioException Si algún dato es inválido o si ocurre un error
+     * en la capa de persistencia.
+     */
+    @Override
+    public IngredienteDTO consultarIngredientesFiltro(Long id) throws NegocioException {
+
+        try {
+            Ingrediente ingre = ingredientesDAO.consultarIngrediente(id);
+
+            return IngredienteAIngredienteDTO.convertirADTO(ingre);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No fue posible filtrar los ingredientes", ex);
+        }
     }
 
 }
