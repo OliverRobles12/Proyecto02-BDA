@@ -26,9 +26,10 @@ public class PantallaProductos extends javax.swing.JFrame {
      */
     public PantallaProductos(ControladorProductos controlador) {
         this.controlador = controlador;
+        initComponents();
         this.setResizable(false);
         setLocationRelativeTo(null);
-        initComponents();
+        
         utilerias.aplicarIcono(this);
         panelHeader = new PanelHeader();
         panelMenu = new PanelMenu();

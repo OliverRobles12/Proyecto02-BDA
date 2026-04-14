@@ -99,33 +99,37 @@
                                           </Group>
                                           <Component id="txtNombre" alignment="0" min="-2" pref="395" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="cmbTipo" min="-2" pref="154" max="-2" attributes="0"/>
                                           <Component id="lblTipo" min="-2" pref="56" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txtPrecio" min="-2" pref="255" max="-2" attributes="0"/>
+                                                  <Component id="lblPrecio1" min="-2" pref="56" max="-2" attributes="0"/>
                                                   <Group type="102" attributes="0">
-                                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                      <Component id="txtPrecio" min="-2" pref="146" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
                                                       <Component id="lblImagen" min="-2" pref="56" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
+                                              </Group>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace pref="209" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel2" min="-2" pref="60" max="-2" attributes="0"/>
+                                                  <Group type="102" attributes="0">
                                                       <Component id="txtImagen" min="-2" pref="255" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="btnBuscarImagen" min="-2" pref="99" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
-                                              <Component id="lblPrecio1" min="-2" pref="56" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -174,11 +178,12 @@
                           <Component id="txtPrecio" alignment="3" pref="32" max="32767" attributes="0"/>
                           <Component id="txtNombre" alignment="3" pref="32" max="32767" attributes="0"/>
                           <Component id="cmbTipo" alignment="3" max="32767" attributes="0"/>
+                          <Component id="lblImagen" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="8" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblImagen" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -333,9 +338,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblImagen">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Imagen"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNombre">
               <Events>
@@ -413,6 +415,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarIngredienteActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Imagen"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
