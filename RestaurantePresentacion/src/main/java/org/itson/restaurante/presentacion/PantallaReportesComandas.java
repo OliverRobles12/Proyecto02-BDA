@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -84,7 +86,12 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
         this.repaint();
         setLocationRelativeTo(null);
 
-        actualizarTablaPorFechas();
+        try {
+            listaComandas = comandaBO.consultarComandas();
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error "+ex.getMessage());
+        }
+        cargarComandas(listaComandas);
     }
 
     /**
@@ -222,31 +229,49 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
     }
     private void btnGuardarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPDFActionPerformed
         try {
-            LocalDate inicio = fechaInicioChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-            LocalDate fin = fechaFinChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-            ReporteBO bo = new ReporteBO();
-            JasperPrint jp = bo.generarReporteComandas(inicio, fin);
+        LocalDate inicio = fechaInicioChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        LocalDate fin = fechaFinChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        
+        ReporteBO bo = new ReporteBO();
+        JasperPrint jp = bo.generarReporteComandas(inicio, fin);
 
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setSelectedFile(new File("ReporteComandas.pdf"));
+        if (jp == null || jp.getPages().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El reporte no contiene datos para las fechas seleccionadas.", "Reporte Vacío", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
-            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("ReporteComandas.pdf"));
 
-                String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            String ruta = fileChooser.getSelectedFile().getAbsolutePath();
 
-                if (!ruta.endsWith(".pdf")) {
-                    ruta += ".pdf";
-                }
-
-                JasperExportManager.exportReportToPdfFile(jp, ruta);
-
-                JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
+            if (!ruta.toLowerCase().endsWith(".pdf")) {
+                ruta += ".pdf";
             }
 
-        } catch (NegocioException | JRException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            JasperExportManager.exportReportToPdfFile(jp, ruta);
+            JOptionPane.showMessageDialog(this, "PDF generado correctamente en:\n" + ruta);
         }
+
+    } catch (net.sf.jasperreports.engine.JRRuntimeException ex) {
+        // Este catch atrapa los errores de Jasper cuando no puede escribir el archivo (FileNotFound/AccessDenied)
+        String mensaje = "Error al intentar guardar el archivo:\n";
+        if (ex.getMessage().contains("Acceso denegado")) {
+            mensaje += "- No tienes permisos para escribir en esta carpeta.\n- O el archivo ya está abierto por otro programa.";
+        } else {
+            mensaje += "- Verifica que la ruta seleccionada sea válida.";
+        }
+        JOptionPane.showMessageDialog(this, mensaje, "Error de Archivo", JOptionPane.ERROR_MESSAGE);
+
+        
+    } catch (NegocioException | JRException ex) {
+        JOptionPane.showMessageDialog(this, "Error de lógica o reporte: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + ex.getMessage(), "Error Crítico", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnGuardarPDFActionPerformed
 
     private void btnConsultarPDfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPDfActionPerformed
