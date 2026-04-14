@@ -1,11 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package org.itson.restaurante.presentacion;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.itson.restaurante.controladores.ControladorComandas;
+import org.itson.restaurante.dtos.ComandaDTO;
+import org.itson.restaurante.dtos.ProductoComandaDTO;
+import org.itson.restaurante.utilerias.PanelHeader;
+import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
+import org.itson.restaurante.utilerias.utilerias;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
@@ -15,14 +21,29 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaDetallesComanda.class.getName());
 
+    private PanelHeader panelHeader;
+    private PanelNavegacionPantallasPrincipales panelNavegacion;
+    
     private ControladorComandas control;
+    private String folio;
     
     /**
      * Creates new form PantallaDetallesComanda
      */
-    public PantallaDetallesComanda(ControladorComandas control) {
+    public PantallaDetallesComanda(ControladorComandas control, String folio) {
         initComponents();
         this.control = control;
+        this.folio = folio;
+        
+        panelHeader = new PanelHeader();
+        panelNavegacion = new PanelNavegacionPantallasPrincipales();
+        
+        panelPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
+        panelPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
+        
+        utilerias.estilizarTabla(tblProductosComanda);
+        
+        
     }
 
     /**
@@ -39,14 +60,15 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
         lblPrincipal = new javax.swing.JLabel();
         sep = new javax.swing.JSeparator();
         btnVolver = new javax.swing.JButton();
-        btnEntrega = new javax.swing.JButton();
+        btnMarcarEntrega = new javax.swing.JButton();
         lblFolio = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         lblCliente = new javax.swing.JLabel();
         lblMesa = new javax.swing.JLabel();
-        lblEstado = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProductosComanda = new javax.swing.JTable();
+        lblEstado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,7 +76,7 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
         panelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelContenido.setBackground(new java.awt.Color(255, 255, 255));
-        panelContenido.setPreferredSize(new java.awt.Dimension(1150, 590));
+        panelContenido.setPreferredSize(new java.awt.Dimension(1365, 590));
 
         lblPrincipal.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
         lblPrincipal.setText("Detalle comanda");
@@ -69,11 +91,11 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
         btnVolver.setPreferredSize(new java.awt.Dimension(200, 32));
         btnVolver.addActionListener(this::btnVolverActionPerformed);
 
-        btnEntrega.setBackground(new java.awt.Color(18, 44, 79));
-        btnEntrega.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnEntrega.setForeground(new java.awt.Color(255, 255, 255));
-        btnEntrega.setText("Marcar entrega");
-        btnEntrega.addActionListener(this::btnEntregaActionPerformed);
+        btnMarcarEntrega.setBackground(new java.awt.Color(18, 44, 79));
+        btnMarcarEntrega.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnMarcarEntrega.setForeground(new java.awt.Color(255, 255, 255));
+        btnMarcarEntrega.setText("Marcar entrega");
+        btnMarcarEntrega.addActionListener(this::btnMarcarEntregaActionPerformed);
 
         lblFolio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblFolio.setText("Folio:");
@@ -87,34 +109,42 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
         lblMesa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblMesa.setText("Mesa:");
 
-        lblEstado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblEstado.setText("Estado:");
+        lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTotal.setText("Total:");
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 400));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductosComanda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Producto", "Cantidad", "Precio unit.", "Comentario", "Subtotal"
+                "Producto", "Cantidad", "Comentario", "Subtotal"
             }
-        ));
-        jTable1.setPreferredSize(new java.awt.Dimension(800, 400));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblProductosComanda.setPreferredSize(new java.awt.Dimension(800, 400));
+        jScrollPane1.setViewportView(tblProductosComanda);
+
+        lblEstado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblEstado.setText("Estado:");
 
         javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
         panelContenido.setLayout(panelContenidoLayout);
         panelContenidoLayout.setHorizontalGroup(
             panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContenidoLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(140, 140, 140)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelContenidoLayout.createSequentialGroup()
-                        .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblPrincipal, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sep, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(lblPrincipal)
+                    .addComponent(sep, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelContenidoLayout.createSequentialGroup()
                         .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFolio)
@@ -123,17 +153,18 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
                         .addGap(322, 322, 322)
                         .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblMesa)
-                            .addComponent(lblEstado))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(lblTotal)
+                            .addComponent(lblEstado))))
+                .addContainerGap(140, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenidoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(panelContenidoLayout.createSequentialGroup()
                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnMarcarEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(175, 175, 175))
+                .addGap(280, 280, 280))
         );
         panelContenidoLayout.setVerticalGroup(
             panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,17 +182,19 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
                     .addComponent(lblFecha)
                     .addComponent(lblEstado))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCliente)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCliente)
+                    .addComponent(lblTotal))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntrega)
+                    .addComponent(btnMarcarEntrega)
                     .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        panelPrincipal.add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 175, 1150, 595));
+        panelPrincipal.add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 1360, 595));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,32 +210,66 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
-        
-    }//GEN-LAST:event_btnEntregaActionPerformed
+    private void btnMarcarEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarEntregaActionPerformed
+        control.marcarEntregaComanda(this, folio);
+    }//GEN-LAST:event_btnMarcarEntregaActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-
+        control.mostarPantallaComandas(this);
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    public void llenarTabla(List<ProductoComandaDTO> lista) {
+        
+        DefaultTableModel modelo = (DefaultTableModel) tblProductosComanda.getModel();
+        modelo.setRowCount(0); // Limpiamos la tabla
+        
+        if (lista == null || lista.isEmpty()) {
+            return;
+        }
+        
+        Double subtotal = 0d;
+        for (ProductoComandaDTO producto : lista) {
+            subtotal += producto.getSubtotal();
+            Object[] fila = {
+                producto.getNombreProducto(),
+                producto.getCantidad(),
+                producto.getDetalles(),
+                producto.getSubtotal(),
+            };
+            modelo.addRow(fila);;
+        }
+        lblTotal.setText("$" + subtotal);
+        
+    }
+    
+    public void llenarCampos(ComandaDTO comanda) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        lblFolio.setText(lblFolio.getText() + " " + comanda.getFolio());
+        lblFecha.setText(lblFecha.getText() + " " + comanda.getFechaHora().format(formatter));
+        lblCliente.setText(lblCliente.getText() + " " +comanda.getNombreCompleto());
+        lblMesa.setText(lblMesa.getText() + " " + String.valueOf(comanda.getNoMesa()));
+        lblEstado.setText(lblEstado.getText() + " " + comanda.getEstado().toString());
+    }
+    
     public void mostarMensaje(String msj, boolean esError) {
         int tipo = esError ? JOptionPane.ERROR_MESSAGE : JOptionPane.INFORMATION_MESSAGE;
         JOptionPane.showMessageDialog(this, msj, "Sistema", tipo);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEntrega;
+    private javax.swing.JButton btnMarcarEntrega;
     private javax.swing.JButton btnVolver;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblFolio;
     private javax.swing.JLabel lblMesa;
     private javax.swing.JLabel lblPrincipal;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JSeparator sep;
+    private javax.swing.JTable tblProductosComanda;
     // End of variables declaration//GEN-END:variables
 }

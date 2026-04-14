@@ -2,6 +2,7 @@
 package org.itson.restaurante.dtos;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
@@ -16,11 +17,12 @@ public class ComandaDTO {
     private LocalDateTime fechaHora;
     private Integer noMesa;
     private String nombreCompleto;
+    private List<ProductoComandaDTO> listaProductos;
 
     public ComandaDTO() {
     }
-    
-    public ComandaDTO(Long id, String folio, EstadoComanda estado, Double totalAcumulado, LocalDateTime fechaHora, Integer noMesa, String nombreCompleto) {
+
+    public ComandaDTO(Long id, String folio, EstadoComanda estado, Double totalAcumulado, LocalDateTime fechaHora, Integer noMesa, String nombreCompleto, List listaProductos) {
         this.id = id;
         this.folio = folio;
         this.estado = estado;
@@ -28,6 +30,7 @@ public class ComandaDTO {
         this.fechaHora = fechaHora;
         this.noMesa = noMesa;
         this.nombreCompleto = nombreCompleto;
+        this.listaProductos = listaProductos;
     }
     
     public Long getId() {
@@ -57,7 +60,9 @@ public class ComandaDTO {
     public String getNombreCompleto() {
         return nombreCompleto;
     }
-    
-    
+
+    public List getListaProductos() {
+        return listaProductos;
+    }
     
 }

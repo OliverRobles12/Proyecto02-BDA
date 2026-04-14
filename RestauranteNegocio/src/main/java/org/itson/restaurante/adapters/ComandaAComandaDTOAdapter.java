@@ -1,9 +1,13 @@
 
 package org.itson.restaurante.adapters;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.itson.restaurante.dominio.Comanda;
+import org.itson.restaurante.dominio.ProductoComanda;
 import org.itson.restaurante.dtos.ComandaDTO;
 import org.itson.restaurante.dtos.EstadoComanda;
+import org.itson.restaurante.dtos.ProductoComandaDTO;
 
 /**
  *
@@ -26,6 +30,12 @@ public class ComandaAComandaDTOAdapter {
             estado = EstadoComanda.ENTREGADA;
         }
         
+        List<ProductoComandaDTO> listaProductos = new ArrayList<>();
+        
+        for (ProductoComanda productoComanda : comanda.getProductos()) {
+            listaProductos.add(ProductoComandaAProductoComandaDTOAdapter.adapter(productoComanda));
+        }
+        
         return new ComandaDTO(
                 comanda.getId(),
                 comanda.getFolio(),
@@ -33,7 +43,8 @@ public class ComandaAComandaDTOAdapter {
                 comanda.getTotalAcumulado(), 
                 comanda.getFechaHora(), 
                 comanda.getMesa().getNoMesa(), 
-                nombreCliente
+                nombreCliente,
+                listaProductos
         );
         
     }

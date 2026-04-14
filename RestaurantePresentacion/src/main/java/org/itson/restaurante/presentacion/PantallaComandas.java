@@ -215,7 +215,13 @@ public class PantallaComandas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
-
+        int fila = tblComandas.getSelectedRow();
+        if (fila != -1) {
+            String folio = tblComandas.getValueAt(fila, 0).toString();
+            control.mostrarPantallaDetalleComanda(this, folio);
+        } else {
+            this.mostarMensaje("Es necesario seleccionar una comanda.", true);
+        }
     }//GEN-LAST:event_btnDetallesActionPerformed
 
     private void btnNuevaComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaComandaActionPerformed

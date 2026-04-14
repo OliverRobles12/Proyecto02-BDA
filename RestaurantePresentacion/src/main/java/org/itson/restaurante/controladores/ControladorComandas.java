@@ -81,10 +81,22 @@ public class ControladorComandas {
         
     }
     
-    public void mostrarPantallaDetalleComanda(JFrame pantallaActual) {
-        PantallaDetallesComanda vistaPantalla = new PantallaDetallesComanda(this);
+    public void mostrarPantallaDetalleComanda(JFrame pantallaActual, String folio) {
+        PantallaDetallesComanda vistaPantalla = new PantallaDetallesComanda(this, folio);
+        vistaPantalla.setVisible(true);
+        
+        try {
+            ComandaDTO comanda = comandaBO.consultarComanda(folio);
+            vistaPantalla.llenarTabla(comanda.getListaProductos());
+            vistaPantalla.llenarCampos(comanda);
+        } catch (NegocioException ex) {
+            vistaPantalla.mostarMensaje("No ha sido posible cargar los detalles de la comanda.", true);
+        }
+        
+        if (vistaPantalla != null) {
+            pantallaActual.dispose();
+        }
     }
-    
     
     // Pantalla Comandas
     
@@ -104,13 +116,15 @@ public class ControladorComandas {
     }
     
     // Pantalla detalles comanda
-    private void marcarEntregaComanda(PantallaDetallesComanda vistaDetllas, String folio) {
+    
+    public void marcarEntregaComanda(PantallaDetallesComanda vistaDetalles, String folio) {
         try {
             comandaBO.marcarEntregaComanda(folio);
+            vistaDetalles.mostarMensaje("Comanda marcada como entregada.", false);
+            this.mostarPantallaComandas(vistaDetalles);
         } catch (NegocioException ex) {
-            // vistaDetllas.mos
+            vistaDetalles.mostarMensaje("No ha sido posible cambiar el estado de la comanda.", true);
         }
-        
     }
     
     // Pantalla nueva comanda

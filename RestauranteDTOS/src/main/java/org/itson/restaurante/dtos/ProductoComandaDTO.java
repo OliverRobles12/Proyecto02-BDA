@@ -11,12 +11,14 @@ public class ProductoComandaDTO {
     private String detalles;
     private Double subtotal;
     private Long idProducto;
+    private String nombreProducto;
 
-    public ProductoComandaDTO(Integer cantidad, String detalles, Double subtotal, Long idProducto) {
+    public ProductoComandaDTO(Integer cantidad, String detalles, Double subtotal, Long idProducto, String nombreProducto) {
         this.cantidad = cantidad;
         this.detalles = detalles;
         this.subtotal = subtotal;
         this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
     }
 
     public Integer getCantidad() {
@@ -34,7 +36,9 @@ public class ProductoComandaDTO {
     public Long getIdProducto() {
         return idProducto;
     }
-    
-    
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
     
 }
