@@ -6,6 +6,9 @@ package org.itson.restaurante.controladores;
 
 import java.util.List;
 import javax.swing.JFrame;
+import org.itson.restaurante.dtos.IngredienteDTO;
+import org.itson.restaurante.dtos.NuevoProductoDTO;
+import org.itson.restaurante.dtos.ProductoActualizadoDTO;
 import org.itson.restaurante.dtos.ProductoDTO;
 import org.itson.restaurante.dtos.TipoProducto;
 import org.itson.restaurante.negocio.NegocioException;
@@ -25,6 +28,7 @@ public class ControladorProductos {
     private ProductoBO productoBO = new ProductoBO();
 
     public ControladorProductos() {
+        this.control = control;
     }
     
     public static ControladorProductos getInstancia() {
@@ -60,7 +64,7 @@ public class ControladorProductos {
     }
     
     public void mostrarPantallaFormularioProductos(JFrame pantallaActual) {
-        PantallaFormularioProducto formularioProductos = new PantallaFormularioProducto(this, null);
+        PantallaFormularioProducto formularioProductos = new PantallaFormularioProducto(this, null,control,null);
         formularioProductos.setLocationRelativeTo(pantallaActual);
         formularioProductos.setVisible(true);
         
@@ -70,13 +74,17 @@ public class ControladorProductos {
     }
 
     public void mostrarPantallaFormularioProductos(JFrame pantallaActual, ProductoDTO productoAEditar) {
-        PantallaFormularioProducto formularioProductos = new PantallaFormularioProducto(this, productoAEditar);
+        PantallaFormularioProducto formularioProductos = new PantallaFormularioProducto(this, productoAEditar,control,null);
         formularioProductos.setLocationRelativeTo(pantallaActual);
         formularioProductos.setVisible(true);
         
         if (pantallaActual != null) {
             pantallaActual.dispose(); 
         }
+    }
+    
+    public ProductoDTO registrar(NuevoProductoDTO nuevoProducto) throws NegocioException{
+        return productoBO.registrarProducto(nuevoProducto);
     }
     
     public List<ProductoDTO> consultarProductos() throws NegocioException {
@@ -86,4 +94,20 @@ public class ControladorProductos {
     public List<ProductoDTO> consultarProductosFiltro(String nombre,TipoProducto tipo) throws NegocioException {
         return productoBO.consultarProductosFiltro(nombre, tipo);
     }
+    
+    public ProductoDTO consultarProductoID(Long id) throws NegocioException{
+        return productoBO.consultarProductoPorId(id);
+    }
+    
+    public void ActualizarProducto(ProductoDTO productoActualizado) throws NegocioException{
+        productoBO.actualizarProducto(productoActualizado);
+    }
+    
+    public IngredienteDTO ConsultarIngrediente(Long id) throws NegocioException{
+       return control.getControladorIngredientes().consultarIngrediente(id);
+    }
+    
+    public void setControl(Controlador control) {
+    this.control = control;
+}
 }

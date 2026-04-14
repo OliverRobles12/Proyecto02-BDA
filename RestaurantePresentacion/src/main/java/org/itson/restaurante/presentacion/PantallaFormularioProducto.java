@@ -5,14 +5,21 @@
 package org.itson.restaurante.presentacion;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import org.itson.restaurante.controladores.Controlador;
 import org.itson.restaurante.controladores.ControladorProductos;
+import org.itson.restaurante.dtos.EstadoProducto;
+import org.itson.restaurante.dtos.IngredienteDTO;
+import org.itson.restaurante.dtos.IngredienteRecetaDTO;
+import org.itson.restaurante.dtos.NuevoProductoDTO;
 import org.itson.restaurante.dtos.ProductoDTO;
 import org.itson.restaurante.dtos.TipoProducto;
 import org.itson.restaurante.negocio.NegocioException;
@@ -33,16 +40,36 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
     private ControladorProductos controlador;
     private Controlador controladorBase;
     private ProductoDTO productoSeleccionado = null;
-    private List<ProductoDTO> Listproductos = new ArrayList<>();
+    private IngredienteRecetaDTO IngredienteSeleccionado = null;
+    private IngredienteDTO ingredienteEncontrado = null;
+    private List<IngredienteRecetaDTO> ListIngredientes = new ArrayList<>();
+    private byte[] imagen;
     /**
      * Creates new form PantallaProductos
      */
-    public PantallaFormularioProducto(ControladorProductos controlador, ProductoDTO producto) {
+    public PantallaFormularioProducto(ControladorProductos controlador, ProductoDTO producto,Controlador controladorBase,IngredienteDTO ingredienteEncontrado) {
         this.controlador = controlador;
         this.controladorBase = controladorBase;
+        this.productoSeleccionado = producto;
+        this.ingredienteEncontrado = ingredienteEncontrado;
         initComponents();
+        this.setResizable(false);
         inicializarTabla();
+        javax.swing.DefaultComboBoxModel modelo = new javax.swing.DefaultComboBoxModel();
+        for (TipoProducto tipo : TipoProducto.values()) {
+            modelo.addElement(tipo);
+        }
+        cmbTipo.setModel(modelo);
+        if (this.productoSeleccionado != null) {
+            Long id = this.productoSeleccionado.getId(); 
+            this.cmbTipo.setSelectedItem(productoSeleccionado.getTipoProducto());
+        } else {
+            this.ListIngredientes = new ArrayList<>();
+        }
+        cargarDatosProducto();
         utilerias.aplicarIcono(this);
+        
+        
         
         
         panelHeader = new PanelHeader();
@@ -57,6 +84,9 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         panelNavegacion.setPantallasNavegacion("Busqueda de Producto", "Editar/Agregar ");
         
         utilerias.estilizarBotonSinFondo(btnCancelar);
+        
+        
+        
         
         
     }
@@ -81,7 +111,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         sep1 = new javax.swing.JSeparator();
         lblTitulo1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbTipo = new javax.swing.JComboBox<>();
         lblTipo = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
         lblImagen = new javax.swing.JLabel();
@@ -91,7 +121,8 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         txtImagen = new javax.swing.JTextField();
         btnBuscarImagen = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblIngredientes = new javax.swing.JTable();
+        btnEliminarIngrediente = new javax.swing.JButton();
         panelContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,8 +167,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        cmbTipo.addActionListener(this::cmbTipoActionPerformed);
 
         lblTipo.setText("Tipo");
 
@@ -160,7 +190,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         btnBuscarImagen.setToolTipText("");
         btnBuscarImagen.addActionListener(this::btnBuscarImagenActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -171,7 +201,14 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblIngredientes);
+
+        btnEliminarIngrediente.setBackground(new java.awt.Color(18, 44, 79));
+        btnEliminarIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEliminarIngrediente.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarIngrediente.setText("Eliminar Ingrediente");
+        btnEliminarIngrediente.setToolTipText("");
+        btnEliminarIngrediente.addActionListener(this::btnEliminarIngredienteActionPerformed);
 
         javax.swing.GroupLayout panelContenido1Layout = new javax.swing.GroupLayout(panelContenido1);
         panelContenido1.setLayout(panelContenido1Layout);
@@ -196,7 +233,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelContenido1Layout.createSequentialGroup()
@@ -215,7 +252,9 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                                         .addComponent(lblPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(61, 61, 61))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenido1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
+                        .addComponent(btnEliminarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(btnGuardarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -247,20 +286,17 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                 .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(jComboBox1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbTipo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescripcion)
                     .addComponent(lblImagen))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenido1Layout.createSequentialGroup()
-                        .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBuscarImagen)
-                            .addComponent(txtImagen))
-                        .addGap(14, 14, 14)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnBuscarImagen, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(txtDescripcion))
+                .addGap(14, 14, 14)
                 .addComponent(sep1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -268,11 +304,17 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                     .addComponent(btnBuscarIngrediente, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnGuardarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(49, 49, 49))
+                .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContenido1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancelar)
+                            .addComponent(btnGuardarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(57, 57, 57))
+                    .addGroup(panelContenido1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelContenido1Layout.createSequentialGroup()
                     .addGap(16, 16, 16)
@@ -318,19 +360,74 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
-//            if (this.tblProductos.getSelectedRow() < 0) {
-//            JOptionPane.showMessageDialog(this,
-//                    "Selecciona un ingrediente primero",
-//                    "Aviso",
-//                    JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//        seleccionarProductoTabla();
-//        this.dispose();
+            TipoProducto tipoSeleccionado = (TipoProducto) cmbTipo.getSelectedItem();
+            String nombreNuevo = txtNombre.getText();
+            String descripcionNueva = txtDescripcion.getText();
+            Double precioNuevo = 0.0; 
+            String textoPrecio = txtPrecio.getText();
+
+            if (!textoPrecio.isEmpty()) {
+                precioNuevo = Double.parseDouble(textoPrecio); 
+            }
+            try{
+            if(productoSeleccionado != null){
+
+                Long idOriginal = productoSeleccionado.getId();
+                EstadoProducto estadoOriginal = productoSeleccionado.getEstado(); 
+                ProductoDTO productoActualizado = new ProductoDTO(
+                    idOriginal,
+                    nombreNuevo,
+                    precioNuevo,
+                    tipoSeleccionado, 
+                    estadoOriginal,
+                    descripcionNueva,
+                    this.imagen,      
+                    this.ListIngredientes 
+                );
+                controlador.ActualizarProducto(productoActualizado);
+                productoSeleccionado.setReceta(ListIngredientes);
+
+                JOptionPane.showMessageDialog(this, "Producto actualizado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            
+            this.productoSeleccionado = productoActualizado;
+            }else{
+                NuevoProductoDTO productoNuevo = new NuevoProductoDTO(
+                nombreNuevo,
+                precioNuevo,
+                tipoSeleccionado, 
+                descripcionNueva,
+                this.imagen,      
+                this.ListIngredientes
+            );
+
+               controlador.registrar(productoNuevo); 
+            
+            JOptionPane.showMessageDialog(this, "Producto registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+            
+
+        
+        } catch (NegocioException ex) {
+            System.getLogger(PantallaFormularioProducto.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }//GEN-LAST:event_btnGuardarProductoActionPerformed
 
     private void btnBuscarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIngredienteActionPerformed
-        controladorBase.abrirBusquedaIngredientes(this);
+        IngredienteDTO ingredienteElegido =
+            controladorBase.abrirBusquedaIngredientesProductos(this);
+
+        if (ingredienteElegido == null) {
+            return; 
+        }
+
+        try {
+            agregarIngredienteAlProducto(ingredienteElegido);
+        } catch (NegocioException ex) {
+            System.getLogger(PantallaFormularioProducto.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+        
+        
     }//GEN-LAST:event_btnBuscarIngredienteActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -349,21 +446,63 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cmbTipoActionPerformed
 
     private void txtImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImagenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImagenActionPerformed
 
     private void btnBuscarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarImagenActionPerformed
-        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                "Imágenes", "jpg", "jpeg", "png", "gif"
+        ));
+
+        int resultado = fileChooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivo = fileChooser.getSelectedFile();
+            this.txtImagen.setText(archivo.getAbsolutePath());
+
+            try {
+                imagen = java.nio.file.Files.readAllBytes(archivo.toPath());
+                ImageIcon icono = new ImageIcon(imagen);
+                Image escalada = icono.getImage().getScaledInstance(306, 221, Image.SCALE_SMOOTH);
+                this.lblImagen.setIcon(new ImageIcon(escalada));
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al cargar la imagen");
+            }
+        }
     }//GEN-LAST:event_btnBuscarImagenActionPerformed
+
+    private void btnEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIngredienteActionPerformed
+        int fila = this.tblIngredientes.getSelectedRow();
+
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona un ingrediente primero",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int filaModelo = tblIngredientes.convertRowIndexToModel(fila);
+        this.productoSeleccionado.getReceta().remove(filaModelo);
+        this.ListIngredientes.remove(filaModelo);
+
+        try {
+            cargarIngredientes(this.ListIngredientes);
+        } catch (NegocioException ex) {
+            System.getLogger(PantallaFormularioProducto.class.getName())
+                    .log(System.Logger.Level.ERROR, (String) null, ex);
+     }
+ 
+    }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
 
     public void inicializarTabla(){
     
-        String[] columnas = {"Nombre","Tipo","Precio","Estado","Imagen"};
+        String[] columnas = {"Nombre","Unidad","Cantidad"};
         
         DefaultTableModel modelo = new DefaultTableModel(columnas,0){
             @Override
@@ -374,52 +513,84 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
             public Class<?> getColumnClass(int columnIndex) { 
                 return switch (columnIndex) {
                     case 0 -> String.class;    
-                    case 1 -> Object.class;    
-                    case 2 -> Float.class;     
-                    case 3 -> String.class;    
-                    case 4 -> ImageIcon.class; 
+                    case 1 -> String.class;    
+                    case 2 -> Float.class;   
                     default -> Object.class;
                 };
             }
         };
-        
+        tblIngredientes.setModel(modelo);
+        utilerias.estilizarTablaProductos(tblIngredientes);
+        if (this.productoSeleccionado != null) {
         try{
-            List<ProductoDTO> listaProductos = controlador.consultarProductos();
-//            cargarProductos(listaProductos);
+            List<IngredienteRecetaDTO> listaIngredientes = controlador.consultarProductoID(productoSeleccionado.getId()).getReceta();
+            cargarIngredientes(listaIngredientes);
         }catch(NegocioException ex){
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
+       }
     }
     
-//    private void cargarProductos(List<ProductoDTO> productos) {
-//    DefaultTableModel modelo = (DefaultTableModel) this.tblProductos.getModel();
-//
-//    modelo.setRowCount(0);
-//
-//    for (ProductoDTO p : productos) {
-//        modelo.addRow(new Object[]{
-//            p.getNombre(),
-//            p.getTipoProducto(),
-//            p.getPrecio(),
-//            p.getEstado(), 
-//            convertirImagen(p.getImagen()) 
-//        });
-//      }
-//        this.Listproductos = productos;
-//        
-//    }
+    private void seleccionarIngredienteTabla(){
+        int fila = this.tblIngredientes.getSelectedRow();
+        if(fila >= 0){
+            this.IngredienteSeleccionado = this.ListIngredientes.get(fila);
+        }
+    }
+
+        private void cargarIngredientes(List<IngredienteRecetaDTO> ingredientes) throws NegocioException {
+        DefaultTableModel modelo = (DefaultTableModel) this.tblIngredientes.getModel();
+
+        modelo.setRowCount(0);
+
+        
+        for (IngredienteRecetaDTO i : ingredientes) {
+        String unidad = "Desconocida"; 
+
+        try {
+            if (controlador != null) {
+                IngredienteDTO ing = controlador.ConsultarIngrediente(i.getIdIngrediente());
+
+                if (ing != null && ing.getUnidadMedida() != null) {
+                    unidad = ing.getUnidadMedida().toString();
+                }
+            } else {
+                System.err.println("¡Ojo! El controlador está null en este punto.");
+            }
+        } catch (Exception ex) {
+            System.err.println("Error al buscar unidad de medida: " + ex.getMessage());
+        }
+
+        modelo.addRow(new Object[]{
+            i.getNombre(),
+            unidad,
+            i.getCantidad()
+        });
+        }
+        this.ListIngredientes = ingredientes;
+     }
+        
+
+        public IngredienteRecetaDTO getIngredienteSeleccionado() {
+            return IngredienteSeleccionado;
+        }
     
-//    private void seleccionarProductoTabla(){
-//        int fila = this.tblProductos.getSelectedRow();
-//        if(fila >= 0){
-//            this.productoSeleccionado = this.Listproductos.get(fila);
-//        }
-//    }
-//
-//    public ProductoDTO getProductoSeleccionado() {
-//        return productoSeleccionado;
-//    }
     
+    private void cargarDatosProducto(){
+        if (this.productoSeleccionado != null) {
+            this.txtNombre.setText(productoSeleccionado.getNombre());
+            this.txtDescripcion.setText(productoSeleccionado.getDescripcion());
+            this.txtPrecio.setText(productoSeleccionado.getPrecio().toString());
+
+
+
+             if (productoSeleccionado.getImagen() != null) {
+                ImageIcon icono = new ImageIcon(productoSeleccionado.getImagen());
+                Image escalada = icono.getImage().getScaledInstance(306, 221, Image.SCALE_SMOOTH);
+                this.lblImagen.setIcon(new ImageIcon(escalada));
+            }
+        }
+    }
     
     
     private ImageIcon convertirImagen(byte[] imagenBytes) {
@@ -429,10 +600,27 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         } else {
             icono = new ImageIcon(imagenBytes);
         }
-        Image imgEscalada = icono.getImage().getScaledInstance(180, 130, Image.SCALE_SMOOTH);
+        Image imgEscalada = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         return new ImageIcon(imgEscalada);
     }
     
+    private void agregarIngredienteAlProducto(IngredienteDTO ingrediente) throws NegocioException {
+
+        IngredienteRecetaDTO nuevo = new IngredienteRecetaDTO(
+                ingrediente.getId(),
+                ingrediente.getNombre(),
+                1.0   
+        );
+
+        ListIngredientes.add(nuevo);
+        cargarIngredientes(ListIngredientes);
+
+        try {
+            cargarIngredientes(ListIngredientes);
+        } catch (NegocioException ex) {
+            ex.printStackTrace();
+        }
+    }
     
     /**
      * @param args the command line arguments
@@ -467,11 +655,11 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarImagen;
     private javax.swing.JButton btnBuscarIngrediente;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminarIngrediente;
     private javax.swing.JButton btnGuardarProducto;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblPrecio1;
@@ -482,6 +670,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
     private javax.swing.JPanel panelContenido1;
     private javax.swing.JSeparator sep;
     private javax.swing.JSeparator sep1;
+    private javax.swing.JTable tblIngredientes;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtImagen;
     private javax.swing.JTextField txtNombre;

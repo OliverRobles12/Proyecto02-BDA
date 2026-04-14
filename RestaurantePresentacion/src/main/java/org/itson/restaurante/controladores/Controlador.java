@@ -1,6 +1,7 @@
 package org.itson.restaurante.controladores;
 
 import javax.swing.JFrame;
+import org.itson.restaurante.dtos.IngredienteDTO;
 import org.itson.restaurante.dtos.RolEmpleado;
 import org.itson.restaurante.negocio.IMesaBO;
 import org.itson.restaurante.negocio.MesaBO;
@@ -26,8 +27,10 @@ public class Controlador {
     private static Controlador instancia;
 
     private ControladorProductos controladorProducos;
+    private ControladorProductos controladorProductos;
     private ControladorComandas controladorComandas;
     private ControladorClientes controladorClientes;
+    private ControladorIngrediente controladorIngredientes;
     private IMesaBO mesaBO;
 
     private Controlador() {
@@ -61,11 +64,22 @@ public class Controlador {
         return controladorComandas;
     }
 
-    public ControladorProductos getControladorProductos() {
-        if (controladorProducos == null) {
-            controladorProducos = new ControladorProductos();
+
+   
+    public ControladorProductos getControladorProductos(){
+        if(controladorProductos == null){
+            controladorProductos = new ControladorProductos();
+            controladorProductos.setControl(this);
+
         }
-        return controladorProducos;
+        
+    }
+    
+    public ControladorIngrediente getControladorIngredientes(){
+        if(controladorIngredientes == null){
+            controladorIngredientes = new ControladorIngrediente();
+        }
+        return controladorIngredientes;
     }
 
     public void registrarMesas(PantallaMenuPrincipal vistaMenuPrincipal, int cantidad) {
@@ -130,7 +144,9 @@ public class Controlador {
 
     }
 
-    public void abrirBusquedaIngredientes(JFrame pantallaActual) {
+
+    public IngredienteDTO abrirBusquedaIngredientes(JFrame pantallaActual){
+
         PantallaBusquedaIngrediente busqueda = new PantallaBusquedaIngrediente(pantallaActual, true);
         busqueda.setModal(true);
         busqueda.setVisible(true);
@@ -138,6 +154,19 @@ public class Controlador {
         if (pantallaActual != null) {
             pantallaActual.dispose();
         }
+        
+        IngredienteDTO seleccionado = busqueda.getIngredienteSeleccionado();
+        return seleccionado;
+    }
+    
+    public IngredienteDTO abrirBusquedaIngredientesProductos(JFrame pantallaActual){
+        PantallaBusquedaIngrediente busqueda =new PantallaBusquedaIngrediente(pantallaActual, true);
+
+        busqueda.setLocationRelativeTo(pantallaActual);
+
+        busqueda.setVisible(true); 
+
+        return busqueda.getIngredienteSeleccionado();
     }
 
     /**

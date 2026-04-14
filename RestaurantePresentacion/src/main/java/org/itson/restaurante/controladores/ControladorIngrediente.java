@@ -116,4 +116,8 @@ public class ControladorIngrediente {
     public List<IngredienteDTO> consultarIngredientesFiltro(String filtro) throws NegocioException {
         return this.ingredientesBO.consultarIngredientesFiltro(filtro);
     }
+    
+    public IngredienteDTO consultarIngrediente(Long id) throws NegocioException{
+        return this.ingredientesBO.consultarIngredientesFiltro(id);
+    }
 }
