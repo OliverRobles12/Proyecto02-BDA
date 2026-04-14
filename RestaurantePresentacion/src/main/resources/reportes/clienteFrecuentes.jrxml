@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="ReporteClientesFrecuentes" 
+              pageWidth="595" 
+              pageHeight="842" 
+              columnWidth="555" 
+              leftMargin="20" 
+              rightMargin="20" 
+              topMargin="20" 
+              bottomMargin="20" 
+              uuid="d25b1a3c-1234-4321-b123-e4567890abcd">
+
+    <parameter name="fechaInicio" class="java.lang.String"/>
+    <parameter name="fechaFin" class="java.lang.String"/>
+
+    <field name="nombre" class="java.lang.String"/>
+    <field name="apellidoPaterno" class="java.lang.String"/>
+    <field name="telefono" class="java.lang.String"/>
+    <field name="puntosAcumulados" class="java.lang.Integer"/>
+    <field name="totalGastado" class="java.lang.Double"/>
+    <field name="numeroVisitas" class="java.lang.Integer"/>
+    <field name="fechaUltimaComanda" class="java.time.LocalDate"/>
+
+    <pageHeader>
+        <band height="100" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="20" width="555" height="30" forecolor="#122C4F" uuid="a1234567-b123-c123-d123-e12345678901"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="20" isBold="true"/>
+                </textElement>
+                <text><![CDATA[REPORTE DE CLIENTES FRECUENTES]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement x="0" y="50" width="555" height="20" forecolor="#495057" uuid="b1234567-c123-d123-e123-f12345678902"/>
+                <textElement textAlignment="Center">
+                    <font size="10" isItalic="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Filtro de Registro: " + $P{fechaInicio} + " al " + $P{fechaFin}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="70" width="555" height="15" forecolor="#6C757D" uuid="c1234567-d123-e123-f123-012345678903"/>
+                <textElement textAlignment="Center">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Generado el: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+
+            <textField evaluationTime="Report">
+                <reportElement x="455" y="0" width="100" height="20" uuid="d1234567-e123-f123-0123-112345678904"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+
+    <columnHeader>
+        <band height="25" splitType="Stretch">
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="20" backcolor="#122C4F" uuid="e1234567-f123-0123-1123-212345678905"/>
+                <graphicElement><pen lineWidth="0.0"/></graphicElement>
+            </rectangle>
+            <staticText>
+                <reportElement x="5" y="0" width="155" height="20" forecolor="#FFFFFF" uuid="f1234567-0123-1123-2123-312345678906"/>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Nombre del Cliente]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="165" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="01234567-1123-2123-3123-412345678907"/>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Teléfono]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="250" y="0" width="50" height="20" forecolor="#FFFFFF" uuid="11234567-2123-3123-4123-512345678908"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Visitas]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="305" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="21234567-3123-4123-5123-612345678909"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Puntos]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="370" y="0" width="90" height="20" forecolor="#FFFFFF" uuid="31234567-4123-5123-6123-712345678910"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Última Compra]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="465" y="0" width="85" height="20" forecolor="#FFFFFF" uuid="41234567-5123-6123-7123-812345678911"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Inversión Total]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="25" splitType="Stretch">
+            <textField>
+                <reportElement x="5" y="0" width="155" height="20" uuid="51234567-6123-7123-8123-912345678912"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{nombre} + " " + $F{apellidoPaterno}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="165" y="0" width="80" height="20" uuid="61234567-7123-8123-9123-012345678913"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="250" y="0" width="50" height="20" uuid="71234567-8123-9123-0123-112345678914"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{numeroVisitas}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="305" y="0" width="60" height="20" uuid="81234567-9123-0123-1123-212345678915"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{puntosAcumulados}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="370" y="0" width="90" height="20" uuid="91234567-0123-1123-2123-312345678916"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[($F{fechaUltimaComanda} != null) ? $F{fechaUltimaComanda}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) : "Sin registro"]]></textFieldExpression>
+            </textField>
+            <textField pattern="$ #,##0.00">
+                <reportElement x="465" y="0" width="85" height="20" uuid="01234567-1123-2123-3123-412345678917"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{totalGastado}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="22" width="555" height="1" forecolor="#E0E0E0" uuid="11234567-2123-3123-4123-512345678918"/>
+            </line>
+        </band>
+    </detail>
+
+    <summary>
+        <band height="40" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="10" width="555" height="20" forecolor="#6C757D" uuid="21234567-3123-4123-5123-612345678919"/>
+                <textElement textAlignment="Center">
+                    <font isItalic="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Fin del listado de Clientes Preferenciales - Total: " + $V{REPORT_COUNT}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+</jasperReport>

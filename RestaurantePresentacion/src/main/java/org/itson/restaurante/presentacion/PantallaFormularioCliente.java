@@ -49,34 +49,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
     }
-
-//    public PantallaFormularioCliente(ClienteFrecuenteDTO cliente) {
-//        initComponents();
-//
-//        panelHeader = new PanelHeader();
-//        panelNavegacion = new PanelNavegacionPantallasPrincipales();
-//
-//        panPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
-//        panPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
-//
-//        panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Formulario");
-//
-//        utilerias.estilizarBotonPrimario(btnEditarCliente);
-//
-//        utilerias.estilizarBotonPrimario(btnGuardarCliente);
-//
-//        utilerias.estilizarBotonSinFondo(btnCancelar);
-//
-//        btnGuardarCliente.setVisible(false);
-//        btnEditarCliente.setVisible(true);
-//
-//        this.setLocationRelativeTo(null);
-//
-//        this.clienteForm = cliente;
-//
-//        llenarCampos(this.clienteForm);
-//
-//    }
     
     public PantallaFormularioCliente(ControladorClientes control, ClienteFrecuenteDTO cliente) {
         this(control);
@@ -113,6 +85,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         btnEditarCliente = new javax.swing.JButton();
         panContenido = new javax.swing.JPanel();
+        btnClienteGeneral = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario Cliente");
@@ -201,15 +174,31 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
         panContenido.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnClienteGeneral.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnClienteGeneral.setForeground(new java.awt.Color(18, 44, 79));
+        btnClienteGeneral.setText("Cliente General");
+        btnClienteGeneral.setOpaque(true);
+        btnClienteGeneral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteGeneralActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
         panContenido.setLayout(panContenidoLayout);
         panContenidoLayout.setHorizontalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1370, Short.MAX_VALUE)
+            .addGroup(panContenidoLayout.createSequentialGroup()
+                .addGap(501, 501, 501)
+                .addComponent(btnClienteGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(679, Short.MAX_VALUE))
         );
         panContenidoLayout.setVerticalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panContenidoLayout.createSequentialGroup()
+                .addContainerGap(373, Short.MAX_VALUE)
+                .addComponent(btnClienteGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(187, 187, 187))
         );
 
         panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 177, 1370, 590));
@@ -313,6 +302,10 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
+    private void btnClienteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteGeneralActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClienteGeneralActionPerformed
+
     public ClienteFrecuenteDTO getClienteFrecuenteDTO() {
         return clienteForm;
     }
@@ -332,6 +325,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnClienteGeneral;
     private javax.swing.JButton btnEditarCliente;
     private javax.swing.JButton btnGuardarCliente;
     private javax.swing.JLabel lblApellidoMaterno;
