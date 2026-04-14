@@ -69,7 +69,7 @@ public class ControladorClientes {
      * @return Regresa el cliente seleccionado en el buscardorCLienteDialog.
      */
     public ClienteFrecuenteDTO mostrarBuscadorClienteDialog(JFrame pantallaActual) {
-        PantallaBusquedaClienteD dialog = new PantallaBusquedaClienteD(pantallaActual, true);
+        PantallaBusquedaClienteD dialog = new PantallaBusquedaClienteD(pantallaActual, true, this);
         dialog.setVisible(true);
         return dialog.getClienteSeleccionado();
     }
