@@ -17,6 +17,7 @@ public class PantallaCliente extends javax.swing.JFrame {
     
     /**
      * Creates new form PantallaCliente
+     * @param control
      */
     public PantallaCliente(ControladorClientes control) {
         this.control = control;

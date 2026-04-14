@@ -1,6 +1,5 @@
 package org.itson.restaurante.negocio;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -26,32 +25,19 @@ public class ReporteBO implements IReporteBO {
     @Override
     public JasperPrint generarReporteComandas(LocalDate inicio, LocalDate fin) throws NegocioException {
         try {
-            // 1. Obtener datos
             List<Comanda> lista = comandaDAO.consultarComandas();
             List<ReporteComandaDTO> listaDTO = ComandaAReporteComandaDTO.convertirLista(lista);
 
-            // 2. Formato de fechas
             DateTimeFormatter formatoSimple = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            // 3. Parámetros
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("fechaInicio", inicio.format(formatoSimple));
             parametros.put("fechaFin", fin.format(formatoSimple));
 
-            // 4. DataSource
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaDTO);
 
-            // 5. Cargar reporte DESDE resources (IMPORTANTE)
-            InputStream reporte = getClass().getResourceAsStream("/Comandas.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reportes/comandas.jrxml"));
 
-            if (reporte == null) {
-                throw new NegocioException("No se encontró el archivo ReporteComandas.jrxml en resources", null);
-            }
-
-            // 6. Compilar
-            JasperReport report = JasperCompileManager.compileReport(reporte);
-
-            // 7. Llenar reporte
             return JasperFillManager.fillReport(report, parametros, dataSource);
 
         } catch (PersistenciaException | JRException ex) {

@@ -148,8 +148,8 @@ public class PantallaReportes extends javax.swing.JFrame {
 
     private void btnConsultarPDfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPDfActionPerformed
         try {
-            LocalDate inicio = LocalDate.now();
-            LocalDate fin = LocalDate.now();
+            LocalDate inicio = LocalDate.now();//cambiar por el campo de fecha real
+            LocalDate fin = LocalDate.now();//cambiar por el campo de fecha real
 
             ReporteBO bo = new ReporteBO();
             JasperPrint jp = bo.generarReporteComandas(inicio, fin);
@@ -160,6 +160,17 @@ public class PantallaReportes extends javax.swing.JFrame {
         } catch (NegocioException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        } catch (Exception ex) {
+            if (ex.getMessage().contains("FileNotFoundException")) {
+                JOptionPane.showMessageDialog(this,
+                        "No se pudo crear el archivo. Verifica que:\n"
+                        + "1. La carpeta de destino existe.\n"
+                        + "2. No tienes el PDF abierto en otro programa.\n"
+                        + "3. Tienes permisos para escribir en esa carpeta (OneDrive).",
+                        "Error de Acceso", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage());
+            }
         }
     }//GEN-LAST:event_btnConsultarPDfActionPerformed
 
@@ -195,7 +206,7 @@ public class PantallaReportes extends javax.swing.JFrame {
             public void run() {
                 new PantallaReportes().setVisible(true);
             }
-            
+
         });
     }
 
