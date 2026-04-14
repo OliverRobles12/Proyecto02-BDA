@@ -120,6 +120,9 @@ public class ComandaDAO implements IComandaDAO{
             return comanda;
             
         } catch (PersistenceException ex){
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             LOGGER.severe(ex.getMessage());
             throw new PersistenciaException("No ha sido posible registrar la nueva comanda.", ex);
         } finally {
@@ -181,6 +184,57 @@ public class ComandaDAO implements IComandaDAO{
                 em.close();
             }
         }
+    }
+
+    @Override
+    public boolean actualizarComanda(Comanda comanda) throws PersistenciaException {
+        
+        EntityManager em = null;
+        
+        try {
+            em = ManejadorConexiones.crearEntityManager();
+            em.getTransaction().begin();
+            em.merge(comanda);
+            em.getTransaction().commit();
+            return true;
+            
+        } catch (PersistenceException ex) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            LOGGER.severe("Error al actualizar la comanda: " + ex.getMessage());
+            throw new PersistenciaException("No ha sido posible actualizar la comanda con folio: " + comanda.getFolio(), ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        
+    }
+
+    @Override
+    public Comanda consultarComanda(String folio) throws PersistenciaException {
+        
+        EntityManager em = null;
+        
+        try {
+            em = ManejadorConexiones.crearEntityManager();
+            
+            String jpql = "SELECT c FROM Comanda c WHERE c.folio = :folio";
+            TypedQuery<Comanda> query = em.createQuery(jpql, Comanda.class);
+            query.setParameter("folio", folio);
+            // Si el folio no existe devolvemos null.
+            return query.getResultStream().findFirst().orElse(null);
+            
+        } catch (PersistenceException ex) {
+            LOGGER.severe("Error al consultar la comanda por folio: " + ex.getMessage());
+            throw new PersistenciaException("No ha sido posible consultar la comanda con folio: " + folio, ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        
     }
 
     

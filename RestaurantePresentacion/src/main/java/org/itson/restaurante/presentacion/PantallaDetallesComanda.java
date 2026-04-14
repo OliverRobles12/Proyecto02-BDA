@@ -4,6 +4,9 @@
  */
 package org.itson.restaurante.presentacion;
 
+import javax.swing.JOptionPane;
+import org.itson.restaurante.controladores.ControladorComandas;
+
 /**
  *
  * @author oliro
@@ -12,11 +15,14 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaDetallesComanda.class.getName());
 
+    private ControladorComandas control;
+    
     /**
      * Creates new form PantallaDetallesComanda
      */
-    public PantallaDetallesComanda() {
+    public PantallaDetallesComanda(ControladorComandas control) {
         initComponents();
+        this.control = control;
     }
 
     /**
@@ -28,47 +34,175 @@ public class PantallaDetallesComanda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelPrincipal = new javax.swing.JPanel();
+        panelContenido = new javax.swing.JPanel();
+        lblPrincipal = new javax.swing.JLabel();
+        sep = new javax.swing.JSeparator();
+        btnVolver = new javax.swing.JButton();
+        btnEntrega = new javax.swing.JButton();
+        lblFolio = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        lblCliente = new javax.swing.JLabel();
+        lblMesa = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelPrincipal.setPreferredSize(new java.awt.Dimension(1364, 770));
+        panelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelContenido.setBackground(new java.awt.Color(255, 255, 255));
+        panelContenido.setPreferredSize(new java.awt.Dimension(1150, 590));
+
+        lblPrincipal.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
+        lblPrincipal.setText("Detalle comanda");
+
+        sep.setForeground(new java.awt.Color(18, 44, 79));
+
+        btnVolver.setBackground(new java.awt.Color(18, 44, 79));
+        btnVolver.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolver.setText("Volver");
+        btnVolver.setToolTipText("");
+        btnVolver.setPreferredSize(new java.awt.Dimension(200, 32));
+        btnVolver.addActionListener(this::btnVolverActionPerformed);
+
+        btnEntrega.setBackground(new java.awt.Color(18, 44, 79));
+        btnEntrega.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEntrega.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrega.setText("Marcar entrega");
+        btnEntrega.addActionListener(this::btnEntregaActionPerformed);
+
+        lblFolio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblFolio.setText("Folio:");
+
+        lblFecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblFecha.setText("Fecha:");
+
+        lblCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblCliente.setText("Cliente:");
+
+        lblMesa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblMesa.setText("Mesa:");
+
+        lblEstado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblEstado.setText("Estado:");
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 400));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Producto", "Cantidad", "Precio unit.", "Comentario", "Subtotal"
+            }
+        ));
+        jTable1.setPreferredSize(new java.awt.Dimension(800, 400));
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
+        panelContenido.setLayout(panelContenidoLayout);
+        panelContenidoLayout.setHorizontalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContenidoLayout.createSequentialGroup()
+                        .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPrincipal, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sep, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(25, Short.MAX_VALUE))
+                    .addGroup(panelContenidoLayout.createSequentialGroup()
+                        .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFolio)
+                            .addComponent(lblCliente)
+                            .addComponent(lblFecha))
+                        .addGap(322, 322, 322)
+                        .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMesa)
+                            .addComponent(lblEstado))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenidoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(panelContenidoLayout.createSequentialGroup()
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(175, 175, 175))
+        );
+        panelContenidoLayout.setVerticalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblPrincipal)
+                .addGap(2, 2, 2)
+                .addComponent(sep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFolio)
+                    .addComponent(lblMesa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFecha)
+                    .addComponent(lblEstado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCliente)
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEntrega)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelPrincipal.add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 175, 1150, 595));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregaActionPerformed
+        
+    }//GEN-LAST:event_btnEntregaActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaDetallesComanda().setVisible(true));
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    public void mostarMensaje(String msj, boolean esError) {
+        int tipo = esError ? JOptionPane.ERROR_MESSAGE : JOptionPane.INFORMATION_MESSAGE;
+        JOptionPane.showMessageDialog(this, msj, "Sistema", tipo);
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEntrega;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblFolio;
+    private javax.swing.JLabel lblMesa;
+    private javax.swing.JLabel lblPrincipal;
+    private javax.swing.JPanel panelContenido;
+    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JSeparator sep;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,17 +7,14 @@ import java.util.List;
 import org.itson.restaurante.adapters.ComandaAComandaDTOAdapter;
 import org.itson.restaurante.dominio.Cliente;
 import org.itson.restaurante.dominio.Comanda;
+import org.itson.restaurante.dominio.EstadoComanda;
 import org.itson.restaurante.dominio.EstadoMesa;
-import org.itson.restaurante.dominio.Mesa;
-import org.itson.restaurante.dtos.ClienteFrecuenteActualizadoDTO;
 import org.itson.restaurante.dtos.ComandaDTO;
 import org.itson.restaurante.dtos.NuevaComandaDTO;
 import org.itson.restaurante.persistencia.ClienteDAO;
 import org.itson.restaurante.persistencia.ComandaDAO;
 import org.itson.restaurante.persistencia.IClienteDAO;
 import org.itson.restaurante.persistencia.IComandaDAO;
-import org.itson.restaurante.persistencia.IMesaDAO;
-import org.itson.restaurante.persistencia.MesaDAO;
 import org.itson.restaurante.persistencia.PersistenciaException;
 
 /**
@@ -79,7 +76,31 @@ public class ComandaBO implements IComandaBO {
         }
         
     }
-     @Override
+
+    @Override
+    public boolean marcarEntregaComanda(String folio) throws NegocioException {
+        try {
+            Comanda comanda = comandaDAO.consultarComanda(folio);
+            comanda.setEstado(EstadoComanda.ENTREGADA);
+            comanda.getMesa().setEstado(EstadoMesa.DISPONIBLE);
+            comandaDAO.actualizarComanda(comanda);
+            return true;
+        } catch(PersistenciaException ex) {
+            throw new NegocioException("No fue posible marcar entrega de la comanda", ex);
+        }
+    }
+
+    @Override
+    public ComandaDTO consultarComanda(String folio) throws NegocioException {
+        try {
+            Comanda comanda = comandaDAO.consultarComanda(folio);
+            return ComandaAComandaDTOAdapter.adapter(comanda);
+        } catch(PersistenciaException ex) {
+            throw new NegocioException("No fue posible consultar la comanda con folio: " + folio, ex);
+        }
+    }
+
+    @Override
     public List<ComandaDTO> consultarComandasFechas(LocalDate inicio,LocalDate fin) throws NegocioException {
         try {
             List<Comanda> comandasDominio = comandaDAO.consultarComandasFecha(inicio, fin);
@@ -91,11 +112,7 @@ public class ComandaBO implements IComandaBO {
         } catch (PersistenciaException ex) {
             throw new NegocioException("No fue posible consultar comandas.", ex);
         }
-        
     }
-    
-    
-    
     
 
 }

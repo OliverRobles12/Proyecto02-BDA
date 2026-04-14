@@ -23,6 +23,7 @@ import org.itson.restaurante.negocio.MesaBO;
 import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.negocio.ProductoBO;
 import org.itson.restaurante.presentacion.PantallaComandas;
+import org.itson.restaurante.presentacion.PantallaDetallesComanda;
 import org.itson.restaurante.presentacion.PantallaFormularioComanda;
 
 /**
@@ -80,7 +81,9 @@ public class ControladorComandas {
         
     }
     
-    // Pantalla Menu principal
+    public void mostrarPantallaDetalleComanda(JFrame pantallaActual) {
+        PantallaDetallesComanda vistaPantalla = new PantallaDetallesComanda(this);
+    }
     
     
     // Pantalla Comandas
@@ -96,6 +99,16 @@ public class ControladorComandas {
             vistaComandas.LlenarTabla(lista);
         } catch (NegocioException ex) {
             vistaComandas.mostarMensaje("No fue posible mostrar las comandas registradas.", true);
+        }
+        
+    }
+    
+    // Pantalla detalles comanda
+    private void marcarEntregaComanda(PantallaDetallesComanda vistaDetllas, String folio) {
+        try {
+            comandaBO.marcarEntregaComanda(folio);
+        } catch (NegocioException ex) {
+            // vistaDetllas.mos
         }
         
     }
