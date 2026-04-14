@@ -80,6 +80,9 @@ public class ControladorComandas {
         
     }
     
+    // Pantalla Menu principal
+    
+    
     // Pantalla Comandas
     
     /**
@@ -300,6 +303,7 @@ public class ControladorComandas {
         try {
             comandaBO.registrarNuevaComanda(nuevaComandaDTO);
             vistaNuevaComanda.mostarMensaje("La monda ha sido registrada con exito.", false);
+            mostarPantallaComandas(vistaNuevaComanda);
         } catch (NegocioException ex) {
             vistaNuevaComanda.mostarMensaje("No ha sido posioble registrar la comanda.", true);
         }

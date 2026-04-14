@@ -2,6 +2,7 @@
 package org.itson.restaurante.presentacion;
 
 import java.awt.Color;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -241,6 +242,7 @@ public class PantallaComandas extends javax.swing.JFrame {
 
     public void LlenarTabla(List<ComandaDTO> lista) {
         
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         DefaultTableModel modelo = (DefaultTableModel) tblComandas.getModel();
         modelo.setRowCount(0); // Limpiamos la tabla
         
@@ -253,7 +255,7 @@ public class PantallaComandas extends javax.swing.JFrame {
                 comanda.getFolio(),
                 comanda.getNombreCompleto(),
                 comanda.getNoMesa(),
-                comanda.getFechaHora(),
+                comanda.getFechaHora().format(formatter),
                 "$" + comanda.getTotalAcumulado(),
                 comanda.getEstado()
             };

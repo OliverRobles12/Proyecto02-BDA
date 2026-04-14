@@ -19,9 +19,11 @@ import org.itson.restaurante.dominio.ClienteFrecuente;
 import org.itson.restaurante.dominio.Comanda;
 import org.itson.restaurante.dominio.EstadoComanda;
 import org.itson.restaurante.dominio.EstadoMesa;
+import org.itson.restaurante.dominio.Ingrediente;
 import org.itson.restaurante.dominio.Mesa;
 import org.itson.restaurante.dominio.Producto;
 import org.itson.restaurante.dominio.ProductoComanda;
+import org.itson.restaurante.dominio.ProductoIngrediente;
 import org.itson.restaurante.dtos.NuevaComandaDTO;
 import org.itson.restaurante.dtos.NuevoProductoComandaDTO;
 import org.itson.restaurante.utilerias.GeneradorFolio;
@@ -70,8 +72,11 @@ public class ComandaDAO implements IComandaDAO{
             
             Double totalAcumulado = 0d;
             
+            // Recorremos la lista de productos
             for (NuevoProductoComandaDTO productoComandaDTO : nuevaComanda.getProductosComanda()) {
+                // Buscamos el producto
                 Producto producto = em.find(Producto.class, productoComandaDTO.getIdProducto());
+                // Creamos un producto comanda y lo asociamos
                 ProductoComanda pc = new ProductoComanda(
                         productoComandaDTO.getCantidad(), 
                         productoComandaDTO.getDetalles(), 
@@ -79,6 +84,19 @@ public class ComandaDAO implements IComandaDAO{
                         comanda, 
                         producto
                 );
+                // Restamos el stock a los ingredientes recorriento por cada elemento de la receta
+                for (ProductoIngrediente productoIngrediente : producto.getReceta()) {
+                    // Por efectos de salud mental y 0 conflictos con el equipo, redondearemos hacia arriba. Mejor que sobre a que falte.
+                    Double cantidadIngredienteRequerida = productoIngrediente.getCantidad() * productoComandaDTO.getCantidad();
+                    Integer cantidadDescontar = (int) Math.ceil(cantidadIngredienteRequerida);
+                    
+                    Ingrediente ingrediente = productoIngrediente.getIngrediente();
+                    Integer stockIngredienteActual = ingrediente.getStock();
+                    ingrediente.setStock(stockIngredienteActual - cantidadDescontar);
+                    em.merge(ingrediente);
+                    
+                }
+                
                 comanda.getProductos().add(pc);
                 totalAcumulado = totalAcumulado + productoComandaDTO.getSubtotal();
             }
