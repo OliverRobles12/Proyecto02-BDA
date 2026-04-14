@@ -22,7 +22,7 @@ public class ProductoDominioADTO {
         List<IngredienteRecetaDTO> listaIngredientes = new ArrayList<>();
             for (ProductoIngrediente IngredienteReceta: producto.getReceta()) {
                     IngredienteRecetaDTO ingrediente = new IngredienteRecetaDTO(
-                            IngredienteReceta.getId(),
+                            IngredienteReceta.getIngrediente().getId(),
                             IngredienteReceta.getIngrediente().getNombre(),
                             IngredienteReceta.getCantidad()
                     );

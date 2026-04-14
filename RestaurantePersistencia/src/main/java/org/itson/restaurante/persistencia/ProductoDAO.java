@@ -99,7 +99,7 @@ public class ProductoDAO implements IProductoDAO{
      * en la base de datos
      */
     @Override
-    public Producto actualizarProducto(ProductoActualizadoDTO productoActualizado) throws PersistenciaException {
+    public Producto actualizarProducto(ProductoDTO productoActualizado) throws PersistenciaException {
         EntityManager entityManager = null;
         try{
             entityManager = ManejadorConexiones.crearEntityManager();

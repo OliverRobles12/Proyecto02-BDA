@@ -92,7 +92,7 @@ public class ProductoBO implements IProductoBO{
     }
 
     @Override
-    public ProductoDTO actualizarProducto(ProductoActualizadoDTO productoActualizado) throws NegocioException {
+    public ProductoDTO actualizarProducto(ProductoDTO productoActualizado) throws NegocioException {
         
         if (productoActualizado == null) {
             throw new NegocioException("El producto a actualizar no puede ser nulo", null);
@@ -195,8 +195,8 @@ public class ProductoBO implements IProductoBO{
             throw new NegocioException("Se requiere el ID del producto para buscarlo", null);
         }
         try {
-            return productoDAO.consultarProductoPorId(id);
-            
+            ProductoDTO producto = productoDAO.consultarProductoPorId(id);
+            return producto;
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al cambiar el estado del producto.", ex);
         }

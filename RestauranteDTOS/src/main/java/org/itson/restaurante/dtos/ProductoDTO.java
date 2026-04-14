@@ -21,6 +21,8 @@ public class ProductoDTO {
     private byte[] imagen;
     private List<IngredienteRecetaDTO> receta;
 
+   
+
     public ProductoDTO(Long id, String nombre, Double precio, TipoProducto tipoProducto, EstadoProducto estado, String descripcion, byte[] imagen, List<IngredienteRecetaDTO> receta) {
         this.id = id;
         this.nombre = nombre;
@@ -65,6 +67,8 @@ public class ProductoDTO {
         return receta;
     }
 
-    
+     public void setReceta(List<IngredienteRecetaDTO> receta) {
+        this.receta = receta;
+    }
     
 }

@@ -20,7 +20,7 @@ public interface IProductoBO {
     
     public ProductoDTO registrarProducto(NuevoProductoDTO nuevoProducto) throws NegocioException;
     
-    public ProductoDTO actualizarProducto(ProductoActualizadoDTO productoActualizado) throws NegocioException;
+    public ProductoDTO actualizarProducto(ProductoDTO productoActualizado) throws NegocioException;
     
     public List<ProductoDTO> consultarProductos() throws NegocioException;
     

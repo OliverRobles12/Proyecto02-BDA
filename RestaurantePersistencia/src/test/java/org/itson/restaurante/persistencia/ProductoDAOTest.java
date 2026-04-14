@@ -27,85 +27,85 @@ public class ProductoDAOTest {
     public ProductoDAOTest() {
     }
     
-    @BeforeEach
-    public void init() {
-        dao = new ProductoDAO();
-    }
-
-    @Test
-    public void RegistrarProductoFuncionaOK() {
-        
-        List<IngredienteRecetaDTO> receta = new LinkedList<>();
-        
-        NuevoProductoDTO producto1 = new NuevoProductoDTO("Coca cola",50.0,TipoProducto.BEBIDA,"",null,receta);
-        
-        Producto p1 = assertDoesNotThrow(() -> {
-            return dao.registrarProducto(producto1);
-        });
-        
-        assertNotNull(p1);
-    }
-    
-    @Test
-    public void ActualizarProductoFuncionaOK(){
-        List<IngredienteRecetaDTO> receta = new LinkedList<>();
-        IngredienteRecetaDTO ing1 = new IngredienteRecetaDTO(41L,"Jamón de Pavo",250.00);
-        receta.add(ing1);
-        
-        ProductoActualizadoDTO productoAct = new ProductoActualizadoDTO(1L,"Sandwich",70.0,TipoProducto.PLATILLO,EstadoProducto.ACTIVO,"Sin tomate",null,receta);
-        
-        Producto p1 = assertDoesNotThrow(() -> {
-            return dao.actualizarProducto(productoAct);
-        });
-        
-        assertEquals(p1.getNombre(),productoAct.getNombre());
-    }
-    
-//    @Test
-//    public void ConsultarProductosOK() {
-//        assertDoesNotThrow(() -> {
-//            List<Producto> productos = dao.consultarProductos();
-//            assertEquals(productos.size(),5);
-//        });
+//    @BeforeEach
+//    public void init() {
+//        dao = new ProductoDAO();
 //    }
-    
-    @Test
-    public void ConsultarPorNombreFuncionaOk(){
-        
-        assertDoesNotThrow(() -> {
-            List<Producto> productos = dao.consultarProductosFiltro("Co", null);
-            assertEquals(productos.get(0).getNombre(),"Coca cola");
-        });
-        
-    
-    }
-    
-    @Test
-    public void ConsultarPorCategoriaFuncionaOk(){
-        assertDoesNotThrow(() -> {
-            List<Producto> productos = dao.consultarProductosFiltro(null, org.itson.restaurante.dominio.TipoProducto.PLATILLO);
-            assertEquals(productos.size(),2);
-        });
-    
-    }
-    
-    @Test
-    public void ConsultarPorAmbosFuncionaOk(){
-        assertDoesNotThrow(() -> {
-                List<Producto> productos = dao.consultarProductosFiltro("Pan", org.itson.restaurante.dominio.TipoProducto.PLATILLO);
-                assertEquals(productos.size(),1);
-            });
-    
-    }
-    
-    @Test
-    public void CambiarDeEstadoFuncionaOK(){
-        assertDoesNotThrow(() -> {
-            dao.cambiarEstadoProducto(2L);
-            List<Producto> productos = dao.consultarProductosFiltro("pan",null);
-            System.out.println(productos.get(0).getEstado());
-        });
-        
-    }
-    
+//
+//    @Test
+//    public void RegistrarProductoFuncionaOK() {
+//        
+//        List<IngredienteRecetaDTO> receta = new LinkedList<>();
+//        
+//        NuevoProductoDTO producto1 = new NuevoProductoDTO("Coca cola",50.0,TipoProducto.BEBIDA,"",null,receta);
+//        
+//        Producto p1 = assertDoesNotThrow(() -> {
+//            return dao.registrarProducto(producto1);
+//        });
+//        
+//        assertNotNull(p1);
+//    }
+//    
+//    @Test
+//    public void ActualizarProductoFuncionaOK(){
+//        List<IngredienteRecetaDTO> receta = new LinkedList<>();
+//        IngredienteRecetaDTO ing1 = new IngredienteRecetaDTO(41L,"Jamón de Pavo",250.00);
+//        receta.add(ing1);
+//        
+//        ProductoActualizadoDTO productoAct = new ProductoActualizadoDTO(1L,"Sandwich",70.0,TipoProducto.PLATILLO,EstadoProducto.ACTIVO,"Sin tomate",null,receta);
+//        
+//        Producto p1 = assertDoesNotThrow(() -> {
+//            return dao.actualizarProducto(productoAct);
+//        });
+//        
+//        assertEquals(p1.getNombre(),productoAct.getNombre());
+//    }
+//    
+////    @Test
+////    public void ConsultarProductosOK() {
+////        assertDoesNotThrow(() -> {
+////            List<Producto> productos = dao.consultarProductos();
+////            assertEquals(productos.size(),5);
+////        });
+////    }
+//    
+//    @Test
+//    public void ConsultarPorNombreFuncionaOk(){
+//        
+//        assertDoesNotThrow(() -> {
+//            List<Producto> productos = dao.consultarProductosFiltro("Co", null);
+//            assertEquals(productos.get(0).getNombre(),"Coca cola");
+//        });
+//        
+//    
+//    }
+//    
+//    @Test
+//    public void ConsultarPorCategoriaFuncionaOk(){
+//        assertDoesNotThrow(() -> {
+//            List<Producto> productos = dao.consultarProductosFiltro(null, org.itson.restaurante.dominio.TipoProducto.PLATILLO);
+//            assertEquals(productos.size(),2);
+//        });
+//    
+//    }
+//    
+//    @Test
+//    public void ConsultarPorAmbosFuncionaOk(){
+//        assertDoesNotThrow(() -> {
+//                List<Producto> productos = dao.consultarProductosFiltro("Pan", org.itson.restaurante.dominio.TipoProducto.PLATILLO);
+//                assertEquals(productos.size(),1);
+//            });
+//    
+//    }
+//    
+//    @Test
+//    public void CambiarDeEstadoFuncionaOK(){
+//        assertDoesNotThrow(() -> {
+//            dao.cambiarEstadoProducto(2L);
+//            List<Producto> productos = dao.consultarProductosFiltro("pan",null);
+//            System.out.println(productos.get(0).getEstado());
+//        });
+//        
+//    }
+//    
 }

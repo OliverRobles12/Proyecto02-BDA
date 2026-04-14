@@ -20,7 +20,7 @@ public interface IProductoDAO {
     
     public Producto registrarProducto (NuevoProductoDTO nuevoProducto) throws PersistenciaException;
     
-    public Producto actualizarProducto (ProductoActualizadoDTO  productoActualizado)throws PersistenciaException;
+    public Producto actualizarProducto (ProductoDTO  productoActualizado)throws PersistenciaException;
     
     public List<Producto> consultarProductos () throws PersistenciaException;
     
