@@ -18,9 +18,10 @@ import org.itson.restaurante.presentacion.PantallaFormularioCliente;
  */
 public class ControladorClientes {
 
-    private IClienteFrecuenteBO clienteFrecuenteBO = new ClienteFrecuenteBO();
+    private IClienteFrecuenteBO clienteFrecuenteBO ;
     
     public ControladorClientes() {
+        this.clienteFrecuenteBO = new ClienteFrecuenteBO();
     }
     
     public void mostarPantallaClientes(JFrame pantallaActual) {

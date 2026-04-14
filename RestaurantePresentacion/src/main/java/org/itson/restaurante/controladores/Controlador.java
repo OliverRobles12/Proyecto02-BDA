@@ -10,6 +10,7 @@ import org.itson.restaurante.presentacion.PantallaFormularioIngrediente;
 import org.itson.restaurante.presentacion.PantallaIngredientes;
 import org.itson.restaurante.presentacion.PantallaLogin;
 import org.itson.restaurante.presentacion.PantallaMenuPrincipal;
+import org.itson.restaurante.presentacion.PantallaReportes;
 
 /**
  * Esta clase nos ayuda a controlar el flujo entre las pantallas y es el
@@ -59,9 +60,9 @@ public class Controlador {
         }
         return controladorComandas;
     }
-    
-    public ControladorProductos getControladorProductos(){
-        if(controladorProducos == null){
+
+    public ControladorProductos getControladorProductos() {
+        if (controladorProducos == null) {
             controladorProducos = new ControladorProductos();
         }
         return controladorProducos;
@@ -76,7 +77,7 @@ public class Controlador {
         }
         vistaMenuPrincipal.mostarMensaje("Se han agregado " + cantidad + " mesas.", false);
     }
-    
+
     /**
      * Este metodo abre la pantalla del menu principal
      *
@@ -128,12 +129,12 @@ public class Controlador {
         }
 
     }
-    
-    public void abrirBusquedaIngredientes(JFrame pantallaActual){
+
+    public void abrirBusquedaIngredientes(JFrame pantallaActual) {
         PantallaBusquedaIngrediente busqueda = new PantallaBusquedaIngrediente(pantallaActual, true);
         busqueda.setModal(true);
         busqueda.setVisible(true);
-        
+
         if (pantallaActual != null) {
             pantallaActual.dispose();
         }
@@ -156,7 +157,11 @@ public class Controlador {
      * nueva
      */
     public void abrirReportes(JFrame pantallaActual) {
-
+        PantallaReportes reporte = new PantallaReportes();
+        reporte.setVisible(true);
+        if (pantallaActual != null) {
+            pantallaActual.dispose();
+        }
     }
 
     //METODOS LOGIN
