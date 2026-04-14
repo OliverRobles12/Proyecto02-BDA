@@ -4,15 +4,8 @@
  */
 package org.itson.restaurante.presentacion;
 
-import java.awt.Color;
-import static java.awt.SystemColor.control;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,17 +14,12 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
-import org.itson.restaurante.dtos.ComandaDTO;
 import org.itson.restaurante.negocio.ClienteFrecuenteBO;
-import org.itson.restaurante.negocio.ComandaBO;
 import org.itson.restaurante.negocio.IClienteFrecuenteBO;
-import org.itson.restaurante.negocio.IComandaBO;
 import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.negocio.ReporteBO;
 import org.itson.restaurante.utilerias.PanelHeader;
 import org.itson.restaurante.utilerias.PanelMenu;
-import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
-import org.itson.restaurante.utilerias.utilerias;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
@@ -229,9 +217,12 @@ public class PantallaReportesCliente extends javax.swing.JFrame {
     }
     private void btnGuardarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPDFActionPerformed
         try {
-        
+        if(this.txtBuscar.getText().isBlank()){
+                JOptionPane.showMessageDialog(this, "Error: debe buscar un cliente ", "Error", JOptionPane.ERROR_MESSAGE);
+             }
         ReporteBO bo = new ReporteBO();
-        JasperPrint jp = bo.generarReporteCliente(this.txtBuscar.getText());
+        String texto  = this.txtBuscar.getText();
+        JasperPrint jp = bo.generarReporteCliente(texto);
 
         if (jp == null || jp.getPages().isEmpty()) {
             JOptionPane.showMessageDialog(this, "El reporte no contiene datos para el nombre seleccionadas.", "Reporte Vacío", JOptionPane.INFORMATION_MESSAGE);
@@ -273,6 +264,9 @@ public class PantallaReportesCliente extends javax.swing.JFrame {
 
     private void btnConsultarPDfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPDfActionPerformed
          try {
+             if(this.txtBuscar.getText().isBlank()){
+                JOptionPane.showMessageDialog(this, "Error: debe buscar un cliente ", "Error", JOptionPane.ERROR_MESSAGE);
+             }
                ReporteBO bo = new ReporteBO();
 
                JasperPrint jp = bo.generarReporteCliente(this.txtBuscar.getText());
@@ -285,20 +279,6 @@ public class PantallaReportesCliente extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(this, ex.getMessage());
            }
     }//GEN-LAST:event_btnConsultarPDfActionPerformed
-    private void actualizarTablaPorFechas() {
-
-        try {
-            listaClientes = clienteBO.consultarClienteFiltro(this.txtBuscar.getText());
-
-            cargarClientes(listaClientes);
-
-            if (listaClientes.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No hay un nombre ingresado");
-            }
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, "Error al filtrar: " + ex.getMessage());
-        }
-    }
     private void tblIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIngredientesMouseClicked
 
     }//GEN-LAST:event_tblIngredientesMouseClicked

@@ -13,7 +13,6 @@ import org.itson.restaurante.presentacion.PantallaLogin;
 import org.itson.restaurante.presentacion.PantallaMenuPrincipal;
 import org.itson.restaurante.presentacion.PantallaReportes;
 import org.itson.restaurante.presentacion.PantallaReportesCliente;
-import org.itson.restaurante.presentacion.PantallaReportesClientes;
 import org.itson.restaurante.presentacion.PantallaReportesComandas;
 
 /**

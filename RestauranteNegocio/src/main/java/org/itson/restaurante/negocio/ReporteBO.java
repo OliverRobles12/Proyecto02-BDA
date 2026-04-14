@@ -1,6 +1,5 @@
 package org.itson.restaurante.negocio;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -56,39 +55,29 @@ public class ReporteBO implements IReporteBO {
 
     @Override
     public JasperPrint generarReporteCliente(String nombreBusqueda) throws NegocioException {
+        try {
+            List<ClienteFrecuente> lista = clienteDAO.consultarClientesFrecuentesFiltro(nombreBusqueda);
+            ClienteAReporteCliente mapper = new ClienteAReporteCliente();
+            List<ReporteClienteDTO> reporte = mapper.convertirLista(lista);
 
-    try {
-        List<ClienteFrecuente> lista = clienteDAO.consultarClientesFrecuentesFiltro(nombreBusqueda);
+            Map<String, Object> parametros = new HashMap<>();
 
-        ClienteAReporteCliente mapper = new ClienteAReporteCliente();
-        List<ReporteClienteDTO> reporte = mapper.convertirLista(lista);
+            parametros.put("filtroNombre", (nombreBusqueda == null || nombreBusqueda.isEmpty())
+                    ? "Todos los clientes"
+                    : nombreBusqueda);
 
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("filtroNombre", (nombreBusqueda == null || nombreBusqueda.isEmpty()) 
-                        ? "Todos los clientes" 
-                        : nombreBusqueda);
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
+            JasperReport report = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/reportes/clienteFrecuentes.jrxml")
+            );
 
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
+            return JasperFillManager.fillReport(report, parametros, dataSource);
 
-        JasperReport report = JasperCompileManager.compileReport(
-                getClass().getResourceAsStream("/reportes/clienteFrecuentes.jrxml")
-        );
-
-        return JasperFillManager.fillReport(
-                report,
-                parametros,
-                dataSource
-        );
-
-    } catch (PersistenciaException | JRException ex) {
-        ex.printStackTrace();
-        throw new NegocioException(
-                "No se pudo generar el reporte para: " + nombreBusqueda + ". " + ex.getMessage(), ex
-        );
-    }
+        } catch (PersistenciaException | JRException ex) {
+            ex.printStackTrace();
+            throw new NegocioException(
+                    "No se pudo generar el reporte para: " + nombreBusqueda + ". " + ex.getMessage(), ex
+            );
+        }
     }
 }
-    
-
-    
-    
