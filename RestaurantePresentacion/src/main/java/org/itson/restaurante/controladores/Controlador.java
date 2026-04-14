@@ -73,6 +73,7 @@ public class Controlador {
 
         }
         
+        return controladorProductos;
     }
     
     public ControladorIngrediente getControladorIngredientes(){
