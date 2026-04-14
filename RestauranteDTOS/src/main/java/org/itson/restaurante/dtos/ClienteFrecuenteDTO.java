@@ -98,6 +98,11 @@ public class ClienteFrecuenteDTO {
     public LocalDate getFechaUltimaComanda() {
         return fechaUltimaComanda;
     }
+
+    public void setFechaUltimaComanda(LocalDate fechaUltimaComanda) {
+        this.fechaUltimaComanda = fechaUltimaComanda;
+    }
+    
     
     
 }

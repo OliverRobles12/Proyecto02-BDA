@@ -1,4 +1,3 @@
-
 package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
@@ -6,6 +5,9 @@ import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
 import org.itson.restaurante.utilerias.utilerias;
 import org.itson.restaurante.negocio.NegocioException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.itson.restaurante.controladores.ControladorClientes;
 import org.itson.restaurante.utilerias.PanelHeader;
@@ -20,17 +22,18 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     private ClienteFrecuenteDTO clienteForm = null;
     private ControladorClientes control;
-    
+
     /**
      * Creates new form PantallaFormularioCliente
+     *
      * @param control
      */
     public PantallaFormularioCliente(ControladorClientes control) {
         this.control = control;
-        
+
         initComponents();
         utilerias.aplicarIcono(this);
-        
+
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
 
@@ -49,7 +52,7 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
     }
-    
+
     public PantallaFormularioCliente(ControladorClientes control, ClienteFrecuenteDTO cliente) {
         this(control);
         panelNavegacion.setPantallasNavegacion("Clientes Frecuentes", "Editar cliente");
@@ -85,7 +88,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         btnEditarCliente = new javax.swing.JButton();
         panContenido = new javax.swing.JPanel();
-        btnClienteGeneral = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulario Cliente");
@@ -174,31 +176,15 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
         panContenido.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnClienteGeneral.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnClienteGeneral.setForeground(new java.awt.Color(18, 44, 79));
-        btnClienteGeneral.setText("Cliente General");
-        btnClienteGeneral.setOpaque(true);
-        btnClienteGeneral.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClienteGeneralActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panContenidoLayout = new javax.swing.GroupLayout(panContenido);
         panContenido.setLayout(panContenidoLayout);
         panContenidoLayout.setHorizontalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panContenidoLayout.createSequentialGroup()
-                .addGap(501, 501, 501)
-                .addComponent(btnClienteGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(679, Short.MAX_VALUE))
+            .addGap(0, 1370, Short.MAX_VALUE)
         );
         panContenidoLayout.setVerticalGroup(
             panContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panContenidoLayout.createSequentialGroup()
-                .addContainerGap(373, Short.MAX_VALUE)
-                .addComponent(btnClienteGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(187, 187, 187))
+            .addGap(0, 590, Short.MAX_VALUE)
         );
 
         panPrincipal.add(panContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 177, 1370, 590));
@@ -298,13 +284,10 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
 
             control.mostarPantallaClientes(this);
-        } catch (NegocioException ex) {JOptionPane.showMessageDialog(this,ex.getMessage(), "Aviso",JOptionPane.WARNING_MESSAGE);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
-
-    private void btnClienteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteGeneralActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnClienteGeneralActionPerformed
 
     public ClienteFrecuenteDTO getClienteFrecuenteDTO() {
         return clienteForm;
@@ -325,7 +308,6 @@ public class PantallaFormularioCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnClienteGeneral;
     private javax.swing.JButton btnEditarCliente;
     private javax.swing.JButton btnGuardarCliente;
     private javax.swing.JLabel lblApellidoMaterno;

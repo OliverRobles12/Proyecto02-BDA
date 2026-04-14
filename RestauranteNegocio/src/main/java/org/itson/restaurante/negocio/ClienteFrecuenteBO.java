@@ -1,4 +1,3 @@
-
 package org.itson.restaurante.negocio;
 
 import static org.itson.restaurante.adapters.ClienteFrecuenteAClienteDTOAdapter.convertirADTO;
@@ -14,6 +13,7 @@ import java.time.LocalDate;
 
 import java.util.List;
 import org.itson.restaurante.persistencia.IClienteDAO;
+
 /**
  *
  * @author juanl
@@ -28,12 +28,15 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
     /**
      * Registra un nuevo cliente frecuente en el sistema tras validar sus datos.
-     * Valida que los campos obligatorios no estén vacíos, que los nombres no contengan números,
-     * y que el formato del correo y teléfono sean correctos.
+     * Valida que los campos obligatorios no estén vacíos, que los nombres no
+     * contengan números, y que el formato del correo y teléfono sean correctos.
      *
-     * @param nuevoCliente Objeto DTO con los datos del nuevo cliente a registrar.
-     * @return ClienteFrecuenteDTO Objeto DTO con los datos del cliente ya registrado
-     * @throws NegocioException Si algún dato es inválido o si ocurre un error en la capa de persistencia.
+     * @param nuevoCliente Objeto DTO con los datos del nuevo cliente a
+     * registrar.
+     * @return ClienteFrecuenteDTO Objeto DTO con los datos del cliente ya
+     * registrado
+     * @throws NegocioException Si algún dato es inválido o si ocurre un error
+     * en la capa de persistencia.
      */
     @Override
     public ClienteFrecuenteDTO registrarCliente(NuevoClienteFrecuenteDTO nuevoCliente) throws NegocioException {
@@ -44,11 +47,11 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         if (nuevoCliente.getNombre() == null || nuevoCliente.getNombre().isBlank()) {
             throw new NegocioException("El nombre no puede ser nulo", null);
         }
-        
-        if(!(nuevoCliente.getNombre().matches("[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+"))) {
+
+        if (!(nuevoCliente.getNombre().matches("[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+"))) {
             throw new NegocioException("El nombre no puede contener numeros", null);
         }
-        
+
         if (nuevoCliente.getApellidoPaterno() == null || nuevoCliente.getApellidoPaterno().isBlank()) {
             throw new NegocioException("El apellido paterno no puede ser nulo", null);
         }
@@ -79,7 +82,6 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         if (!(nuevoCliente.getTelefono().matches("^\\d{3}[- ]?\\d{3}[- ]?\\d{4}$"))) {
             throw new NegocioException("El telefono es invalido", null);
         }
-        
 
         try {
             Cliente cliente = clientesDAO.registrarClienteFrecuente(nuevoCliente);
@@ -103,18 +105,21 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     }
 
     /**
-     * Actualiza la información de un cliente frecuente existente.
-     * Realiza las mismas validaciones de formato antes de actualizarlo.
+     * Actualiza la información de un cliente frecuente existente. Realiza las
+     * mismas validaciones de formato antes de actualizarlo.
      *
-     * @param clienteActualizado Objeto DTO con los datos actualizados del cliente.
-     * @return ClienteFrecuenteDTO Objeto DTO con los datos del cliente ya actualizado.
-     * @throws NegocioException Si algún dato es inválido o si ocurre un error en la capa de persistencia.
+     * @param clienteActualizado Objeto DTO con los datos actualizados del
+     * cliente.
+     * @return ClienteFrecuenteDTO Objeto DTO con los datos del cliente ya
+     * actualizado.
+     * @throws NegocioException Si algún dato es inválido o si ocurre un error
+     * en la capa de persistencia.
      */
     @Override
     public ClienteFrecuenteDTO actualizarCliente(ClienteFrecuenteDTO clienteActualizado) throws NegocioException {
         if (clienteActualizado.getNombre() == null || clienteActualizado.getNombre().isBlank()) {
             throw new NegocioException("El nombre no puede ser nulo", null);
-            
+
         } else if (!(clienteActualizado.getNombre().matches("[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+"))) {
             throw new NegocioException("El nombre no puede contener numeros", null);
         }
@@ -134,7 +139,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         if (!(clienteActualizado.getApellidoMaterno().matches("[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+"))) {
             throw new NegocioException("El apellido materno no puede contener numeros", null);
         }
-        
+
         if (clienteActualizado.getCorreo() == null || clienteActualizado.getCorreo().isBlank()) {
         } else {
             if (!(clienteActualizado.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))) {
@@ -159,18 +164,20 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
                     clienteActualizado.getCorreo()
             );
             ClienteFrecuente cliente = clientesDAO.actualizarClienteFrecuente(clienteConversion);
-            
+
             return convertirADTO(cliente);
         } catch (PersistenciaException ex) {
             throw new NegocioException("No fue posible actualizar al cliente", ex);
         }
 
     }
-    
+
     /**
      * Consulta una lista de clientes frecuentes que se encuentren con el filtro
+     *
      * @param filtro parametro para filtrar la búsqueda
-     * @return List&lt;ClienteFrecuenteDTO&gt; Lista de clientes que coinciden con el criterio de búsqueda.
+     * @return List&lt;ClienteFrecuenteDTO&gt; Lista de clientes que coinciden
+     * con el criterio de búsqueda.
      * @throws NegocioException Si ocurre un error al realizar la consulta
      */
     @Override
@@ -179,7 +186,6 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
             List<ClienteFrecuente> clientes = clientesDAO.consultarClientesFrecuentesFiltro(filtro);
 
-
             return convertirListaClientesADTO(clientes);
 
         } catch (PersistenciaException ex) {
@@ -187,23 +193,32 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
-    
-    /**
-     * Consulta y devuelve la lista completa de todos los clientes frecuentes registrados en el sistema.
+    /*
+     * Consulta y devuelve la lista completa de todos los clientes frecuentes
+     * registrados en el sistema. Agrega manualmente la fecha de la última
+     * comanda consultando al DAO.
      *
-     * @return List&lt;ClienteFrecuenteDTO&gt; Lista con todos los clientes frecuentes.
+     * @return List<ClienteFrecuenteDTO> Lista con todos los clientes frecuentes
+     * enriquecida con la fecha.
      * @throws NegocioException Si ocurre un error al realizar la consulta
      */
     @Override
     public List<ClienteFrecuenteDTO> consultarClientes() throws NegocioException {
         try {
-
             List<ClienteFrecuente> clientes = clientesDAO.consultarClientesFrecuentes();
 
-            return convertirListaClientesADTO(clientes);
+            List<ClienteFrecuenteDTO> clientesDTO = convertirListaClientesADTO(clientes);
+
+            for (ClienteFrecuenteDTO cDto : clientesDTO) {
+                LocalDate fechaUltima = clientesDAO.consultarFechaUltimaComanda(cDto.getId());
+
+                cDto.setFechaUltimaComanda(fechaUltima);
+            }
+
+            return clientesDTO;
 
         } catch (PersistenciaException ex) {
-            throw new NegocioException("No fue posible consultar a los cliente", ex);
+            throw new NegocioException("No fue posible consultar a los clientes", ex);
         }
     }
 

@@ -23,4 +23,5 @@ public interface IClienteFrecuenteBO {
     
     public abstract  List<ClienteFrecuenteDTO> consultarClientes( ) throws NegocioException;
     
+    
 }

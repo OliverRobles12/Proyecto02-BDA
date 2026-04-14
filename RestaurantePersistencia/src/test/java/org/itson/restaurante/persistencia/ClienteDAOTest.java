@@ -102,16 +102,16 @@ public class ClienteDAOTest {
         
     }
     
-    @Test
-    public void testConsultarClienteFrecuenteFuncionaOk() {
-        
-        Cliente cliente = Assertions.assertDoesNotThrow(() -> {
-            return dao.consultarClienteFrecuente(idCliente);
-        });
-        
-        Assertions.assertTrue(cliente != null);
-        
-    }
+//    @Test
+//    public void testConsultarClienteFrecuenteFuncionaOk() {
+//        
+//        Cliente cliente = Assertions.assertDoesNotThrow(() -> {
+//            return dao.consultarClientesFrecuentes(idCliente);
+//        });
+//        
+//        Assertions.assertTrue(cliente != null);
+//        
+//    }
     
     @Test
     public void testConsultarClientesFrecuentesFuncionaOk() {

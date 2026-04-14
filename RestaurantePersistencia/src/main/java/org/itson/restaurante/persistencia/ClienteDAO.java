@@ -1,6 +1,7 @@
-
 package org.itson.restaurante.persistencia;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.itson.restaurante.adapters.ClienteDTOAClienteFrecuenteDominioAdapter;
 import org.itson.restaurante.dtos.ClienteFrecuenteActualizadoDTO;
 import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
@@ -28,11 +29,11 @@ public class ClienteDAO implements IClienteDAO {
 
     @Override
     public Cliente registrarClienteFrecuente(NuevoClienteFrecuenteDTO nuevoCliente) throws PersistenciaException {
-        
+
         Cliente cliente = ClienteDTOAClienteFrecuenteDominioAdapter.adapter(nuevoCliente);
         EntityManager em = null;
-        
-        try{
+
+        try {
             em = ManejadorConexiones.crearEntityManager();
             em.getTransaction().begin();
             em.persist(cliente);
@@ -45,44 +46,44 @@ public class ClienteDAO implements IClienteDAO {
             if (em != null) {
                 em.close();
             }
-        } 
-        
+        }
+
     }
 
     @Override
     public ClienteFrecuente actualizarClienteFrecuente(ClienteFrecuenteActualizadoDTO clienteActualizado) throws PersistenciaException {
-        
+
         try {
-            
+
             EntityManager em = ManejadorConexiones.crearEntityManager();
             em.getTransaction().begin();
             ClienteFrecuente clienteGuardado = em.find(ClienteFrecuente.class, clienteActualizado.getId());
-            
+
             clienteGuardado.setNombre(clienteActualizado.getNombre());
             clienteGuardado.setApellidoPaterno(clienteActualizado.getApellidoPaterno());
             clienteGuardado.setApellidoMaterno(clienteActualizado.getApellidoMaterno());
             clienteGuardado.setTelefono(clienteActualizado.getTelefono());
-            
-            if(clienteActualizado.getCorreo() != null && !clienteActualizado.getCorreo().isBlank()){
+
+            if (clienteActualizado.getCorreo() != null && !clienteActualizado.getCorreo().isBlank()) {
                 clienteGuardado.setCorreo(clienteActualizado.getCorreo());
             }
-            
+
             em.persist(clienteGuardado);
             em.getTransaction().commit();
             return clienteGuardado;
-            
+
         } catch (PersistenceException ex) {
             LOGGER.severe(ex.getMessage());
             throw new PersistenciaException("No ha sido posible actualizar al cliente frecuente", ex);
         }
-        
+
     }
 
     @Override
     public Cliente eliminarCliente(Long id) throws PersistenciaException {
 
         EntityManager em = null;
-        
+
         try {
             em = ManejadorConexiones.crearEntityManager();
             em.getTransaction().begin();
@@ -97,15 +98,15 @@ public class ClienteDAO implements IClienteDAO {
             if (em != null) {
                 em.close();
             }
-        }   
-        
+        }
+
     }
 
     @Override
     public Cliente consultarClienteFrecuente(Long id) throws PersistenciaException {
-        
+
         EntityManager em = null;
-        
+
         try {
             em = ManejadorConexiones.crearEntityManager();
             em.getTransaction().begin();
@@ -119,15 +120,15 @@ public class ClienteDAO implements IClienteDAO {
             if (em != null) {
                 em.close();
             }
-        }   
-        
+        }
+
     }
-    
+
     @Override
     public List<ClienteFrecuente> consultarClientesFrecuentes() throws PersistenciaException {
-        
+
         EntityManager em = null;
-        
+
         try {
             em = ManejadorConexiones.crearEntityManager();
             String JPQL = "SELECT cf FROM ClienteFrecuente cf";
@@ -140,45 +141,44 @@ public class ClienteDAO implements IClienteDAO {
             if (em != null) {
                 em.close();
             }
-        }   
-        
-                
+        }
+
     }
 
     @Override
     public List<ClienteFrecuente> consultarClientesFrecuentesFiltro(String filtro) throws PersistenciaException {
-        
+
         EntityManager em = null;
-        
+
         try {
             em = ManejadorConexiones.crearEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<ClienteFrecuente> cq = cb.createQuery(ClienteFrecuente.class);
             Root<ClienteFrecuente> cliente = cq.from(ClienteFrecuente.class);
-            
+
             // En caso de que no haya filtro, traeremos toda las lista
             if (filtro == null || filtro.isBlank()) {
                 return em.createQuery(cq).getResultList();
             }
-            
+
             // Limpiamos el filtro en caso de tener espacios en blanco a los lados
             String filtroLimpio = filtro.trim();
             String patron = "%" + filtroLimpio.toLowerCase() + "%";
             // Para buscar en la BD tendremos que encriptar el filtro apra poder buscar en los datos sencibles
             String patronEncriptado = Encriptador.convertToDatabaseColumn(filtroLimpio);
-            
+
             Predicate pNombre = cb.like(cb.lower(cliente.get("nombre")), patron);
             Predicate pApellidoP = cb.like(cb.lower(cliente.get("apellidoPaterno")), patron);
             Predicate pApellidoM = cb.like(cb.lower(cliente.get("apellidoMaterno")), patron);
-            
+
             // En estos predicate buscamos que el encriptado sea igual, utilizamos un trim por que la BD nos devuelve
             // el tamaño maximo que tiene el atributo agregando espaciados para completar.
             Predicate pTelefono = cb.equal(cb.trim(cliente.get("telefono")), patronEncriptado);
             Predicate pCorreo = cb.equal(cb.trim(cliente.get("correo")), patronEncriptado);
-            
+
             // Unimos los predicados
             cq.where(cb.or(pNombre, pTelefono, pCorreo, pApellidoP, pApellidoM));
-            
+
             return em.createQuery(cq).getResultList();
         } catch (PersistenceException ex) {
             LOGGER.severe(ex.getMessage());
@@ -187,8 +187,27 @@ public class ClienteDAO implements IClienteDAO {
             if (em != null) {
                 em.close();
             }
-        }       
-        
+        }
+
     }
-    
+
+    @Override
+    public LocalDate consultarFechaUltimaComanda(Long idCliente)throws PersistenciaException  {
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.crearEntityManager();
+            String jpql = "SELECT MAX(c.fechaHora) FROM Comanda c WHERE c.cliente.id = :idCliente";
+
+            TypedQuery<LocalDateTime> query = em.createQuery(jpql, LocalDateTime.class);
+            query.setParameter("idCliente", idCliente);
+
+            LocalDateTime resultado = query.getSingleResult();
+
+            return (resultado != null) ? resultado.toLocalDate() : null;
+
+        } catch (PersistenceException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new PersistenciaException("No ha sido posible consultar la comanda de clientes", ex);
+        } 
+    }
 }

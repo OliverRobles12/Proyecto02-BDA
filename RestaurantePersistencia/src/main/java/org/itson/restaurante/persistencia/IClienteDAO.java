@@ -1,6 +1,7 @@
 
 package org.itson.restaurante.persistencia;
 
+import java.time.LocalDate;
 import org.itson.restaurante.dtos.ClienteFrecuenteActualizadoDTO;
 import org.itson.restaurante.dtos.NuevoClienteFrecuenteDTO;
 import org.itson.restaurante.dominio.Cliente;
@@ -61,4 +62,5 @@ public interface IClienteDAO {
      */
     public abstract List<ClienteFrecuente> consultarClientesFrecuentesFiltro(String filtro) throws PersistenciaException;
     
+    public LocalDate consultarFechaUltimaComanda(Long idCliente) throws PersistenciaException ;
 }
