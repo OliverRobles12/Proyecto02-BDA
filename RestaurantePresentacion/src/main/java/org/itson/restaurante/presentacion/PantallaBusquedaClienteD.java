@@ -1,4 +1,3 @@
-
 package org.itson.restaurante.presentacion;
 
 import org.itson.restaurante.dtos.ClienteFrecuenteDTO;
@@ -28,12 +27,14 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private ClienteFrecuenteDTO clienteSeleccionado = null;
     private List<ClienteFrecuenteDTO> listaClientes = new ArrayList<>();
     private boolean alertaSinResultados = false;
+    private org.itson.restaurante.utilerias.PanelHeader panelHeader;
+    private org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales panelNavegacion;
 
     ControladorClientes control;
-    
+
     public PantallaBusquedaClienteD(java.awt.Frame parent, boolean modal, ControladorClientes control) {
         super(parent, modal);
-        
+
         initComponents();
         this.control = control;
         panelHeader = new PanelHeader();
@@ -241,12 +242,12 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
 
-/**
- * Realiza la búsqueda de clientes conforme el usuario escribe en el campo
- * de búsqueda y actualiza la tabla con los resultados encontrados.
- * 
- * @param evt Evento de tecla presionada
- */
+    /**
+     * Realiza la búsqueda de clientes conforme el usuario escribe en el campo
+     * de búsqueda y actualiza la tabla con los resultados encontrados.
+     *
+     * @param evt Evento de tecla presionada
+     */
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         String textoBusqueda = this.txtBusqueda.getText().trim();
         try {
@@ -262,10 +263,10 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
                 }
                 return;
             }
-            alertaSinResultados= false;
+            alertaSinResultados = false;
             cargarClientes(listaClientes);
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
 
@@ -290,10 +291,10 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
         utilerias.estilizarTabla(tblClientes);
 
         try {
-            listaClientes  = control.consultarClientes();
+            listaClientes = control.consultarClientes();
             cargarClientes(listaClientes);
         } catch (NegocioException ex) {
-             JOptionPane.showMessageDialog(this, ex.getMessage(),"Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -347,6 +348,5 @@ public class PantallaBusquedaClienteD extends javax.swing.JDialog {
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
-    private org.itson.restaurante.utilerias.PanelHeader panelHeader;
-    private org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales panelNavegacion;
+
 }

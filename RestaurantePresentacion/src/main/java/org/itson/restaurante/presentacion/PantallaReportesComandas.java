@@ -4,19 +4,30 @@
  */
 package org.itson.restaurante.presentacion;
 
+import java.awt.Color;
+import static java.awt.SystemColor.control;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import org.itson.restaurante.dtos.ComandaDTO;
+import org.itson.restaurante.negocio.ComandaBO;
+import org.itson.restaurante.negocio.IComandaBO;
 import org.itson.restaurante.negocio.NegocioException;
 import org.itson.restaurante.negocio.ReporteBO;
+import org.itson.restaurante.utilerias.PanelHeader;
+import org.itson.restaurante.utilerias.PanelMenu;
+import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.itson.restaurante.utilerias.utilerias;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
@@ -24,13 +35,56 @@ import org.itson.restaurante.utilerias.utilerias;
  */
 public class PantallaReportesComandas extends javax.swing.JFrame {
 
+    private List<ComandaDTO> listaComandas;
+    private IComandaBO comandaBO = new ComandaBO();
+
     /**
      * Creates new form PantallaReportes
      */
     public PantallaReportesComandas() {
         initComponents();
-        utilerias.estilizarBotonPrimario(btnGuardarPDF);
+        configurarTabla();
+
+        fechaInicioChooser = new com.toedter.calendar.JDateChooser();
+        fechaFinChooser = new com.toedter.calendar.JDateChooser();
+        fechaInicioChooser.setDateFormatString("dd/MM/yyyy");
+        fechaFinChooser.setDateFormatString("dd/MM/yyyy");
+        fechaInicioChooser.setDate(new java.util.Date());
+        fechaFinChooser.setDate(new java.util.Date());
+
+        fechaInicioChooser.setBackground(java.awt.Color.WHITE);
+        fechaFinChooser.setBackground(java.awt.Color.WHITE);
+        fechaInicioChooser.getComponent(1).setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        fechaFinChooser.getComponent(1).setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        panPrinciapl.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panPrinciapl.add(fechaInicioChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 150, 30));
+        panPrinciapl.add(fechaFinChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, 150, 30));
+
+        javax.swing.JButton btnBuscar = new javax.swing.JButton("🔍");
+        panPrinciapl.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 40, 50, 30));
+        btnBuscar.addActionListener(e -> {
+            actualizarTablaPorFechas();
+        });
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelHeader = new PanelHeader();
+        panelMenu = new PanelMenu();
+
+        jPanel1.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
+        jPanel1.add(panelMenu, new AbsoluteConstraints(0, 130, 215, 640));
+
+        jPanel1.add(panPrinciapl, new AbsoluteConstraints(215, 130, 1151, 638));
+
+        jPanel1.setComponentZOrder(panelMenu, 0);
+        jPanel1.setComponentZOrder(panPrinciapl, 1);
+
+        this.revalidate();
+        this.repaint();
         setLocationRelativeTo(null);
+
+        actualizarTablaPorFechas();
     }
 
     /**
@@ -42,17 +96,31 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         panPrinciapl = new javax.swing.JPanel();
         btnGuardarPDF = new javax.swing.JButton();
         btnConsultarPDf = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblIngredientes = new javax.swing.JTable();
+        sep = new javax.swing.JSeparator();
+        lblPantalla = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1366, 768));
+        setMinimumSize(new java.awt.Dimension(1366, 768));
+        setPreferredSize(new java.awt.Dimension(1366, 768));
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setMaximumSize(new java.awt.Dimension(1366, 768));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1366, 768));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
 
         panPrinciapl.setBackground(new java.awt.Color(255, 255, 255));
         panPrinciapl.setMaximumSize(new java.awt.Dimension(1366, 768));
         panPrinciapl.setMinimumSize(new java.awt.Dimension(1366, 768));
         panPrinciapl.setPreferredSize(new java.awt.Dimension(1366, 768));
+        panPrinciapl.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGuardarPDF.setBackground(new java.awt.Color(18, 44, 79));
         btnGuardarPDF.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -64,6 +132,7 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
                 btnGuardarPDFActionPerformed(evt);
             }
         });
+        panPrinciapl.add(btnGuardarPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(919, 529, 240, -1));
 
         btnConsultarPDf.setBackground(new java.awt.Color(18, 44, 79));
         btnConsultarPDf.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -75,52 +144,86 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
                 btnConsultarPDfActionPerformed(evt);
             }
         });
+        panPrinciapl.add(btnConsultarPDf, new org.netbeans.lib.awtextra.AbsoluteConstraints(667, 529, 240, -1));
 
-        javax.swing.GroupLayout panPrinciaplLayout = new javax.swing.GroupLayout(panPrinciapl);
-        panPrinciapl.setLayout(panPrinciaplLayout);
-        panPrinciaplLayout.setHorizontalGroup(
-            panPrinciaplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panPrinciaplLayout.createSequentialGroup()
-                .addGap(437, 437, 437)
-                .addComponent(btnConsultarPDf, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(689, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPrinciaplLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(339, 339, 339))
+        tblIngredientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tblIngredientes.setFillsViewportHeight(true);
+        tblIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblIngredientesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblIngredientes);
+
+        panPrinciapl.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 1060, 380));
+
+        sep.setForeground(new java.awt.Color(18, 44, 79));
+        panPrinciapl.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 1060, 10));
+
+        lblPantalla.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
+        lblPantalla.setText("Reporte comandas");
+        panPrinciapl.add(lblPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 158, Short.MAX_VALUE)
+                .addComponent(panPrinciapl, javax.swing.GroupLayout.PREFERRED_SIZE, 1208, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        panPrinciaplLayout.setVerticalGroup(
-            panPrinciaplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPrinciaplLayout.createSequentialGroup()
-                .addContainerGap(392, Short.MAX_VALUE)
-                .addComponent(btnConsultarPDf)
-                .addGap(175, 175, 175)
-                .addComponent(btnGuardarPDF)
-                .addGap(137, 137, 137))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(128, Short.MAX_VALUE)
+                .addComponent(panPrinciapl, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrinciapl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrinciapl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void configurarTabla() {
+        DefaultTableModel modelo = new DefaultTableModel(
+                new Object[]{"ID", "Folio", "Fecha", "Cliente", "Total", "Estado"}, 0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblIngredientes.setModel(modelo); // Aunque se llame tblIngredientes, la usaremos para comandas
+    }
 
+    private void cargarComandas(List<ComandaDTO> lista) {
+        DefaultTableModel modelo = (DefaultTableModel) tblIngredientes.getModel();
+        modelo.setRowCount(0);
+        for (ComandaDTO c : lista) {
+            modelo.addRow(new Object[]{
+                c.getId(),
+                c.getFolio(),
+                c.getFechaHora().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                c.getNombreCompleto(),
+                "$" + c.getTotalAcumulado(),
+                c.getEstado()
+            });
+        }
+    }
     private void btnGuardarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPDFActionPerformed
         try {
-            LocalDate inicio = LocalDate.now();
-            LocalDate fin = LocalDate.now();
+            LocalDate inicio = fechaInicioChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            LocalDate fin = fechaFinChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
             ReporteBO bo = new ReporteBO();
             JasperPrint jp = bo.generarReporteComandas(inicio, fin);
 
@@ -148,9 +251,9 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
 
     private void btnConsultarPDfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPDfActionPerformed
         try {
-            LocalDate inicio = LocalDate.now();//cambiar por el campo de fecha real
-            LocalDate fin = LocalDate.now();//cambiar por el campo de fecha real
 
+            LocalDate inicio = fechaInicioChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            LocalDate fin = fechaFinChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
             ReporteBO bo = new ReporteBO();
             JasperPrint jp = bo.generarReporteComandas(inicio, fin);
             if (jp != null) {
@@ -173,6 +276,25 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnConsultarPDfActionPerformed
+    private void actualizarTablaPorFechas() {
+        LocalDate inicio = fechaInicioChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        LocalDate fin = fechaFinChooser.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+
+        try {
+            listaComandas = comandaBO.consultarComandasFechas(inicio, fin);
+
+            cargarComandas(listaComandas);
+
+            if (listaComandas.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay comandas en el rango seleccionado.");
+            }
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al filtrar: " + ex.getMessage());
+        }
+    }
+    private void tblIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIngredientesMouseClicked
+
+    }//GEN-LAST:event_tblIngredientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -214,6 +336,15 @@ public class PantallaReportesComandas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultarPDf;
     private javax.swing.JButton btnGuardarPDF;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPantalla;
     private javax.swing.JPanel panPrinciapl;
+    private javax.swing.JSeparator sep;
+    private javax.swing.JTable tblIngredientes;
     // End of variables declaration//GEN-END:variables
+    private org.itson.restaurante.utilerias.PanelHeader panelHeader;
+    private org.itson.restaurante.utilerias.PanelMenu panelMenu;
+    private com.toedter.calendar.JDateChooser fechaInicioChooser;
+    private com.toedter.calendar.JDateChooser fechaFinChooser;
 }

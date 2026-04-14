@@ -1,6 +1,7 @@
 
 package org.itson.restaurante.negocio;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.itson.restaurante.dtos.ComandaDTO;
 import org.itson.restaurante.dtos.NuevaComandaDTO;
@@ -14,5 +15,6 @@ public interface IComandaBO {
     public boolean registrarNuevaComanda(NuevaComandaDTO nuevaComanda) throws NegocioException;
     
     public List<ComandaDTO> consultarComandas() throws NegocioException;
+    public List<ComandaDTO> consultarComandasFechas(LocalDate inicio,LocalDate fin) throws NegocioException;
     
 }

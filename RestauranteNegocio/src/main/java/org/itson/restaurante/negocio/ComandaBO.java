@@ -1,6 +1,7 @@
 
 package org.itson.restaurante.negocio;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.itson.restaurante.adapters.ComandaAComandaDTOAdapter;
@@ -78,6 +79,21 @@ public class ComandaBO implements IComandaBO {
         }
         
     }
+     @Override
+    public List<ComandaDTO> consultarComandasFechas(LocalDate inicio,LocalDate fin) throws NegocioException {
+        try {
+            List<Comanda> comandasDominio = comandaDAO.consultarComandasFecha(inicio, fin);
+            List<ComandaDTO> comandasDTO = new ArrayList<>();
+            for (Comanda comanda : comandasDominio) {
+                comandasDTO.add(ComandaAComandaDTOAdapter.adapter(comanda));
+            }
+            return comandasDTO;
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No fue posible consultar comandas.", ex);
+        }
+        
+    }
+    
     
     
     

@@ -96,22 +96,20 @@ public class PantallaReportesClientes extends javax.swing.JFrame {
         panPrinciaplLayout.setHorizontalGroup(
             panPrinciaplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panPrinciaplLayout.createSequentialGroup()
-                .addGap(437, 437, 437)
+                .addContainerGap(822, Short.MAX_VALUE)
                 .addComponent(btnConsultarPDf, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(689, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPrinciaplLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnGuardarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(339, 339, 339))
+                .addGap(46, 46, 46))
         );
         panPrinciaplLayout.setVerticalGroup(
             panPrinciaplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPrinciaplLayout.createSequentialGroup()
-                .addContainerGap(392, Short.MAX_VALUE)
-                .addComponent(btnConsultarPDf)
-                .addGap(175, 175, 175)
-                .addComponent(btnGuardarPDF)
-                .addGap(137, 137, 137))
+            .addGroup(panPrinciaplLayout.createSequentialGroup()
+                .addContainerGap(674, Short.MAX_VALUE)
+                .addGroup(panPrinciaplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarPDF)
+                    .addComponent(btnConsultarPDf))
+                .addGap(62, 62, 62))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -133,62 +131,62 @@ public class PantallaReportesClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPDFActionPerformed
-        try {
-            LocalDate inicio = LocalDate.now();
-            LocalDate fin = LocalDate.now();
-            ReporteBO bo = new ReporteBO();
-            JasperPrint jp = bo.generarReporteCliente(inicio, fin);
-
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setSelectedFile(new File("ReporteClientes.pdf"));
-
-            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-
-                String ruta = fileChooser.getSelectedFile().getAbsolutePath();
-
-                if (!ruta.endsWith(".pdf")) {
-                    ruta += ".pdf";
-                }
-
-                JasperExportManager.exportReportToPdfFile(jp, ruta);
-
-                JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
-            }
-
-        } catch (NegocioException | JRException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-        } catch (Exception ex) {
-            System.getLogger(PantallaReportesClientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+//        try {
+//            LocalDate inicio = LocalDate.now();
+//            LocalDate fin = LocalDate.now();
+//            ReporteBO bo = new ReporteBO();
+//            JasperPrint jp = bo.generarReporteCliente(inicio, fin);
+//
+//            JFileChooser fileChooser = new JFileChooser();
+//            fileChooser.setSelectedFile(new File("ReporteClientes.pdf"));
+//
+//            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+//
+//                String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+//
+//                if (!ruta.endsWith(".pdf")) {
+//                    ruta += ".pdf";
+//                }
+//
+//                JasperExportManager.exportReportToPdfFile(jp, ruta);
+//
+//                JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
+//            }
+//
+//        } catch (NegocioException | JRException ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+//        } catch (Exception ex) {
+//            System.getLogger(PantallaReportesClientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+//        }
     }//GEN-LAST:event_btnGuardarPDFActionPerformed
 
     private void btnConsultarPDfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPDfActionPerformed
-        try {
-            LocalDate inicio = LocalDate.now();//cambiar por el campo de fecha real
-            LocalDate fin = LocalDate.now();//cambiar por el campo de fecha real
-
-            ReporteBO bo = new ReporteBO();
-            JasperPrint jp = bo.generarReporteCliente(inicio, fin);
-            if (jp != null) {
-                JasperViewer.viewReport(jp, false);
-            }
-
-        } catch (NegocioException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-        } catch (Exception ex) {
-            if (ex.getMessage().contains("FileNotFoundException")) {
-                JOptionPane.showMessageDialog(this,
-                        "No se pudo crear el archivo. Verifica que:\n"
-                        + "1. La carpeta de destino existe.\n"
-                        + "2. No tienes el PDF abierto en otro programa.\n"
-                        + "3. Tienes permisos para escribir en esa carpeta (OneDrive).",
-                        "Error de Acceso", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage());
-            }
-        }
+//        try {
+//            LocalDate inicio = LocalDate.now();//cambiar por el campo de fecha real
+//            LocalDate fin = LocalDate.now();//cambiar por el campo de fecha real
+//
+//            ReporteBO bo = new ReporteBO();
+//            JasperPrint jp = bo.generarReporteCliente(inicio, fin);
+//            if (jp != null) {
+//                JasperViewer.viewReport(jp, false);
+//            }
+//
+//        } catch (NegocioException ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+//        } catch (Exception ex) {
+//            if (ex.getMessage().contains("FileNotFoundException")) {
+//                JOptionPane.showMessageDialog(this,
+//                        "No se pudo crear el archivo. Verifica que:\n"
+//                        + "1. La carpeta de destino existe.\n"
+//                        + "2. No tienes el PDF abierto en otro programa.\n"
+//                        + "3. Tienes permisos para escribir en esa carpeta (OneDrive).",
+//                        "Error de Acceso", JOptionPane.WARNING_MESSAGE);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage());
+//            }
+//        }
     }//GEN-LAST:event_btnConsultarPDfActionPerformed
 
     /**

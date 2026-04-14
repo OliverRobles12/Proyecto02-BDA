@@ -412,7 +412,7 @@ public class PantallaFormularioIngrediente extends javax.swing.JFrame {
                 Image escalada = icono.getImage().getScaledInstance(306, 221, Image.SCALE_SMOOTH);
                 lblImagenSeleccionada.setIcon(new ImageIcon(escalada));
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Error al cargar la imagen");
+                JOptionPane.showMessageDialog(this, "Error al cargar la imagen: "+ ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnExaminarImagenActionPerformed
