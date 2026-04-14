@@ -2,6 +2,7 @@
 package org.itson.restaurante.dtos;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -12,14 +13,16 @@ public class NuevaComandaDTO {
     private Long idMesa;
     private Long idCliente;
     private List<NuevoProductoComandaDTO> productosComanda;
+    private Map<Long, Double> ingredientesRequeridos;
     
     public NuevaComandaDTO() {
     }
 
-    public NuevaComandaDTO(Long idMesa, Long idCliente, List<NuevoProductoComandaDTO> productosComanda) {
+    public NuevaComandaDTO(Long idMesa, Long idCliente, List<NuevoProductoComandaDTO> productosComanda, Map<Long, Double> ingredientesRequeridos) {
         this.idMesa = idMesa;
         this.idCliente = idCliente;
         this.productosComanda = productosComanda;
+        this.ingredientesRequeridos = ingredientesRequeridos;
     }
 
     public NuevaComandaDTO(Long idMesa, List<NuevoProductoComandaDTO> productosComanda) {
@@ -41,6 +44,10 @@ public class NuevaComandaDTO {
 
     public List<NuevoProductoComandaDTO> getProductosComanda() {
         return productosComanda;
+    }
+
+    public Map<Long, Double> getIngredientesRequeridos() {
+        return ingredientesRequeridos;
     }
     
 }

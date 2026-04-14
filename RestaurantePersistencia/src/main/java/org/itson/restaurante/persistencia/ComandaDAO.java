@@ -15,8 +15,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.itson.restaurante.dominio.Cliente;
+import org.itson.restaurante.dominio.ClienteFrecuente;
 import org.itson.restaurante.dominio.Comanda;
 import org.itson.restaurante.dominio.EstadoComanda;
+import org.itson.restaurante.dominio.EstadoMesa;
 import org.itson.restaurante.dominio.Mesa;
 import org.itson.restaurante.dominio.Producto;
 import org.itson.restaurante.dominio.ProductoComanda;
@@ -43,6 +45,7 @@ public class ComandaDAO implements IComandaDAO{
             em.getTransaction().begin();
             
             Mesa mesa = em.find(Mesa.class, nuevaComanda.getIdMesa());
+            mesa.setEstado(EstadoMesa.OCUPADA);
             
             Cliente cliente = null;
             if (nuevaComanda.getIdCliente() != null) {
@@ -78,6 +81,19 @@ public class ComandaDAO implements IComandaDAO{
                 );
                 comanda.getProductos().add(pc);
                 totalAcumulado = totalAcumulado + productoComandaDTO.getSubtotal();
+            }
+            
+            if (cliente instanceof ClienteFrecuente) {
+                ClienteFrecuente clienteFrecuente = (ClienteFrecuente) cliente;
+                int puntosGanados = (int) (totalAcumulado / 20);
+                Integer puntosActuales = clienteFrecuente.getPuntosAcumulados();
+                clienteFrecuente.setPuntosAcumulados(puntosActuales + puntosGanados);
+                
+                Integer numeroVisitas = clienteFrecuente.getNumeroVisitas();
+                clienteFrecuente.setNumeroVisitas(numeroVisitas + 1);
+                
+                Double totalGastado = clienteFrecuente.getTotalGastado();
+                clienteFrecuente.setTotalGastado(totalGastado + totalAcumulado);
             }
             
             comanda.setTotalAcumulado(totalAcumulado);

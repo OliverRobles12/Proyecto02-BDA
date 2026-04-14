@@ -102,6 +102,28 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
+    public Cliente consultarClienteFrecuente(Long id) throws PersistenciaException {
+        
+        EntityManager em = null;
+        
+        try {
+            em = ManejadorConexiones.crearEntityManager();
+            em.getTransaction().begin();
+            Cliente cliente = em.find(ClienteFrecuente.class, id);
+            em.getTransaction().commit();
+            return cliente;
+        } catch (PersistenceException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new PersistenciaException("No ha sido posible realizar la consulta de clientes frecuentes.", ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }   
+        
+    }
+    
+    @Override
     public List<ClienteFrecuente> consultarClientesFrecuentes() throws PersistenciaException {
         
         EntityManager em = null;
@@ -168,7 +190,5 @@ public class ClienteDAO implements IClienteDAO {
         }       
         
     }
-    
-    
     
 }

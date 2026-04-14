@@ -11,7 +11,7 @@ import org.itson.restaurante.dtos.NuevaComandaDTO;
  */
 public interface IComandaBO {
 
-    public void registrarNuevaComanda(NuevaComandaDTO nuevaComanda) throws NegocioException;
+    public boolean registrarNuevaComanda(NuevaComandaDTO nuevaComanda) throws NegocioException;
     
     public List<ComandaDTO> consultarComandas() throws NegocioException;
     

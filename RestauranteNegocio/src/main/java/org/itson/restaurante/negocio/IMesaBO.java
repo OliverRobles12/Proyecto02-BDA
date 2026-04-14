@@ -25,4 +25,28 @@ public interface IMesaBO {
      */
     public abstract List<MesaDTO> consultarMesasDisponibles() throws NegocioException;
     
+    /**
+     * Metodo que consultar y comprobar la disponibilidad de una mesa.
+     * @param idMesa
+     * @return
+     * @throws NegocioException 
+     */
+    public abstract boolean mesaDisponible(Long idMesa) throws NegocioException;
+    
+    /**
+     * Metodo encargado de cambiar el estado de una mesa a DISPONIBLE.
+     * @param idMesa
+     * @return
+     * @throws NegocioException 
+     */
+    public abstract boolean cambiarEstadoDisponible(Long idMesa) throws NegocioException;
+    
+    /**
+     * Metodo encargado de cambiar el estado de una mesa a OCUPADA;
+     * @param idMesa
+     * @return
+     * @throws NegocioException 
+     */
+    public abstract boolean cambiarEstadoOcupada(Long idMesa) throws NegocioException;
+    
 }

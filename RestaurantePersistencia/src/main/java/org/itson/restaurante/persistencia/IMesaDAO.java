@@ -4,6 +4,7 @@ package org.itson.restaurante.persistencia;
 import java.util.List;
 import javax.persistence.PersistenceException;
 import org.itson.restaurante.dominio.Mesa;
+import org.itson.restaurante.dtos.MesaDTO;
 
 /**
  *
@@ -26,6 +27,14 @@ public interface IMesaDAO {
      * @throws PersistenciaException 
      */
     public abstract Mesa eliminarMesa(Long idMesa) throws PersistenciaException;
+    
+    /**
+     * Actualiza la mesa con el id proporcionado.
+     * @param mesa Resultado de la operacion.
+     * @return
+     * @throws PersistenciaException 
+     */
+    public abstract boolean actualizarMesa(Mesa mesa) throws PersistenciaException;
  
     /**
      * Consulta las mesas con estado disponibles.

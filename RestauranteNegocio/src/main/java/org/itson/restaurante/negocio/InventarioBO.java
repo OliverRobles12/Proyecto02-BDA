@@ -6,8 +6,10 @@ import org.itson.restaurante.dominio.Ingrediente;
 import org.itson.restaurante.dominio.Producto;
 import org.itson.restaurante.dominio.ProductoIngrediente;
 import org.itson.restaurante.persistencia.IIngredientesDAO;
+import org.itson.restaurante.persistencia.IProductoDAO;
 import org.itson.restaurante.persistencia.IngredientesDAO;
 import org.itson.restaurante.persistencia.PersistenciaException;
+import org.itson.restaurante.persistencia.ProductoDAO;
 
 /**
  *
@@ -16,22 +18,11 @@ import org.itson.restaurante.persistencia.PersistenciaException;
 public class InventarioBO implements IInventarioBO {
     
     private IIngredientesDAO ingredientesDAO;
+    private IProductoDAO productoDAO;
     
     public InventarioBO(){
-        ingredientesDAO = new IngredientesDAO();
-    }
-    
-    @Override
-    public boolean sePuedePreparar(Long IdProducto, Integer cantidadPreparar) throws NegocioException{
-        Producto producto = null;
-        for(ProductoIngrediente productoIngrediente : producto.getReceta()) {
-            double cantidadRequerida = productoIngrediente.getCantidad() * cantidadPreparar;
-            int stockActual = productoIngrediente.getIngrediente().getStock();
-            if (stockActual < cantidadRequerida) {
-                throw new NegocioException("No hay ingredientes suficientes para preparar " + cantidadPreparar + " " + producto.getNombre(), null);
-            }
-        }
-        return true;
+        this.ingredientesDAO = new IngredientesDAO();
+        this.productoDAO = new ProductoDAO();
     }
     
     @Override
@@ -44,7 +35,7 @@ public class InventarioBO implements IInventarioBO {
                 Ingrediente ingrediente = ingredientesDAO.consultarIngrediente(idIngrediente);
                 
                 if (ingrediente == null) {
-                    throw new NegocioException("El ingrediente: " + ingrediente.getNombre() + " no existe en el inventario.", null);
+                    throw new NegocioException("El ingrediente con Id: " + idIngrediente + " no se encontro en la base da datos.", null);
                 }
                 
                 if (ingrediente.getStock() < cantidadTotalComanda) {

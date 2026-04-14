@@ -4,7 +4,6 @@ package org.itson.restaurante.persistencia;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import org.itson.restaurante.dominio.EstadoMesa;
@@ -62,6 +61,25 @@ public class MesaDAO implements IMesaDAO{
             }
         }
         
+    }
+    
+    @Override
+    public boolean actualizarMesa(Mesa mesa) throws PersistenciaException {
+        EntityManager em = null;
+        try {
+            em = ManejadorConexiones.crearEntityManager();
+            em.getTransaction().begin();
+            em.merge(mesa);
+            em.getTransaction().commit();
+            return true;
+        } catch(PersistenceException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new PersistenciaException("No ha sido posible actualizar la mesa con id: " + mesa.getId());
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
     
     @Override
@@ -123,5 +141,5 @@ public class MesaDAO implements IMesaDAO{
         }
         
     }
-    
+
 }

@@ -51,7 +51,6 @@ public class ClienteDAOTest {
             }
         }
     }
-    
 
     @Test
     public void testCrearClienteFuncionaOk() {
@@ -100,6 +99,17 @@ public class ClienteDAOTest {
         });
         
         Assertions.assertNotNull(cliente.getId());
+        
+    }
+    
+    @Test
+    public void testConsultarClienteFrecuenteFuncionaOk() {
+        
+        Cliente cliente = Assertions.assertDoesNotThrow(() -> {
+            return dao.consultarClienteFrecuente(idCliente);
+        });
+        
+        Assertions.assertTrue(cliente != null);
         
     }
     

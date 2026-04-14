@@ -38,6 +38,14 @@ public interface IClienteDAO {
     public abstract Cliente eliminarCliente(Long id) throws PersistenciaException;
 
     /**
+     * Metodo que consulta al cliente frecuente con el id proporcionado.
+     * @param id Identificador del cliente.
+     * @return ClienteFrecuente encontrado.
+     * @throws PersistenciaException 
+     */
+    public abstract Cliente consultarClienteFrecuente(Long id) throws PersistenciaException;
+    
+    /**
      * Método que hace una consulta con todos los clientes frecuentes en el sistema y devuelve una lista con ellos.
      * @return Una lista de objetos ClienteFrecuente; si no hay, devuelve una lista vacía.
      * @throws PersistenciaException Si ocurre un error en la base de datos.

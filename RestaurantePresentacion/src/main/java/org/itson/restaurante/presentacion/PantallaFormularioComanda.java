@@ -29,10 +29,6 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
     
     private ControladorComandas control;
     
-    private List<NuevoProductoComandaDTO> productosSeleccionados; 
-    private Map<Long, Double> ingredientesRequeridos;
-    private Long idClienteReferido;
-    
     /**
      * Creates new form PantallaFormularioComanda
      */
@@ -40,9 +36,6 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         
         this.control = control;
         initComponents();
-        
-        ingredientesRequeridos = new HashMap<>();
-        productosSeleccionados = new ArrayList<>();
         
         panelHeader = new PanelHeader();
         panelNavegacion = new PanelNavegacionPantallasPrincipales();
@@ -57,33 +50,19 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         utilerias.estilizarBotonSinFondo(btnClienteGeneral);
         utilerias.estilizarTabla(tblProductosComandas);
         
-        tblProductosComandas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int fila = tblProductosComandas.getSelectedRow();
-                    if (fila != -1){
-                        btnSumar.setEnabled(true);
-                        btnRestar.setEnabled(true);
-                        txtCantidad.setText(tblProductosComandas.getValueAt(fila, 4).toString());
-                    } else {
-                        btnSumar.setEnabled(false);
-                        btnRestar.setEnabled(false);
-                        txtCantidad.setText("0");
-                    }
-                }
+        tblProductosComandas.getSelectionModel().addListSelectionListener(e -> {
+            if(e.getValueIsAdjusting()) return;
+            int fila = tblProductosComandas.getSelectedRow();
+            if(fila == -1) {
+                btnSumar.setEnabled(false);
+                btnRestar.setEnabled(false);
+                return;
             }
+            btnSumar.setEnabled(true);
+            btnRestar.setEnabled(true);
+            txtCantidad.setText(tblProductosComandas.getValueAt(fila, 4).toString());
         });
         
-        tblProductosComandas.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int fila = tblProductosComandas.rowAtPoint(evt.getPoint());
-                if (fila == -1) {
-                    tblProductosComandas.clearSelection();
-                }
-            }
-        });
         
     }
 
@@ -150,16 +129,9 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
                 "#", "Producto", "Comentario", "Precio unit.", "Cantidad", "Subtotal"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, true, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -217,21 +189,21 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         btnClienteGeneral.setPreferredSize(new java.awt.Dimension(200, 32));
         btnClienteGeneral.addActionListener(this::btnClienteGeneralActionPerformed);
 
-        btnRestar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRestar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnRestar.setText("-");
         btnRestar.setEnabled(false);
-        btnRestar.setPreferredSize(new java.awt.Dimension(32, 30));
         btnRestar.addActionListener(this::btnRestarActionPerformed);
 
-        btnSumar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSumar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnSumar.setText("+");
         btnSumar.setEnabled(false);
-        btnSumar.setPreferredSize(new java.awt.Dimension(32, 30));
         btnSumar.addActionListener(this::btnSumarActionPerformed);
 
         txtCantidad.setEditable(false);
-        txtCantidad.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtCantidad.setEnabled(false);
+        txtCantidad.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        txtCantidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCantidad.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        txtCantidad.setPreferredSize(new java.awt.Dimension(64, 30));
 
         txtTotal.setEditable(false);
         txtTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -279,11 +251,11 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelContenidoLayout.createSequentialGroup()
-                            .addComponent(btnRestar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRestar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnSumar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnSumar))))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
         panelContenidoLayout.setVerticalGroup(
@@ -311,10 +283,10 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRestar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSumar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRestar)
+                    .addComponent(btnSumar)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -346,40 +318,17 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public List<NuevoProductoComandaDTO> getProductosSeleccionados() {
-        return productosSeleccionados;
-    }
-
-    public Long getIdClienteReferido() {
-        return idClienteReferido;
-    }
-
-    public void setIdClienteReferido(Long idClienteReferido) {
-        this.idClienteReferido = idClienteReferido;
-    }
-
-    public Map<Long, Double> getIngredientesRequeridos() {
-        return ingredientesRequeridos;
-    }
-
-    public void setIngredientesRequeridos(Map<Long, Double> ingredientesRequeridos) {
-        this.ingredientesRequeridos = ingredientesRequeridos;
-    }
-    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        if (!productosSeleccionados.isEmpty() || idClienteReferido != null) {
-            int respuesta = JOptionPane.showConfirmDialog(
-                this, 
-                "Desea descartar la comanda?", 
-                "Nueva comanda",
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.WARNING_MESSAGE
-            );
-            if (respuesta != JOptionPane.YES_OPTION) {
-                return;
-            }
+        int respuesta = JOptionPane.showConfirmDialog(
+            this, 
+            "Desea descartar la comanda?", 
+            "Nueva comanda",
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.WARNING_MESSAGE
+        );
+        if (respuesta == JOptionPane.YES_OPTION) {
+            control.mostarPantallaComandas(this);
         }
-        control.mostarPantallaComandas(this);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
@@ -403,8 +352,8 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         int fila = tblProductosComandas.getSelectedRow();
         if (fila != -1 ) {
             int idRegistro = Integer.parseInt(tblProductosComandas.getValueAt(fila, 0).toString());
-            tblProductosComandas.setRowSelectionInterval(fila, fila);
             control.sumarCantidadProducto(this, idRegistro);
+            tblProductosComandas.setRowSelectionInterval(fila, fila);
         }
     }//GEN-LAST:event_btnSumarActionPerformed
 
@@ -412,8 +361,10 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         int fila = tblProductosComandas.getSelectedRow();
         if (fila != -1) {
             int idRegistro = Integer.parseInt(tblProductosComandas.getValueAt(fila, 0).toString());
-            tblProductosComandas.setRowSelectionInterval(fila, fila);
             control.eliminarProducto(this, idRegistro);
+            if(tblProductosComandas.getRowCount() > 0) {
+                tblProductosComandas.setRowSelectionInterval(fila, fila);
+            }
         }
     }//GEN-LAST:event_btnRestarActionPerformed
     
@@ -421,7 +372,7 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         lblCliente.setText(nombreCompleto);
     }
     
-    public void LlenarTabla(List<NuevoProductoComandaDTO> lista) {
+    public void llenarTabla(List<NuevoProductoComandaDTO> lista) {
         
         DefaultTableModel modelo = (DefaultTableModel) tblProductosComandas.getModel();
         modelo.setRowCount(0); // Limpiamos la tabla
@@ -432,7 +383,7 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         
         Double subtotal = 0d;
         for (NuevoProductoComandaDTO producto : lista) {
-            subtotal += producto.getPrecioUnitario();
+            subtotal += producto.getSubtotal();
             Object[] fila = {
                 producto.getIdTemporal(),
                 producto.getNombreProducto(),
@@ -447,7 +398,7 @@ public class PantallaFormularioComanda extends javax.swing.JFrame {
         
     }
     
-    public void LlenarCbxMesas(List<MesaDTO> mesas) {
+    public void llenarCbxMesas(List<MesaDTO> mesas) {
         DefaultComboBoxModel model = new DefaultComboBoxModel<>();
         model.addElement("Seleccionar mesa");
         for (MesaDTO m : mesas) {

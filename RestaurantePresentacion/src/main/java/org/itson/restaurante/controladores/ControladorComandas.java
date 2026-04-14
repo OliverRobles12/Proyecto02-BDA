@@ -1,6 +1,7 @@
 
 package org.itson.restaurante.controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,11 @@ public class ControladorComandas {
     private IProductoBO producoBO = new ProductoBO();
     private IMesaBO mesaBO = new MesaBO();
     
+    // Estado de la comanda
+    private List<NuevoProductoComandaDTO> productosSeleccionados;
+    private Map<Long, Double> ingredientesRequeridos;
+    private Long idClienteReferido;
+    
     public ControladorComandas() {
     }
     
@@ -59,6 +65,11 @@ public class ControladorComandas {
      * @param pantallaActual Referencia a la pantalla.
      */
     public void mostrarPantallaFomularioComandas(JFrame pantallaActual) {
+        
+        this.productosSeleccionados = new ArrayList<>();
+        this.ingredientesRequeridos = new HashMap<>();
+        this.idClienteReferido = null;
+        
         PantallaFormularioComanda vistaFormulario = new PantallaFormularioComanda(this);
         vistaFormulario.setVisible(true);
         cargarCbxMesasDisponibles(vistaFormulario);
@@ -96,7 +107,7 @@ public class ControladorComandas {
                 vistaFormulario.mostarMensaje("No hay mesas disponibles en este momento.", true);
                 return;
             }
-            vistaFormulario.LlenarCbxMesas(mesas);
+            vistaFormulario.llenarCbxMesas(mesas);
         } catch (NegocioException ex) {
             vistaFormulario.mostarMensaje("Erorr al cargar las mesas disponibles.", true);
         }
@@ -110,7 +121,7 @@ public class ControladorComandas {
     public void seleccionarClienteReferido(PantallaFormularioComanda vistaNuevaComanda) {
         ClienteFrecuenteDTO cliente = Controlador.getIntancia().getControladorClientes().mostrarBuscadorClienteDialog(vistaNuevaComanda);
         if (cliente != null) {
-            vistaNuevaComanda.setIdClienteReferido(cliente.getId());
+            this.idClienteReferido = cliente.getId();
             String nombreCompleto = cliente.getNombre() + " " + cliente.getApellidoPaterno()  + " " + cliente.getApellidoMaterno();
             vistaNuevaComanda.setTextoClienteReferido(nombreCompleto);
         }
@@ -121,14 +132,11 @@ public class ControladorComandas {
      * @param vistaNuevaComanda Referencia a la pantalla.
      */
     public void seleccionarClienteGeneral(PantallaFormularioComanda vistaNuevaComanda) {
-        vistaNuevaComanda.setIdClienteReferido(null);
+        this.idClienteReferido = null;
         vistaNuevaComanda.setTextoClienteReferido("Cliente general");
     }
     
     /**
-     * 
-     * TODO Condacto con la pantalla de busuqeda
-     * 
      * Metodo encargado de contactar con el buscador de productos para luego comprobar la 
      * disponibilidad de ingrediente y proceder a agregarlo a la comanda.
      * Agrega el mismo producto dos veces solo si hay diferencias con los detalles del pedido si no
@@ -143,7 +151,7 @@ public class ControladorComandas {
             return;
         }
         
-        Map<Long, Double> ingredientesProyectados = new HashMap<>(vistaNuevaComanda.getIngredientesRequeridos());
+        Map<Long, Double> ingredientesProyectados = new HashMap<>(this.ingredientesRequeridos);
         
         for (IngredienteRecetaDTO receta : producto.getReceta()){
             ingredientesProyectados.merge(receta.getIdIngrediente(), receta.getCantidad(), Double::sum);
@@ -166,9 +174,9 @@ public class ControladorComandas {
                     producto.getPrecio()
             );
         
-        vistaNuevaComanda.getProductosSeleccionados().add(nuevoProductoComanda);
-        vistaNuevaComanda.setIngredientesRequeridos(ingredientesProyectados);
-        vistaNuevaComanda.LlenarTabla(vistaNuevaComanda.getProductosSeleccionados());
+        this.productosSeleccionados.add(nuevoProductoComanda);
+        this.ingredientesRequeridos = ingredientesProyectados;
+        vistaNuevaComanda.llenarTabla(productosSeleccionados);
         
     }
     
@@ -180,12 +188,12 @@ public class ControladorComandas {
      */
     public void sumarCantidadProducto(PantallaFormularioComanda vistaNuevaComanda, Integer idRegistro){
         try {
-            for(NuevoProductoComandaDTO pc : vistaNuevaComanda.getProductosSeleccionados()) {
+            for(NuevoProductoComandaDTO pc : this.productosSeleccionados) {
                 if (pc.getIdTemporal() == idRegistro) {
 
                     ProductoDTO producto = producoBO.consultarProductoPorId(pc.getIdProducto());
 
-                    Map<Long, Double> ingredientesProyectados = new HashMap<>(vistaNuevaComanda.getIngredientesRequeridos());
+                    Map<Long, Double> ingredientesProyectados = new HashMap<>(this.ingredientesRequeridos);
                     
                     for (IngredienteRecetaDTO receta : producto.getReceta()){
                         ingredientesProyectados.merge(receta.getIdIngrediente(), receta.getCantidad(), Double::sum);
@@ -198,8 +206,10 @@ public class ControladorComandas {
                     
                     pc.setCantidad(pc.getCantidad() + 1);
                     pc.setSubtotal(pc.getCantidad() * pc.getPrecioUnitario());
-                    vistaNuevaComanda.LlenarTabla(vistaNuevaComanda.getProductosSeleccionados());
-                    vistaNuevaComanda.setIngredientesRequeridos(ingredientesProyectados);
+                    
+                    this.ingredientesRequeridos = ingredientesProyectados;
+                    vistaNuevaComanda.llenarTabla(this.productosSeleccionados);
+                    break;
                 }
             }
         } catch (NegocioException ex) {
@@ -219,7 +229,7 @@ public class ControladorComandas {
             NuevoProductoComandaDTO productoEliminar = null;
             boolean restarOEliminar = false;
             // Buscamos dentro los productos seleccionados el produto el que eliminar
-            for(NuevoProductoComandaDTO pc : vistaNuevaComanda.getProductosSeleccionados()) {
+            for(NuevoProductoComandaDTO pc : this.productosSeleccionados) {
                 if (pc.getIdTemporal() == idRegistro) {
                     // Restaremos o eliminamos dependiendo de la cantidad del producto
                     if (pc.getCantidad() > 1) {
@@ -237,7 +247,7 @@ public class ControladorComandas {
                         // Eliminaremos tambien los ingredientes requeridos
                         for (IngredienteRecetaDTO ingrediente : producto.getReceta()){
                             // En caso de no necesitar mas ese ingrediente lo eliminamos del mapa
-                            vistaNuevaComanda.getIngredientesRequeridos().computeIfPresent(ingrediente.getIdIngrediente(), (id, cantidadActual) -> {
+                            this.ingredientesRequeridos.computeIfPresent(ingrediente.getIdIngrediente(), (id, cantidadActual) -> {
                                 Double nuevaCantidad = cantidadActual - ingrediente.getCantidad();
                                 return nuevaCantidad > 0 ? nuevaCantidad : null;
                             });
@@ -248,10 +258,10 @@ public class ControladorComandas {
             }
             
             if (productoEliminar != null) {
-                vistaNuevaComanda.getProductosSeleccionados().remove(productoEliminar);
+               this.productosSeleccionados.remove(productoEliminar);
             }
             
-            vistaNuevaComanda.LlenarTabla(vistaNuevaComanda.getProductosSeleccionados());
+            vistaNuevaComanda.llenarTabla(this.productosSeleccionados);
             
         } catch (NegocioException ex) {
             vistaNuevaComanda.mostarMensaje("No ha sido posible eliminar el producto.", true);
@@ -275,15 +285,16 @@ public class ControladorComandas {
             return;
         }
         
-        if (vistaNuevaComanda.getProductosSeleccionados().isEmpty()) {
+        if (this.productosSeleccionados.isEmpty()) {
             vistaNuevaComanda.mostarMensaje("Solo se puede registrar comandas con al menos 1 producto.", false);
             return;
         }
         
         NuevaComandaDTO nuevaComandaDTO = new NuevaComandaDTO(
                 mesa.getId(),
-                vistaNuevaComanda.getIdClienteReferido(),
-                vistaNuevaComanda.getProductosSeleccionados()
+                idClienteReferido,
+                productosSeleccionados,
+                ingredientesRequeridos
         );
         
         try {
