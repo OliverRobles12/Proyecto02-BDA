@@ -80,7 +80,6 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         PanelPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
         
         
-        PanelPrincipal.add(PanelPrincipal, new AbsoluteConstraints(230, 180, 1366, 590));
         panelNavegacion.setPantallasNavegacion("Busqueda de Producto", "Editar/Agregar ");
         
         utilerias.estilizarBotonSinFondo(btnCancelar);
@@ -124,6 +123,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         tblIngredientes = new javax.swing.JTable();
         btnEliminarIngrediente = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnCantidadIngrediente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -210,6 +210,13 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
 
         jLabel2.setText("Imagen");
 
+        btnCantidadIngrediente.setBackground(new java.awt.Color(18, 44, 79));
+        btnCantidadIngrediente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCantidadIngrediente.setForeground(new java.awt.Color(255, 255, 255));
+        btnCantidadIngrediente.setText("Cantidad Ingrediente");
+        btnCantidadIngrediente.setToolTipText("");
+        btnCantidadIngrediente.addActionListener(this::btnCantidadIngredienteActionPerformed);
+
         javax.swing.GroupLayout panelContenido1Layout = new javax.swing.GroupLayout(panelContenido1);
         panelContenido1.setLayout(panelContenido1Layout);
         panelContenido1Layout.setHorizontalGroup(
@@ -257,6 +264,8 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenido1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(btnEliminarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCantidadIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
@@ -317,7 +326,9 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                         .addGap(57, 57, 57))
                     .addGroup(panelContenido1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminarIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCantidadIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelContenido1Layout.createSequentialGroup()
@@ -354,6 +365,11 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
             Double precioNuevo = 0.0; 
             String textoPrecio = txtPrecio.getText();
 
+            if(txtNombre.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(this,
+                    "Ingrese el nombre del producto");
+                return;
+            }
             if (!textoPrecio.isEmpty()) {
                 precioNuevo = Double.parseDouble(textoPrecio); 
             }
@@ -387,8 +403,19 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
                 this.imagen,      
                 this.ListIngredientes
             );
+                if(ListIngredientes.isEmpty()){
+                    JOptionPane.showMessageDialog(this,
+                        "Agregue al menos un ingrediente");
+                    return;
+                }
+                
+                try{
 
                controlador.registrar(productoNuevo); 
+               }catch(Exception e){
+                    JOptionPane.showMessageDialog(this,
+                        "No se pudo guardar el producto. Intente nuevamente.");
+                 }
             
             JOptionPane.showMessageDialog(this, "Producto registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -498,8 +525,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         }
 
         int filaModelo = tblIngredientes.convertRowIndexToModel(fila);
-        this.productoSeleccionado.getReceta().remove(filaModelo);
-        this.ListIngredientes.remove(filaModelo);
+        ListIngredientes.remove(filaModelo);
 
         try {
             cargarIngredientes(this.ListIngredientes);
@@ -509,6 +535,37 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
      }
  
     }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
+
+    private void btnCantidadIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCantidadIngredienteActionPerformed
+        int fila = this.tblIngredientes.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this,
+            "Selecciona un ingrediente");
+            return;
+        }
+
+        int filaModelo = tblIngredientes.convertRowIndexToModel(fila);
+        IngredienteRecetaDTO ingrediente = ListIngredientes.get(filaModelo);
+
+        String input = JOptionPane.showInputDialog(
+                this,
+                "Nueva cantidad:",
+                ingrediente.getCantidad()
+        );
+
+        if (input == null) return;
+
+        try {
+            ingrediente.setCantidad(Double.parseDouble(input));
+            cargarIngredientes(ListIngredientes);
+
+        } catch (NegocioException ex) {
+            System.getLogger(PantallaFormularioProducto.class.getName())
+                    .log(System.Logger.Level.ERROR, (String) null, ex);
+     }
+ 
+    }//GEN-LAST:event_btnCantidadIngredienteActionPerformed
 
     public void inicializarTabla(){
     
@@ -665,6 +722,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarImagen;
     private javax.swing.JButton btnBuscarIngrediente;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCantidadIngrediente;
     private javax.swing.JButton btnEliminarIngrediente;
     private javax.swing.JButton btnGuardarProducto;
     private javax.swing.JComboBox<String> cmbTipo;

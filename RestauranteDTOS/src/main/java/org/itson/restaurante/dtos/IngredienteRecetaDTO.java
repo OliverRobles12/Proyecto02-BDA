@@ -31,6 +31,10 @@ public class IngredienteRecetaDTO {
     public Double getCantidad() {
         return cantidad;
     }
+
+    public void setCantidad(Double cantidad) {
+        this.cantidad = cantidad;
+    }
     
     
 }
