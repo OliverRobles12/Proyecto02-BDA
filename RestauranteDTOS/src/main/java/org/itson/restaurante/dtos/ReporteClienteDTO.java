@@ -18,17 +18,27 @@ public class ReporteClienteDTO {
     private String telefono;
     private String correo;
     private LocalDate fechaRegistro;
+    
+    private Integer puntosAcumulados;
+    private Double totalGastado;
+    private Integer numeroVisitas;
+    
+    private LocalDate fechaUltimaComanda;
 
     public ReporteClienteDTO() {
     }
 
-    public ReporteClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro) {
+    public ReporteClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, LocalDate fechaRegistro, Integer puntosAcumulados, Double totalGastado, Integer numeroVisitas, LocalDate fechaUltimaComanda) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.correo = correo;
         this.fechaRegistro = fechaRegistro;
+        this.puntosAcumulados = puntosAcumulados;
+        this.totalGastado = totalGastado;
+        this.numeroVisitas = numeroVisitas;
+        this.fechaUltimaComanda = fechaUltimaComanda;
     }
 
     public String getNombre() {
@@ -78,6 +88,40 @@ public class ReporteClienteDTO {
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    public Integer getPuntosAcumulados() {
+        return puntosAcumulados;
+    }
+
+    public void setPuntosAcumulados(Integer puntosAcumulados) {
+        this.puntosAcumulados = puntosAcumulados;
+    }
+
+    public Double getTotalGastado() {
+        return totalGastado;
+    }
+
+    public void setTotalGastado(Double totalGastado) {
+        this.totalGastado = totalGastado;
+    }
+
+    public Integer getNumeroVisitas() {
+        return numeroVisitas;
+    }
+
+    public void setNumeroVisitas(Integer numeroVisitas) {
+        this.numeroVisitas = numeroVisitas;
+    }
+
+    public LocalDate getFechaUltimaComanda() {
+        return fechaUltimaComanda;
+    }
+
+    public void setFechaUltimaComanda(LocalDate fechaUltimaComanda) {
+        this.fechaUltimaComanda = fechaUltimaComanda;
+    }
+
+    
 
     
 }

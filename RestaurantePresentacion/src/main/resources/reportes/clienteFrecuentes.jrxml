@@ -21,7 +21,7 @@
     <field name="puntosAcumulados" class="java.lang.Integer"/>
     <field name="totalGastado" class="java.lang.Double"/>
     <field name="numeroVisitas" class="java.lang.Integer"/>
-    <field name="fechaUltimaComanda" class="java.time.LocalDate"/>
+    <field name="fechaUltimaComanda" class="java.util.Date"/>
 
     <pageHeader>
         <band height="100" splitType="Stretch">
@@ -118,10 +118,10 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle"/>
                 <textFieldExpression><![CDATA[$F{puntosAcumulados}]]></textFieldExpression>
             </textField>
-            <textField>
-                <reportElement x="370" y="0" width="90" height="20" uuid="91234567-0123-1123-2123-312345678916"/>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="370" y="0" width="90" height="20"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle"/>
-                <textFieldExpression><![CDATA[($F{fechaUltimaComanda} != null) ? $F{fechaUltimaComanda}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) : "Sin registro"]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{fechaUltimaComanda}]]></textFieldExpression>
             </textField>
             <textField pattern="$ #,##0.00">
                 <reportElement x="465" y="0" width="85" height="20" uuid="01234567-1123-2123-3123-412345678917"/>

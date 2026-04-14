@@ -12,6 +12,7 @@ import org.itson.restaurante.presentacion.PantallaIngredientes;
 import org.itson.restaurante.presentacion.PantallaLogin;
 import org.itson.restaurante.presentacion.PantallaMenuPrincipal;
 import org.itson.restaurante.presentacion.PantallaReportes;
+import org.itson.restaurante.presentacion.PantallaReportesCliente;
 import org.itson.restaurante.presentacion.PantallaReportesClientes;
 import org.itson.restaurante.presentacion.PantallaReportesComandas;
 
@@ -197,7 +198,7 @@ public class Controlador {
     }
     
     public void abrirReportesClientes(JFrame pantallaActual) {
-        PantallaReportesClientes reporte = new PantallaReportesClientes();
+        PantallaReportesCliente reporte = new PantallaReportesCliente();
         reporte.setVisible(true);
         if (pantallaActual != null) {
             pantallaActual.dispose();

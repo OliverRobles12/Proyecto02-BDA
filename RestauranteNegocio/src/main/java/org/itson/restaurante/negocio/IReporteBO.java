@@ -15,5 +15,5 @@ import net.sf.jasperreports.engine.JasperPrint;
 public interface IReporteBO {
     public abstract JasperPrint generarReporteComandas(LocalDate inicio, LocalDate fin) throws Exception;
     
-    public abstract JasperPrint generarReporteCliente(LocalDate inicio, LocalDate fin) throws Exception;
+    public abstract JasperPrint generarReporteCliente(String nombreBusqueda) throws Exception;
 }
