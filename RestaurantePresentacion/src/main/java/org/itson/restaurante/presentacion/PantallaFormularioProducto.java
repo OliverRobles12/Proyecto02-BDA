@@ -80,7 +80,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         PanelPrincipal.add(panelNavegacion, new AbsoluteConstraints(0, 130, 1366, 45));
         
         
-        PanelPrincipal.add(panelContenido, new AbsoluteConstraints(230, 180, 1366, 590));
+        PanelPrincipal.add(PanelPrincipal, new AbsoluteConstraints(230, 180, 1366, 590));
         panelNavegacion.setPantallasNavegacion("Busqueda de Producto", "Editar/Agregar ");
         
         utilerias.estilizarBotonSinFondo(btnCancelar);
@@ -124,7 +124,6 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
         tblIngredientes = new javax.swing.JTable();
         btnEliminarIngrediente = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        panelContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -329,27 +328,12 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
 
         PanelPrincipal.add(panelContenido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, -1, -1));
 
-        panelContenido.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
-        panelContenido.setLayout(panelContenidoLayout);
-        panelContenidoLayout.setHorizontalGroup(
-            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1150, Short.MAX_VALUE)
-        );
-        panelContenidoLayout.setVerticalGroup(
-            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -357,8 +341,7 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(596, Short.MAX_VALUE))
         );
 
         pack();
@@ -694,7 +677,6 @@ public class PantallaFormularioProducto extends javax.swing.JFrame {
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
-    private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelContenido1;
     private javax.swing.JSeparator sep;
     private javax.swing.JSeparator sep1;

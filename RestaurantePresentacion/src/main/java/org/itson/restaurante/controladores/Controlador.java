@@ -12,6 +12,8 @@ import org.itson.restaurante.presentacion.PantallaIngredientes;
 import org.itson.restaurante.presentacion.PantallaLogin;
 import org.itson.restaurante.presentacion.PantallaMenuPrincipal;
 import org.itson.restaurante.presentacion.PantallaReportes;
+import org.itson.restaurante.presentacion.PantallaReportesClientes;
+import org.itson.restaurante.presentacion.PantallaReportesComandas;
 
 /**
  * Esta clase nos ayuda a controlar el flujo entre las pantallas y es el
@@ -186,8 +188,24 @@ public class Controlador {
      * @param pantallaActual la ventana actual que será cerrada al abrir la
      * nueva
      */
+    public void abrirReportesComandas(JFrame pantallaActual) {
+        PantallaReportesComandas reporte = new PantallaReportesComandas();
+        reporte.setVisible(true);
+        if (pantallaActual != null) {
+            pantallaActual.dispose();
+        }
+    }
+    
+    public void abrirReportesClientes(JFrame pantallaActual) {
+        PantallaReportesClientes reporte = new PantallaReportesClientes();
+        reporte.setVisible(true);
+        if (pantallaActual != null) {
+            pantallaActual.dispose();
+        }
+    }
+    
     public void abrirReportes(JFrame pantallaActual) {
-        PantallaReportes reporte = new PantallaReportes();
+        PantallaReportes reporte = new PantallaReportes(getIntancia());
         reporte.setVisible(true);
         if (pantallaActual != null) {
             pantallaActual.dispose();

@@ -4,33 +4,46 @@
  */
 package org.itson.restaurante.presentacion;
 
-import java.io.File;
-import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
-import org.itson.restaurante.negocio.NegocioException;
-import org.itson.restaurante.negocio.ReporteBO;
+import org.itson.restaurante.controladores.Controlador;
+import org.itson.restaurante.controladores.ControladorProductos;
+import org.itson.restaurante.dtos.ProductoDTO;
+import org.itson.restaurante.utilerias.PanelHeader;
+import org.itson.restaurante.utilerias.PanelMenu;
+import org.itson.restaurante.utilerias.PanelNavegacionPantallasPrincipales;
 import org.itson.restaurante.utilerias.utilerias;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
- * @author joset
+ * @author juanl
  */
 public class PantallaReportes extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaReportes.class.getName());
 
+    private Controlador controlador;
     /**
-     * Creates new form PantallaReportes
+     * Creates new form PantallaProductos
      */
-    public PantallaReportes() {
+    public PantallaReportes(Controlador controlador) {
+        this.controlador = controlador;
         initComponents();
-        utilerias.estilizarBotonPrimario(btnGuardarPDF);
+        this.setResizable(false);
         setLocationRelativeTo(null);
+        
+        utilerias.aplicarIcono(this);
+        panelHeader = new PanelHeader();
+        panelMenu = new PanelMenu();
+        panelNavegacion = new PanelNavegacionPantallasPrincipales();
+
+        PanelPrincipal.add(panelHeader, new AbsoluteConstraints(0, 0, 1366, 130));
+        PanelPrincipal.add(panelMenu, new AbsoluteConstraints(0, 130, 215, 640));
+        PanelPrincipal.add(panelNavegacion, new AbsoluteConstraints(215, 130, 1151, 45));
+        
+        
+        PanelPrincipal.add(panelContenido, new AbsoluteConstraints(230, 180, 1150, 590));
+        panelNavegacion.setPantallasNavegacion("Ingredientes", "Menu Productos");
+        
     }
 
     /**
@@ -42,177 +55,131 @@ public class PantallaReportes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panPrinciapl = new javax.swing.JPanel();
-        btnGuardarPDF = new javax.swing.JButton();
-        btnConsultarPDf = new javax.swing.JButton();
+        PanelPrincipal = new javax.swing.JPanel();
+        sep = new javax.swing.JSeparator();
+        panelContenido = new javax.swing.JPanel();
+        panelContenido1 = new javax.swing.JPanel();
+        lblITitulo1 = new javax.swing.JLabel();
+        btnClientes = new javax.swing.JButton();
+        btnComandas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
-        panPrinciapl.setBackground(new java.awt.Color(255, 255, 255));
-        panPrinciapl.setMaximumSize(new java.awt.Dimension(1366, 768));
-        panPrinciapl.setMinimumSize(new java.awt.Dimension(1366, 768));
-        panPrinciapl.setPreferredSize(new java.awt.Dimension(1366, 768));
+        PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPrincipal.setMinimumSize(new java.awt.Dimension(1366, 768));
+        PanelPrincipal.setPreferredSize(new java.awt.Dimension(1366, 768));
+        PanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnGuardarPDF.setBackground(new java.awt.Color(18, 44, 79));
-        btnGuardarPDF.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnGuardarPDF.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardarPDF.setText("Guardar en PDF");
-        btnGuardarPDF.setToolTipText("");
-        btnGuardarPDF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarPDFActionPerformed(evt);
-            }
-        });
+        sep.setForeground(new java.awt.Color(18, 44, 79));
+        PanelPrincipal.add(sep, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 1080, -1));
 
-        btnConsultarPDf.setBackground(new java.awt.Color(18, 44, 79));
-        btnConsultarPDf.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnConsultarPDf.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultarPDf.setText("Consultar Detalles");
-        btnConsultarPDf.setToolTipText("");
-        btnConsultarPDf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarPDfActionPerformed(evt);
-            }
-        });
+        panelContenido.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout panPrinciaplLayout = new javax.swing.GroupLayout(panPrinciapl);
-        panPrinciapl.setLayout(panPrinciaplLayout);
-        panPrinciaplLayout.setHorizontalGroup(
-            panPrinciaplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panPrinciaplLayout.createSequentialGroup()
-                .addGap(437, 437, 437)
-                .addComponent(btnConsultarPDf, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(689, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPrinciaplLayout.createSequentialGroup()
+        panelContenido1.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblITitulo1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
+        lblITitulo1.setText("Reportes");
+
+        btnClientes.setBackground(new java.awt.Color(18, 44, 79));
+        btnClientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnClientes.setForeground(new java.awt.Color(255, 255, 255));
+        btnClientes.setText("Clientes");
+        btnClientes.setToolTipText("");
+        btnClientes.addActionListener(this::btnClientesActionPerformed);
+
+        btnComandas.setBackground(new java.awt.Color(18, 44, 79));
+        btnComandas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnComandas.setForeground(new java.awt.Color(255, 255, 255));
+        btnComandas.setText("Comandas");
+        btnComandas.setToolTipText("");
+        btnComandas.addActionListener(this::btnComandasActionPerformed);
+
+        javax.swing.GroupLayout panelContenido1Layout = new javax.swing.GroupLayout(panelContenido1);
+        panelContenido1.setLayout(panelContenido1Layout);
+        panelContenido1Layout.setHorizontalGroup(
+            panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenido1Layout.createSequentialGroup()
+                .addContainerGap(558, Short.MAX_VALUE)
+                .addComponent(btnComandas, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
+            .addGroup(panelContenido1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(lblITitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelContenido1Layout.setVerticalGroup(
+            panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenido1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblITitulo1)
+                .addGap(50, 50, 50)
+                .addGroup(panelContenido1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClientes)
+                    .addComponent(btnComandas))
+                .addContainerGap(454, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
+        panelContenido.setLayout(panelContenidoLayout);
+        panelContenidoLayout.setHorizontalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenidoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(339, 339, 339))
+                .addComponent(panelContenido1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        panPrinciaplLayout.setVerticalGroup(
-            panPrinciaplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPrinciaplLayout.createSequentialGroup()
-                .addContainerGap(392, Short.MAX_VALUE)
-                .addComponent(btnConsultarPDf)
-                .addGap(175, 175, 175)
-                .addComponent(btnGuardarPDF)
-                .addGap(137, 137, 137))
+        panelContenidoLayout.setVerticalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenidoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelContenido1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        PanelPrincipal.add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 1150, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrinciapl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panPrinciapl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(PanelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPDFActionPerformed
-        try {
-            LocalDate inicio = LocalDate.now();
-            LocalDate fin = LocalDate.now();
-            ReporteBO bo = new ReporteBO();
-            JasperPrint jp = bo.generarReporteComandas(inicio, fin);
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+            controlador.abrirReportesClientes(this);
+    }//GEN-LAST:event_btnClientesActionPerformed
 
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setSelectedFile(new File("ReporteComandas.pdf"));
+    private void btnComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActionPerformed
+        controlador.abrirReportesComandas(this);
+    }//GEN-LAST:event_btnComandasActionPerformed
 
-            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+    
 
-                String ruta = fileChooser.getSelectedFile().getAbsolutePath();
-
-                if (!ruta.endsWith(".pdf")) {
-                    ruta += ".pdf";
-                }
-
-                JasperExportManager.exportReportToPdfFile(jp, ruta);
-
-                JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
-            }
-
-        } catch (NegocioException | JRException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-        }
-    }//GEN-LAST:event_btnGuardarPDFActionPerformed
-
-    private void btnConsultarPDfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPDfActionPerformed
-        try {
-            LocalDate inicio = LocalDate.now();//cambiar por el campo de fecha real
-            LocalDate fin = LocalDate.now();//cambiar por el campo de fecha real
-
-            ReporteBO bo = new ReporteBO();
-            JasperPrint jp = bo.generarReporteComandas(inicio, fin);
-            if (jp != null) {
-                JasperViewer.viewReport(jp, false);
-            }
-
-        } catch (NegocioException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-        } catch (Exception ex) {
-            if (ex.getMessage().contains("FileNotFoundException")) {
-                JOptionPane.showMessageDialog(this,
-                        "No se pudo crear el archivo. Verifica que:\n"
-                        + "1. La carpeta de destino existe.\n"
-                        + "2. No tienes el PDF abierto en otro programa.\n"
-                        + "3. Tienes permisos para escribir en esa carpeta (OneDrive).",
-                        "Error de Acceso", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_btnConsultarPDfActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaReportes().setVisible(true);
-            }
-
-        });
-    }
-
+    private PanelHeader panelHeader;
+    private PanelMenu panelMenu;
+    private PanelNavegacionPantallasPrincipales panelNavegacion;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConsultarPDf;
-    private javax.swing.JButton btnGuardarPDF;
-    private javax.swing.JPanel panPrinciapl;
+    private javax.swing.JPanel PanelPrincipal;
+    private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnComandas;
+    private javax.swing.JLabel lblITitulo1;
+    private javax.swing.JPanel panelContenido;
+    private javax.swing.JPanel panelContenido1;
+    private javax.swing.JSeparator sep;
     // End of variables declaration//GEN-END:variables
 }
